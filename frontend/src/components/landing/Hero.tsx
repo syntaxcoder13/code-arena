@@ -50,13 +50,13 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative w-full border-b border-black/10 bg-white pt-16 pb-20 sm:pt-24 sm:pb-32 overflow-hidden text-center"
+      className="relative w-full border-b border-black/10 bg-white pt-16 pb-20 sm:pt-24 sm:pb-32 overflow-hidden flex flex-col items-center justify-center text-center"
     >
-      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         {/* 1. Top Mini Badge */}
         <div
           onMouseEnter={() => playHover()}
-          className="hero-badge inline-flex items-center gap-2 rounded-lg border border-black/15 bg-neutral-100 px-3.5 py-1.5 font-mono text-xs font-bold text-black mb-6 select-none cursor-default"
+          className="hero-badge inline-flex items-center justify-center gap-2 rounded-lg border border-black/15 bg-neutral-100 px-3.5 py-1.5 font-mono text-xs font-bold text-black mb-6 select-none cursor-default mx-auto"
         >
           <span className="h-2 w-2 rounded-full bg-[#E5FF45] border border-black animate-ping" />
           <span className="font-extrabold uppercase tracking-wider text-[11px]">
@@ -64,23 +64,23 @@ export function Hero() {
           </span>
         </div>
 
-        {/* 2. Main High-Impact Headline: One-Line "BATTLE DEVELOPERS LIVE." */}
-        <h1 className="hero-title font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight text-black leading-none">
-          <span className="block whitespace-normal lg:whitespace-nowrap">
+        {/* 2. Main High-Impact Headline: Perfectly Centered */}
+        <h1 className="hero-title mx-auto text-center font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-black leading-none flex flex-col items-center justify-center">
+          <span className="inline-block text-center whitespace-normal sm:whitespace-nowrap">
             BATTLE DEVELOPERS LIVE.
           </span>
-          <span className="text-black bg-[#E5FF45] px-3 sm:px-5 py-1 rounded-xl border border-black/20 inline-block mt-3 sm:mt-4 shadow-xs text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black">
+          <span className="text-black bg-[#E5FF45] px-4 sm:px-6 py-1 rounded-xl border-2 border-black inline-block mt-3 sm:mt-4 shadow-xs text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black">
             PROVE YOUR SPEED.
           </span>
         </h1>
 
         {/* 3. Subtitle / Value Proposition */}
-        <p className="hero-subtitle mx-auto mt-6 max-w-2xl text-base sm:text-lg md:text-xl text-neutral-600 font-medium leading-relaxed">
+        <p className="hero-subtitle mx-auto text-center mt-6 max-w-2xl text-base sm:text-lg md:text-xl text-neutral-600 font-medium leading-relaxed">
           The competitive coding platform where software engineers duel in synchronous 1v1 battles, solve algorithms under pressure, and climb the global ladder.
         </p>
 
         {/* 4. Action CTA Buttons */}
-        <div className="hero-actions mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+        <div className="hero-actions mx-auto mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
           <Link
             href="/login"
             onClick={() => playClash()}
