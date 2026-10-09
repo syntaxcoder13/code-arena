@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-cream: #FFFBF0;
+    --bg-warm: #FFF8E7;
+    --bg-blue-subtle: #EAF2FF;
+    --bg-green-subtle: #E6F4EA;
+    --bg-yellow-subtle: #FEF7E0;
+    --bg-red-subtle: #FCE8E6;
+    --bg-purple-subtle: #F3E8FF;
+    
+    --color-pop-blue: #2563EB;
+    --color-pop-yellow: #FBBC05;
+    --color-pop-red: #EA4335;
+    --color-pop-green: #34A853;
+    --color-pop-purple: #7C3AED;
+    --color-pop-pink: #EC4899;
+    --color-pop-black: #121316;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #FFFBF0;
+    color: #121316;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #FFFBF0;
+    color: #121316;
+    overflow-x: hidden;
+    font-family: var(--font-body), "Plus Jakarta Sans", sans-serif;
+    font-weight: 600;
+  }
+}
+
+/* Custom Typography */
+.font-display {
+  font-family: var(--font-display), "Space Grotesk", sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), "Plus Jakarta Sans", sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting), "Caveat", cursive;
+}
+
+/* Neo-Brutalist Hard Shadows */
+.brutal-shadow-sm {
+  box-shadow: 2px 2px 0 0 #000000;
+}
+.brutal-shadow {
+  box-shadow: 4px 4px 0 0 #000000;
+}
+.brutal-shadow-lg {
+  box-shadow: 6px 6px 0 0 #000000;
+}
+.brutal-shadow-xl {
+  box-shadow: 8px 8px 0 0 #000000;
+}
+
+.brutal-shadow-yellow {
+  box-shadow: 5px 5px 0 0 #FBBC05;
+}
+.brutal-shadow-blue {
+  box-shadow: 5px 5px 0 0 #2563EB;
+}
+.brutal-shadow-white {
+  box-shadow: 5px 5px 0 0 #FFFFFF;
+}
+
+/* Button Pressed State */
+.brutal-btn {
+  transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 4px 0 0 #000000;
+}
+.brutal-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 0 #000000;
+}
+.brutal-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 #000000;
+}
+
+/* Neo-Brutalist Card Hover */
+.brutal-card {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 5px 5px 0 0 #000000;
+}
+.brutal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 8px 8px 0 0 #000000;
+}
+
+/* Colorful Striped Pattern Borders */
+.striped-bar {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #2563EB 0,
+    #2563EB 14px,
+    #FBBC05 14px,
+    #FBBC05 28px,
+    #EA4335 28px,
+    #EA4335 42px,
+    #34A853 42px,
+    #34A853 56px
+  );
+}
+
+.striped-bar-subtle {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #000 0,
+    #000 10px,
+    #FBBC05 10px,
+    #FBBC05 20px
+  );
+}
+
+/* Dot Grid Backgrounds for Cream Theme */
+.bg-cream-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+.bg-cream-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+/* Marquee Animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 26s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Floating Elements */
+@keyframes sticker-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--rot, 0deg));
+  }
+  50% {
+    transform: translateY(-6px) rotate(var(--rot, 0deg));
+  }
+}
+
+.animate-sticker {
+  animation: sticker-float 4s ease-in-out infinite;
+}
+
+/* Selection */
+::selection {
+  background-color: #FBBC05;
+  color: #000000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .animate-marquee-reverse,
+  .animate-sticker {
+    animation: none !important;
+  }
+}
+
+/* Sleek IDE Dark Scrollbar */
+.custom-code-scroll::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+.custom-code-scroll::-webkit-scrollbar-track {
+  background: #0F1424;
+  border-radius: 4px;
+}
+.custom-code-scroll::-webkit-scrollbar-thumb {
+  background: #2563EB;
+  border-radius: 4px;
+}
+.custom-code-scroll::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+.custom-code-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #2563EB #0F1424;
+}
+
