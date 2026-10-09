@@ -2,21 +2,18 @@
 
 @layer base {
   :root {
-    --bg-cream: #FFFBF0;
-    --bg-warm: #FFF8E7;
-    --bg-blue-subtle: #EAF2FF;
-    --bg-green-subtle: #E6F4EA;
-    --bg-yellow-subtle: #FEF7E0;
-    --bg-red-subtle: #FCE8E6;
-    --bg-purple-subtle: #F3E8FF;
+    --bg-main: #FFFFFF;
+    --bg-secondary: #FAFAFA;
+    --bg-surface: #F4F4F5;
+    --bg-dark: #0A0A0A;
     
-    --color-pop-blue: #2563EB;
-    --color-pop-yellow: #FBBC05;
-    --color-pop-red: #EA4335;
-    --color-pop-green: #34A853;
-    --color-pop-purple: #7C3AED;
-    --color-pop-pink: #EC4899;
-    --color-pop-black: #121316;
+    --color-lime: #E5FF45;
+    --color-lime-hover: #D4F030;
+    --color-cyan: #00F0FF;
+    --color-coral: #FF5030;
+    --color-magenta: #EC4899;
+    --color-blue: #2563EB;
+    --color-black: #000000;
   }
 
   * {
@@ -25,17 +22,18 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #FFFBF0;
-    color: #121316;
+    background-color: #FFFFFF;
+    color: #000000;
     overflow-x: hidden;
   }
 
   body {
-    background-color: #FFFBF0;
-    color: #121316;
+    background-color: #FFFFFF;
+    color: #000000;
     overflow-x: hidden;
     font-family: var(--font-body), "Plus Jakarta Sans", sans-serif;
-    font-weight: 600;
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
 }
 
@@ -56,66 +54,114 @@
   font-family: var(--font-handwriting), "Caveat", cursive;
 }
 
-/* Neo-Brutalist Hard Shadows */
+/* Editorial Shadows & Elevators */
+.editorial-shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.editorial-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+.editorial-shadow-lg {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Modern Brutalist & Pill Shadows */
 .brutal-shadow-sm {
   box-shadow: 2px 2px 0 0 #000000;
 }
 .brutal-shadow {
-  box-shadow: 4px 4px 0 0 #000000;
+  box-shadow: 3px 3px 0 0 #000000;
 }
 .brutal-shadow-lg {
-  box-shadow: 6px 6px 0 0 #000000;
+  box-shadow: 5px 5px 0 0 #000000;
 }
 .brutal-shadow-xl {
-  box-shadow: 8px 8px 0 0 #000000;
+  box-shadow: 7px 7px 0 0 #000000;
 }
 
-.brutal-shadow-yellow {
-  box-shadow: 5px 5px 0 0 #FBBC05;
+.brutal-shadow-lime {
+  box-shadow: 4px 4px 0 0 #E5FF45;
 }
-.brutal-shadow-blue {
-  box-shadow: 5px 5px 0 0 #2563EB;
+.brutal-shadow-cyan {
+  box-shadow: 4px 4px 0 0 #00F0FF;
 }
-.brutal-shadow-white {
-  box-shadow: 5px 5px 0 0 #FFFFFF;
+.brutal-shadow-coral {
+  box-shadow: 4px 4px 0 0 #FF5030;
+}
+
+/* Pill Button Styles */
+.pill-btn-lime {
+  background-color: #E5FF45;
+  color: #000000;
+  border-radius: 9999px;
+  border: 2px solid #000000;
+  font-weight: 800;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 3px 3px 0 0 #000000;
+}
+.pill-btn-lime:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 #000000;
+  background-color: #DAF428;
+}
+.pill-btn-lime:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #000000;
+}
+
+.pill-btn-dark {
+  background-color: #000000;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  border: 2px solid #000000;
+  font-weight: 800;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 3px 3px 0 0 #000000;
+}
+.pill-btn-dark:hover {
+  transform: translate(-1px, -1px);
+  background-color: #1F2937;
+  box-shadow: 4px 4px 0 0 #000000;
+}
+.pill-btn-dark:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #000000;
 }
 
 /* Button Pressed State */
 .brutal-btn {
   transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 4px 4px 0 0 #000000;
+  box-shadow: 3px 3px 0 0 #000000;
 }
 .brutal-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 0 #000000;
+  box-shadow: 5px 5px 0 0 #000000;
 }
 .brutal-btn:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 #000000;
+  box-shadow: 1px 1px 0 0 #000000;
 }
 
-/* Neo-Brutalist Card Hover */
-.brutal-card {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 5px 5px 0 0 #000000;
+/* Card Hover */
+.editorial-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.brutal-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 8px 8px 0 0 #000000;
+.editorial-card:hover {
+  transform: translateY(-4px);
 }
 
-/* Colorful Striped Pattern Borders */
+/* Striped Pattern Borders */
 .striped-bar {
   background-image: repeating-linear-gradient(
     45deg,
-    #2563EB 0,
-    #2563EB 14px,
-    #FBBC05 14px,
-    #FBBC05 28px,
-    #EA4335 28px,
-    #EA4335 42px,
-    #34A853 42px,
-    #34A853 56px
+    #000000 0,
+    #000000 12px,
+    #E5FF45 12px,
+    #E5FF45 24px,
+    #00F0FF 24px,
+    #00F0FF 36px,
+    #FF5030 36px,
+    #FF5030 48px
   );
 }
 
@@ -124,22 +170,24 @@
     45deg,
     #000 0,
     #000 10px,
-    #FBBC05 10px,
-    #FBBC05 20px
+    #E5FF45 10px,
+    #E5FF45 20px
   );
 }
 
-/* Dot Grid Backgrounds for Cream Theme */
-.bg-cream-dots {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
+/* Background Grids */
+.bg-clean-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
 }
 
-.bg-cream-grid {
-  background-size: 40px 40px;
+.bg-dark-grid {
+  background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
 }
 
 /* Marquee Animations */
@@ -194,7 +242,7 @@
 
 /* Selection */
 ::selection {
-  background-color: #FBBC05;
+  background-color: #E5FF45;
   color: #000000;
 }
 
@@ -220,18 +268,17 @@
   width: 5px;
 }
 .custom-code-scroll::-webkit-scrollbar-track {
-  background: #0F1424;
+  background: #0A0A0A;
   border-radius: 4px;
 }
 .custom-code-scroll::-webkit-scrollbar-thumb {
-  background: #2563EB;
+  background: #E5FF45;
   border-radius: 4px;
 }
 .custom-code-scroll::-webkit-scrollbar-thumb:hover {
-  background: #3B82F6;
+  background: #00F0FF;
 }
 .custom-code-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #2563EB #0F1424;
+  scrollbar-color: #E5FF45 #0A0A0A;
 }
-

@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Users, Code, Trophy, Flame, Terminal } from "lucide-react";
+import { Users, Code, Trophy, Flame } from "lucide-react";
 
 export function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -140,66 +140,82 @@ export function HowItWorks() {
     <section
       id="how-it-works"
       ref={containerRef}
-      className="relative w-full border-b-2 border-black bg-[#FFFBF0] py-10 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#EAF2FF] px-3 py-1 font-mono text-xs font-bold text-[#2563EB] brutal-shadow-sm">
-            <Terminal className="h-3.5 w-3.5" />
-            <span>{"// 03. SYSTEM WORKFLOW"}</span>
-          </div>
-
-          <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
             THREE STEPS. <br />
-            <span className="text-[#2563EB] bg-[#FBBC05]/30 px-2 rounded-lg border-2 border-black inline-block mt-1 sm:mt-2">
+            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
               ONE ARENA.
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-black/80 font-medium leading-relaxed">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
             From entering matchmaking to claiming ranking points, here is how CodeArena turns coding practice into an exhilarating competitive sport.
           </p>
         </div>
 
         {/* 3 Steps Cards */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-8">
-          {steps.map((step) => {
+          {steps.map((step, idx) => {
             const Icon = step.icon;
+            const isDark = idx === 1;
             return (
               <div
                 key={step.num}
-                style={{ backgroundColor: step.cardBg }}
-                className="step-card rounded-2xl border-[3px] border-black p-5 sm:p-7 lg:p-8 flex flex-col justify-between brutal-card"
+                className={`step-card rounded-3xl border ${
+                  isDark
+                    ? "border-black bg-black text-white"
+                    : "border-black/10 bg-neutral-50 text-black"
+                } p-6 sm:p-7 lg:p-8 flex flex-col justify-between editorial-card`}
               >
                 <div>
                   <div className="flex items-center justify-between">
                     <span
-                      className="font-display text-3xl sm:text-5xl font-black tracking-tight"
-                      style={{ color: step.accent }}
+                      className={`font-display text-4xl sm:text-5xl font-black tracking-tight ${
+                        isDark ? "text-[#E5FF45]" : "text-black"
+                      }`}
                     >
                       {step.num}
                     </span>
-                    <span className="rounded-md border-2 border-black bg-white px-2.5 py-0.5 font-mono text-[10px] sm:text-[11px] font-black text-black brutal-shadow-sm">
+                    <span
+                      className={`rounded-full px-3 py-0.5 font-mono text-[10px] sm:text-[11px] font-black ${
+                        isDark ? "bg-[#E5FF45] text-black" : "bg-black text-white"
+                      }`}
+                    >
                       {step.badge}
                     </span>
                   </div>
 
-                  <div className="mt-4 sm:mt-6 flex items-center gap-2 font-mono text-[11px] sm:text-xs font-black tracking-widest text-black/70">
-                    <Icon className="h-4 w-4" style={{ color: step.accent }} />
+                  <div
+                    className={`mt-4 sm:mt-6 flex items-center gap-2 font-mono text-[11px] sm:text-xs font-black tracking-widest ${
+                      isDark ? "text-neutral-400" : "text-neutral-500"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 text-[#E5FF45]" />
                     <span>[ {step.tag} ]</span>
                   </div>
 
-                  <h3 className="mt-2 sm:mt-3 font-display text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
+                  <h3
+                    className={`mt-2 sm:mt-3 font-display text-xl sm:text-2xl font-black uppercase tracking-tight ${
+                      isDark ? "text-white" : "text-black"
+                    }`}
+                  >
                     {step.title}
                   </h3>
 
-                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-black/80 font-medium leading-relaxed">
+                  <p
+                    className={`mt-2 sm:mt-3 text-xs sm:text-sm font-medium leading-relaxed ${
+                      isDark ? "text-neutral-300" : "text-neutral-600"
+                    }`}
+                  >
                     {step.desc}
                   </p>
                 </div>
 
-                <div className="hidden sm:block">
+                <div className="hidden sm:block mt-6">
                   {step.visual}
                 </div>
               </div>

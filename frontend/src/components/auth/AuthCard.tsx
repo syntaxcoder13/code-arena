@@ -12,25 +12,25 @@ interface AuthCardProps {
 export function AuthCard({
   children,
   badge = "CODEARENA // PLAYER ACCESS",
-  badgeColor = "bg-[#FBBC05]",
+  badgeColor = "bg-[#E5FF45]",
   className = "",
 }: AuthCardProps) {
   return (
     <div
-      className={`relative w-full rounded-2xl sm:rounded-3xl border-[2.5px] sm:border-[3px] border-black bg-white p-4 xs:p-5 sm:p-7 brutal-shadow-lg sm:brutal-shadow-xl ${className}`}
+      className={`relative w-full rounded-2xl border-2 border-black bg-white p-5 xs:p-6 sm:p-8 brutal-shadow ${className}`}
     >
       {/* Top Striped Accent */}
-      <div className="absolute top-0 inset-x-0 h-2 rounded-t-[13px] sm:rounded-t-[21px] striped-bar border-b-2 border-black" />
+      <div className="absolute top-0 inset-x-0 h-1.5 rounded-t-[14px] striped-bar border-b border-black/10" />
 
       {/* Top Terminal Badge */}
       {badge && (
-        <div className="mb-4 sm:mb-6 mt-1 flex items-center justify-between gap-2 border-b-2 border-black/10 pb-2.5 sm:pb-3 font-mono text-[10px] sm:text-[11px] font-black text-black">
+        <div className="mb-5 sm:mb-6 mt-1 flex items-center justify-between gap-2 border-b border-black/10 pb-3 font-mono text-[10px] sm:text-[11px] font-bold text-black">
           <span
-            className={`inline-flex items-center gap-1.5 rounded-md border-2 border-black ${badgeColor} px-2 py-0.5 uppercase tracking-wider text-black brutal-shadow-sm text-[9px] xs:text-[10px] sm:text-[11px] truncate max-w-[70%] sm:max-w-none`}
+            className={`inline-flex items-center gap-1.5 rounded-lg ${badgeColor} border border-black/20 text-black px-2.5 py-0.5 uppercase tracking-wider text-[10px] sm:text-[11px] font-black truncate max-w-[70%] sm:max-w-none`}
           >
             {badge}
           </span>
-          <span className="flex items-center gap-1.5 text-black/60 text-[9px] xs:text-[10px] sm:text-[11px] shrink-0">
+          <span className="flex items-center gap-1.5 text-neutral-500 text-[10px] sm:text-[11px] shrink-0 font-mono">
             <span className="h-2 w-2 rounded-full bg-[#34A853] animate-pulse" />
             <span className="hidden xs:inline">AUTH_PORT // 443</span>
             <span className="xs:hidden">LIVE</span>

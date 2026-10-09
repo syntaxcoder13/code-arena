@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Users, Trophy, Flame, Crown, Swords, ArrowRight } from "lucide-react";
+import { Trophy, Flame, Crown, Swords, ArrowRight } from "lucide-react";
 
 export function Community() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,47 +91,42 @@ export function Community() {
     <section
       id="community"
       ref={containerRef}
-      className="relative w-full border-b-2 border-black bg-[#FFFBF0] py-10 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#EAF2FF] px-3 py-1 font-mono text-xs font-bold text-[#2563EB] brutal-shadow-sm">
-            <Users className="h-3.5 w-3.5" />
-            <span>{"// 07. GLOBAL RIVALRIES"}</span>
-          </div>
-
-          <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
             CODE ALONE. <br />
-            <span className="text-[#2563EB] bg-[#FBBC05]/30 px-2 rounded-lg border-2 border-black inline-block mt-1 sm:mt-2">
+            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
               OR FIND YOUR RIVALS.
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-black/80 font-medium leading-relaxed">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
             Join thousands of competitive developers worldwide. Form clans, compete in weekly global cups, and see your name on the leaderboard.
           </p>
         </div>
 
         {/* Community Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8">
-          {/* Left: Global Leaderboard Snapshot (7 cols) in Light Yellow (#FFF8E7) */}
-          <div className="community-card rounded-2xl border-[3px] border-black bg-[#FFF8E7] p-4 sm:p-7 lg:p-8 brutal-shadow-lg lg:col-span-7">
-            <div className="flex items-center justify-between border-b-2 border-black/15 pb-3 sm:pb-4 mb-4 sm:mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+          {/* Left: Global Leaderboard Snapshot (7 cols) */}
+          <div className="community-card rounded-3xl border border-black/10 bg-neutral-50 p-6 sm:p-8 lg:p-9 editorial-card lg:col-span-7">
+            <div className="flex items-center justify-between border-b border-black/10 pb-4 mb-6">
               <div className="flex items-center gap-2 font-mono text-xs font-black text-black">
-                <Trophy className="h-4 w-4 text-[#D97706]" />
+                <Trophy className="h-4 w-4 text-[#FF5030]" />
                 <span>SEASON 04 STANDINGS</span>
               </div>
-              <span className="rounded-md border-2 border-black bg-white px-2 py-0.5 font-mono text-[10px] sm:text-[11px] font-black text-black brutal-shadow-sm">
+              <span className="rounded-full bg-black px-3 py-0.5 font-mono text-[10px] sm:text-[11px] font-black text-white">
                 ● LIVE
               </span>
             </div>
 
-            <div className="space-y-2.5 sm:space-y-3">
+            <div className="space-y-3">
               {topPlayers.map((player, idx) => (
                 <div
                   key={player.handle}
-                  className={`flex flex-wrap items-center justify-between rounded-xl border-2 border-black bg-white p-3 sm:p-4 brutal-shadow-sm hover:translate-x-1 transition-transform ${
+                  className={`flex flex-wrap items-center justify-between rounded-2xl border border-black/10 bg-white p-3.5 sm:p-4 hover:translate-x-1 transition-transform ${
                     idx === 3 ? "hidden sm:flex" : "flex"
                   }`}
                 >

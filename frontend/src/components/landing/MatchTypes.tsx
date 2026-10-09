@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Shield, Users, KeyRound, ArrowUpRight, Trophy, Swords } from "lucide-react";
+import { Shield, Users, KeyRound, ArrowUpRight, Trophy } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 export function MatchTypes() {
@@ -91,73 +91,102 @@ export function MatchTypes() {
     <section
       id="match-types"
       ref={containerRef}
-      className="relative w-full border-b-2 border-black bg-[#FFFBF0] py-10 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#FCE8E6] px-3 py-1 font-mono text-xs font-bold text-[#EA4335] brutal-shadow-sm">
-            <Swords className="h-3.5 w-3.5" />
-            <span>{"// 04. GAME MODES"}</span>
-          </div>
-
-          <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
             CHOOSE YOUR <br />
-            <span className="text-[#EA4335] bg-[#FBBC05]/30 px-2 rounded-lg border-2 border-black inline-block mt-1 sm:mt-2">
+            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
               BATTLE MODE.
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-black/80 font-medium leading-relaxed">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
             Whether you want sweaty competitive rank grinding, chill warmup duels, or a custom lobby tournament with your engineering team.
           </p>
         </div>
 
         {/* Modes 2x2 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
-          {modes.map((mode) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {modes.map((mode, idx) => {
             const Icon = mode.icon;
+            const isDark = idx === 0;
+            const isCoral = idx === 2;
             return (
               <div
                 key={mode.name}
                 onMouseEnter={() => playHover()}
-                style={{ backgroundColor: mode.cardBg }}
-                className="mode-card rounded-2xl border-[3px] border-black p-5 sm:p-7 lg:p-9 flex flex-col justify-between brutal-card group cursor-pointer transition-transform"
+                className={`mode-card rounded-3xl border ${
+                  isDark
+                    ? "border-black bg-black text-white"
+                    : isCoral
+                    ? "border-black bg-[#FF5030] text-white"
+                    : "border-black/10 bg-neutral-50 text-black"
+                } p-6 sm:p-8 lg:p-9 flex flex-col justify-between editorial-card group cursor-pointer`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black text-black/70">
-                      <Icon className="h-4 w-4" style={{ color: mode.accent }} />
+                    <div
+                      className={`flex items-center gap-1.5 font-mono text-[11px] sm:text-xs font-black ${
+                        isDark || isCoral ? "text-neutral-300" : "text-neutral-500"
+                      }`}
+                    >
+                      <Icon className="h-4 w-4 text-[#E5FF45]" />
                       <span>[ {mode.tag} ]</span>
                     </div>
 
-                    <span className="rounded-md border-2 border-black bg-white px-2.5 py-0.5 font-mono text-[10px] sm:text-xs font-black text-black brutal-shadow-sm uppercase">
+                    <span
+                      className={`rounded-full px-3 py-0.5 font-mono text-[10px] sm:text-xs font-black ${
+                        isDark || isCoral
+                          ? "bg-white text-black"
+                          : "bg-black text-white"
+                      }`}
+                    >
                       {mode.badge}
                     </span>
                   </div>
 
-                  <h3 className="mt-4 sm:mt-6 font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-black">
+                  <h3
+                    className={`mt-4 sm:mt-6 font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight ${
+                      isDark || isCoral ? "text-white" : "text-black"
+                    }`}
+                  >
                     {mode.name}
                   </h3>
 
                   <div
-                    className="mt-1 sm:mt-2 font-mono text-[11px] sm:text-xs font-black uppercase tracking-wider"
-                    style={{ color: mode.accent }}
+                    className={`mt-1 sm:mt-2 font-mono text-[11px] sm:text-xs font-black uppercase tracking-wider ${
+                      isDark || isCoral ? "text-[#E5FF45]" : "text-neutral-600"
+                    }`}
                   >
                     {mode.tagline}
                   </div>
 
-                  <p className="mt-2.5 sm:mt-4 text-xs sm:text-sm text-black/80 font-medium leading-relaxed">
+                  <p
+                    className={`mt-2.5 sm:mt-4 text-xs sm:text-sm font-medium leading-relaxed ${
+                      isDark || isCoral ? "text-neutral-200" : "text-neutral-600"
+                    }`}
+                  >
                     {mode.desc}
                   </p>
                 </div>
 
-                <div className="mt-5 sm:mt-8 border-t-2 border-black/15 pt-4 sm:pt-6 flex flex-wrap items-center justify-between gap-3 font-mono text-xs font-bold">
+                <div
+                  className={`mt-6 sm:mt-8 border-t ${
+                    isDark || isCoral ? "border-white/15" : "border-black/10"
+                  } pt-4 sm:pt-6 flex flex-wrap items-center justify-between gap-3 font-mono text-xs font-bold`}
+                >
                   <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {mode.details.map((d) => (
                       <span
                         key={d}
-                        className="rounded-md border-2 border-black bg-white px-2 py-0.5 text-black text-[11px] sm:text-xs"
+                        className={`rounded-full px-3 py-0.5 text-[11px] sm:text-xs ${
+                          isDark || isCoral
+                            ? "bg-white/15 text-white"
+                            : "bg-neutral-200/80 text-black"
+                        }`}
                       >
                         • {d}
                       </span>
@@ -170,7 +199,9 @@ export function MatchTypes() {
                       e.stopPropagation();
                       playClash();
                     }}
-                    className="inline-flex items-center gap-1 font-black text-xs sm:text-sm text-black hover:underline"
+                    className={`inline-flex items-center gap-1 font-black text-xs sm:text-sm ${
+                      isDark || isCoral ? "text-[#E5FF45]" : "text-black"
+                    } hover:underline`}
                   >
                     <span>SELECT MODE</span>
                     <ArrowUpRight className="h-4 w-4" />

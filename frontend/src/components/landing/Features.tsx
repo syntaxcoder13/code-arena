@@ -4,7 +4,6 @@ import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  Terminal,
   Swords,
   Lock,
   LineChart,
@@ -107,59 +106,45 @@ export function Features() {
     <section
       id="features"
       ref={containerRef}
-      className="relative w-full border-b-2 border-black bg-[#FFFBF0] py-10 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#EAF2FF] px-3 py-1 font-mono text-xs font-bold text-[#2563EB] brutal-shadow-sm">
-            <Terminal className="h-3.5 w-3.5" />
-            <span>{"// 06. PLATFORM CAPABILITIES"}</span>
-          </div>
-
-          <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
             MORE THAN <br />
-            <span className="text-[#2563EB] bg-[#FBBC05]/30 px-2 rounded-lg border-2 border-black inline-block mt-1 sm:mt-2">
+            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
               A CODE EDITOR.
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-black/80 font-medium leading-relaxed">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
             Engineered from the ground up for speed, competition, and collaborative developer growth.
           </p>
         </div>
 
-        {/* Feature Cards Grid (Compact 2x3 / 3x2) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Feature Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {featureItems.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.num}
-                className="feature-row rounded-2xl border-[3px] border-black bg-white p-5 sm:p-6 flex flex-col justify-between brutal-card"
+                className="feature-row rounded-3xl border border-black/10 bg-neutral-50 p-6 sm:p-7 flex flex-col justify-between editorial-card"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div
-                      className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl border-2 border-black brutal-shadow-sm"
-                      style={{ backgroundColor: item.bg }}
-                    >
-                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: item.color }} />
+                    <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-black text-[#E5FF45]">
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
 
-                    <span
-                      className="rounded-md border-2 border-black px-2.5 py-0.5 font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider brutal-shadow-sm"
-                      style={{
-                        backgroundColor: item.bg,
-                        color: "#000000",
-                      }}
-                    >
+                    <span className="rounded-full bg-black text-white px-3 py-0.5 font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider">
                       {item.tag}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-black/40">
+                    <span className="font-mono text-xs font-black text-neutral-400">
                       {item.num}.
                     </span>
                     <h3 className="font-display text-lg sm:text-xl font-black uppercase tracking-tight text-black">
@@ -167,7 +152,7 @@ export function Features() {
                     </h3>
                   </div>
 
-                  <p className="mt-2 text-xs sm:text-sm text-black/75 font-medium leading-relaxed">
+                  <p className="mt-2 text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
                     {item.desc}
                   </p>
                 </div>

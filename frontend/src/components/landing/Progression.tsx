@@ -51,49 +51,44 @@ export function Progression() {
     <section
       id="progression"
       ref={containerRef}
-      className="relative w-full border-b-2 border-black bg-[#FFFBF0] py-10 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#FFF8E7] px-3 py-1 font-mono text-xs font-bold text-[#D97706] brutal-shadow-sm">
-            <Trophy className="h-3.5 w-3.5" />
-            <span>{"// 05. RPG PROGRESSION SYSTEM"}</span>
-          </div>
-
-          <h2 className="mt-4 sm:mt-5 font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
             YOUR CODE. <br />
-            <span className="text-[#2563EB] bg-[#FBBC05]/30 px-2 rounded-lg border-2 border-black inline-block mt-1 sm:mt-2">
+            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
               YOUR XP. YOUR RANK.
             </span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-black/80 font-medium leading-relaxed">
+          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
             Every problem solved, every duel won, and every daily streak earned feeds directly into your developer progression profile.
           </p>
         </div>
 
         {/* MAIN HUD STATS OVERVIEW CARD */}
-        <div className="prog-stat rounded-2xl sm:rounded-3xl border-[3px] border-black bg-[#FFF8E7] p-5 sm:p-7 lg:p-10 brutal-shadow-xl">
+        <div className="prog-stat rounded-3xl border border-black bg-black text-white p-6 sm:p-8 lg:p-10 editorial-shadow-lg">
           {/* Header row with Level and XP bar */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center border-b-2 border-black/15 pb-5 sm:pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center border-b border-white/10 pb-6 sm:pb-8">
             {/* Level badge */}
             <div className="lg:col-span-4 flex items-center gap-3 sm:gap-4">
-              <div className="relative flex h-14 w-14 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl border-[3px] border-black bg-[#FBBC05] font-display text-2xl sm:text-3xl font-black text-black brutal-shadow">
+              <div className="relative flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl bg-[#E5FF45] font-display text-2xl sm:text-3xl font-black text-black">
                 24
-                <div className="absolute -bottom-2 rounded border border-black bg-black text-white px-1.5 py-0.2 font-mono text-[9px] sm:text-[10px] font-extrabold uppercase">
+                <div className="absolute -bottom-2 rounded-full bg-white text-black px-2 py-0.2 font-mono text-[9px] font-extrabold uppercase">
                   LVL
                 </div>
               </div>
 
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-display text-lg sm:text-2xl font-black text-black">
+                  <span className="font-display text-lg sm:text-2xl font-black text-white">
                     SYNTAX CONQUEROR
                   </span>
                 </div>
-                <div className="font-mono text-xs font-bold text-black/70 mt-0.5">
-                  XP: <span className="text-[#2563EB] font-black">2,480</span> / 3,000
+                <div className="font-mono text-xs font-bold text-neutral-400 mt-0.5">
+                  XP: <span className="text-[#E5FF45] font-black">2,480</span> / 3,000
                 </div>
               </div>
             </div>

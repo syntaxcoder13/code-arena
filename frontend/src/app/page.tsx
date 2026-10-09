@@ -16,7 +16,7 @@ import { Footer } from "@/components/landing/Footer";
 export default function LandingPage() {
   return (
     <SmoothScrollProvider>
-      <div className="relative min-h-screen bg-[#FFFBF0] text-[#121316] overflow-x-hidden selection:bg-[#FBBC05] selection:text-black">
+      <div className="relative min-h-screen bg-white text-black overflow-x-hidden selection:bg-[#E5FF45] selection:text-black">
         {/* Sticky Funky Navbar */}
         <Navbar />
 

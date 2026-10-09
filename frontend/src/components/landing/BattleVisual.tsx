@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  Swords,
   Timer,
   CheckCircle2,
   Flame,
@@ -352,21 +351,16 @@ export function BattleVisual() {
   return (
     <section
       id="arena-visual"
-      className="relative w-full border-b-2 border-black bg-[#FFFBF0] py-10 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-8 sm:mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#FBBC05] px-3.5 py-1 font-mono text-xs font-black text-black brutal-shadow-sm uppercase tracking-wider">
-            <Swords className="h-4 w-4" />
-            <span>{"// 02. REAL-TIME BATTLE ARENA"}</span>
-          </div>
-
-          <h2 className="mt-3 sm:mt-4 font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black">
-            THE LIVE <span className="text-[#2563EB] bg-[#EAF2FF] px-2 rounded-lg border-2 border-black inline-block">VS BATTLE</span> ARENA
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black">
+            THE LIVE <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block">VS BATTLE</span> ARENA
           </h2>
 
-          <p className="mt-2.5 sm:mt-4 max-w-2xl text-sm sm:text-lg text-black/80 font-medium leading-relaxed">
+          <p className="mt-2.5 sm:mt-4 max-w-2xl text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
             This is what competitive programming feels like in real time. Two developers, one problem, synchronized live test runs, and a countdown to victory.
           </p>
         </div>
