@@ -5,10 +5,18 @@ import Link from "next/link";
 import { Zap, Code, ExternalLink } from "lucide-react";
 import { DEMO_PLAYER_PROFILE } from "@/lib/dashboard-data";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useUserSession } from "@/hooks/useUserSession";
+import { getInitials } from "@/lib/auth";
 
 export function PlayerOverview() {
+  const { session } = useUserSession();
   const [selectedLang, setSelectedLang] = useState(DEMO_PLAYER_PROFILE.preferredLanguage);
   const { playClick, playHover } = useSoundEffects();
+
+  const displayName = session?.name || DEMO_PLAYER_PROFILE.name;
+  const displayUsername = session?.username || DEMO_PLAYER_PROFILE.username;
+  const displayHandle = session?.handle || DEMO_PLAYER_PROFILE.handle;
+  const initials = getInitials(displayName);
 
   const xpPercent = Math.min(
     100,
@@ -41,7 +49,7 @@ export function PlayerOverview() {
         {/* Arcade Avatar Frame */}
         <div className="relative shrink-0">
           <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border-2 border-black bg-black text-[#E5FF45] font-display text-xl sm:text-2xl font-black brutal-shadow-sm">
-            <span>GC</span>
+            <span>{initials}</span>
           </div>
           <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-black bg-[#E5FF45] text-[10px] font-black text-black">
             1
@@ -52,10 +60,10 @@ export function PlayerOverview() {
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="font-display text-lg sm:text-xl font-black uppercase tracking-tight text-black truncate">
-              {DEMO_PLAYER_PROFILE.username}
+              {displayUsername}
             </h3>
             <span className="font-mono text-[10px] font-bold text-neutral-500">
-              {DEMO_PLAYER_PROFILE.handle}
+              {displayHandle}
             </span>
           </div>
 

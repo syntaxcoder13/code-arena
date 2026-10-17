@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, User, Settings, LogOut, ShieldAlert, Sparkles } from "lucide-react";
 import { DEMO_PLAYER_PROFILE } from "@/lib/dashboard-data";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useUserSession } from "@/hooks/useUserSession";
+import { getInitials } from "@/lib/auth";
 
 interface ProfileDropdownProps {
   onOpenFeedback?: () => void;
@@ -45,6 +47,11 @@ export function ProfileDropdown({ onOpenFeedback, onOpenUnavailable }: ProfileDr
     router.push("/login");
   };
 
+  const { session } = useUserSession();
+  const displayName = session?.name || DEMO_PLAYER_PROFILE.username;
+  const displayHandle = session?.handle || (session?.username ? `@${session.username}` : DEMO_PLAYER_PROFILE.handle);
+  const initials = getInitials(displayName);
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
@@ -57,14 +64,18 @@ export function ProfileDropdown({ onOpenFeedback, onOpenUnavailable }: ProfileDr
       >
         {/* Pixel / Arcade Avatar Box */}
         <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border-2 border-black bg-[#E5FF45] font-display text-xs sm:text-sm font-black text-black">
-          <span>GC</span>
+          {session?.avatarUrl ? (
+            <img src={session.avatarUrl} alt={displayName} className="h-full w-full object-cover rounded-md" />
+          ) : (
+            <span>{initials}</span>
+          )}
           <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-[#34A853] border border-black" />
         </div>
 
         {/* Username + Level (Hidden on smallest mobile) */}
         <div className="hidden xs:flex flex-col text-left">
-          <span className="font-display text-xs font-black uppercase tracking-tight text-black leading-none">
-            {DEMO_PLAYER_PROFILE.username}
+          <span className="font-display text-xs font-black uppercase tracking-tight text-black leading-none truncate max-w-[130px]">
+            {displayName}
           </span>
           <span className="font-mono text-[10px] font-bold text-neutral-500 mt-0.5">
             LVL 01 • UNRANKED
@@ -83,15 +94,15 @@ export function ProfileDropdown({ onOpenFeedback, onOpenUnavailable }: ProfileDr
           {/* User Profile Card Header */}
           <div className="rounded-xl border border-black/15 bg-neutral-100 p-3 mb-2">
             <div className="flex items-center justify-between">
-              <span className="font-display text-xs font-black uppercase text-black">
-                {DEMO_PLAYER_PROFILE.username}
+              <span className="font-display text-xs font-black uppercase text-black truncate pr-2">
+                {displayName}
               </span>
-              <span className="font-mono text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md bg-[#E5FF45] border border-black/20 text-black">
-                DEMO PROFILE
+              <span className="font-mono text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md bg-[#E5FF45] border border-black/20 text-black shrink-0">
+                {session?.provider ? session.provider.toUpperCase() : "PLAYER"}
               </span>
             </div>
-            <div className="mt-1 font-mono text-[11px] text-neutral-500">
-              {DEMO_PLAYER_PROFILE.handle}
+            <div className="mt-1 font-mono text-[11px] text-neutral-500 truncate">
+              {displayHandle}
             </div>
             <div className="mt-2 flex items-center justify-between text-[11px] font-mono font-bold text-neutral-700">
               <span>LEVEL 01</span>

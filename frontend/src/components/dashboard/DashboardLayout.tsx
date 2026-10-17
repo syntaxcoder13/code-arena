@@ -2,12 +2,11 @@
 
 import React, { useState, createContext, useContext } from "react";
 import { DashboardSidebar } from "./DashboardSidebar";
-import { DashboardHeader } from "./DashboardHeader";
-import { DashboardFooter } from "./DashboardFooter";
 import { UnavailableModal } from "./UnavailableModal";
 import { FeedbackModal } from "./FeedbackModal";
 import { DailyChallengeModal } from "./DailyChallengeModal";
 import { MatchmakingDemoModal } from "./MatchmakingDemoModal";
+import { Menu } from "lucide-react";
 
 interface DashboardUIContextType {
   openUnavailable: (featureName: string, title?: string, description?: string) => void;
@@ -86,18 +85,22 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Main Content Column */}
         <div className="flex-1 flex flex-col h-screen min-w-0 bg-[#FFFBF0] overflow-hidden">
-          {/* Top Header: Pinned at top */}
-          <DashboardHeader
-            onOpenMobileMenu={() => setMobileMenuOpen(true)}
-            onOpenFeedback={() => setFeedbackModalOpen(true)}
-            onOpenUnavailable={handleOpenUnavailable}
-          />
+          {/* Mobile Menu Trigger for screens < lg */}
+          <div className="lg:hidden p-3 pb-0 flex items-center">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-black bg-white text-black hover:bg-[#E5FF45] transition-colors brutal-shadow-sm cursor-pointer"
+            >
+              <Menu className="h-4 w-4" />
+            </button>
+          </div>
 
           {/* Independent Scrollable Area: ONLY this region scrolls */}
           <div className="flex-1 overflow-y-auto overflow-x-hidden custom-code-scroll">
             <main className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-[1440px] w-full mx-auto">
               {children}
-              <DashboardFooter onOpenFeedback={() => setFeedbackModalOpen(true)} />
             </main>
           </div>
         </div>

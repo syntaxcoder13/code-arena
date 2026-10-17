@@ -1,5 +1,6 @@
 export interface DemoPlayerProfile {
   id: string;
+  name: string;
   username: string;
   handle: string;
   avatarUrl?: string;
@@ -84,8 +85,9 @@ export interface QuickActionItem {
 
 export const DEMO_PLAYER_PROFILE: DemoPlayerProfile = {
   id: "demo_usr_01",
-  username: "Guest_Coder_01",
-  handle: "@dev_novice",
+  name: "Developer",
+  username: "Developer",
+  handle: "@developer",
   level: 1,
   currentXp: 0,
   nextLevelXp: 500,

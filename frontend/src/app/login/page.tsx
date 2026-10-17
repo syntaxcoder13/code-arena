@@ -8,6 +8,7 @@ import { GithubAuthButton } from "@/components/auth/GithubAuthButton";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { AuthHeader } from "@/components/auth/AuthHeader";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { saveSession } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,6 +21,23 @@ export default function LoginPage() {
 
     setLoadingProvider(provider);
     playSuccess();
+
+    // If query has a specific name (e.g. from OAuth callback or test), use it;
+    // otherwise use provider-based account name
+    let userName = provider === "google" ? "Google User" : "GitHub Developer";
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      const queryName = searchParams.get("name");
+      if (queryName) userName = queryName;
+    }
+
+    saveSession({
+      id: `usr_${provider}_${Date.now()}`,
+      name: userName,
+      username: userName.replace(/\s+/g, "_"),
+      handle: `@${userName.toLowerCase().replace(/[^a-z0-9_]/g, "")}`,
+      provider,
+    });
 
     // Direct transition to dashboard
     setTimeout(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { DashboardLayout, useDashboardUI } from "@/components/dashboard/DashboardLayout";
 import { WelcomePanel } from "@/components/dashboard/WelcomePanel";
@@ -10,10 +10,24 @@ import { RecentMatches } from "@/components/dashboard/RecentMatches";
 import { LeaderboardPreview } from "@/components/dashboard/LeaderboardPreview";
 import { ProgressionPanel } from "@/components/dashboard/ProgressionPanel";
 import { CommunityPreview } from "@/components/dashboard/CommunityPreview";
+import { useUserSession } from "@/hooks/useUserSession";
 
 function DashboardContent() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { openUnavailable, openDailyChallenge, openMatchmaking } = useDashboardUI();
+  const { session } = useUserSession();
+  const [greeting, setGreeting] = useState("Good morning");
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      setGreeting("Good morning");
+    } else if (hour < 17) {
+      setGreeting("Good afternoon");
+    } else {
+      setGreeting("Good evening");
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -25,10 +39,16 @@ function DashboardContent() {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
       tl.fromTo(
-        ".dashboard-entrance-hero",
+        ".dashboard-entrance-greeting",
         { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.45 }
+        { opacity: 1, y: 0, duration: 0.4 }
       )
+        .fromTo(
+          ".dashboard-entrance-hero",
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.45 },
+          "-=0.2"
+        )
         .fromTo(
           ".dashboard-entrance-grid",
           { opacity: 0, y: 15 },
@@ -72,6 +92,16 @@ function DashboardContent() {
 
   return (
     <div ref={containerRef} className="space-y-6 sm:space-y-7">
+      {/* 0. Personalized Greeting Header */}
+      <div className="dashboard-entrance-greeting space-y-1">
+        <h1 className="font-body text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-black leading-tight">
+          {greeting}, {session?.name || "Developer"}
+        </h1>
+        <p className="text-sm sm:text-base text-neutral-600 font-normal">
+          Ready to create something amazing? Your AI assistant is here to help.
+        </p>
+      </div>
+
       {/* 1. Clean Hero / Welcome Panel */}
       <div className="dashboard-entrance-hero">
         <WelcomePanel
