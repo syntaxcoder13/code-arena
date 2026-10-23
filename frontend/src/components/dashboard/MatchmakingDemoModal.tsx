@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { X, Swords, Zap, CheckCircle2, RotateCcw, ArrowRight } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
@@ -10,6 +11,7 @@ interface MatchmakingDemoModalProps {
 }
 
 export function MatchmakingDemoModal({ isOpen, onClose }: MatchmakingDemoModalProps) {
+  const router = useRouter();
   const [phase, setPhase] = useState<"searching" | "found" | "accepted">("searching");
   const [seconds, setSeconds] = useState(0);
   const { playPop, playClick, playClash, playSuccess } = useSoundEffects();
@@ -202,20 +204,33 @@ export function MatchmakingDemoModal({ isOpen, onClose }: MatchmakingDemoModalPr
             </h3>
 
             <p className="mt-2 text-xs sm:text-sm text-neutral-600 max-w-sm mx-auto leading-relaxed">
-              Matchmaking simulation completed successfully! The real-time coding editor with synchronized unit testing will open in Phase 2.
+              Match confirmed! Your 1v1 battle against rival gladiator is ready in the live Code Arena chamber.
             </p>
 
             <div className="mt-5 p-3 rounded-xl border border-black/15 bg-[#FFFBF0] font-mono text-xs text-neutral-700">
               ⚡ Sandbox Duel ID: #CA-MATCH-9021
             </div>
 
-            <div className="mt-6 pt-4 border-t border-black/10 flex justify-center">
+            <div className="mt-6 pt-4 border-t border-black/10 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  playClash();
+                  handleClose();
+                  router.push("/arena?duel=active&mode=RANKED_1V1");
+                }}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border-2 border-black bg-[#E5FF45] px-6 py-2.5 font-display text-xs sm:text-sm font-black uppercase tracking-wider text-black brutal-btn hover:bg-[#DAF428] transition-all cursor-pointer"
+              >
+                <Swords className="h-4 w-4" />
+                <span>ENTER LIVE ARENA NOW</span>
+              </button>
+
               <button
                 type="button"
                 onClick={handleClose}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-black bg-[#E5FF45] px-6 py-2.5 font-display text-xs sm:text-sm font-black uppercase tracking-wider text-black brutal-btn hover:bg-[#DAF428] transition-all cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-black/20 text-xs font-bold uppercase text-neutral-600 hover:bg-neutral-100 transition-colors cursor-pointer"
               >
-                <span>RETURN TO DASHBOARD</span>
+                RETURN TO DASHBOARD
               </button>
             </div>
           </div>

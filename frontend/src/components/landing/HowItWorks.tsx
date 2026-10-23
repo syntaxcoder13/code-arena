@@ -3,7 +3,16 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Users, Code, Trophy, Flame } from "lucide-react";
+import {
+  Clock,
+  Search,
+  Zap,
+  Trophy,
+  BarChart3,
+  Crown,
+  ChevronRight,
+  CheckCircle2,
+} from "lucide-react";
 
 export function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,17 +27,17 @@ export function HowItWorks() {
 
       gsap.fromTo(
         ".step-card",
-        { y: 40, opacity: 0 },
+        { y: 30, opacity: 0 },
         {
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 85%",
+            start: "top 80%",
             once: true,
           },
           y: 0,
           opacity: 1,
           stagger: 0.15,
-          duration: 0.7,
+          duration: 0.6,
           ease: "power3.out",
           clearProps: "transform,opacity",
         }
@@ -38,189 +47,236 @@ export function HowItWorks() {
     return () => ctx.revert();
   }, []);
 
-  const steps = [
-    {
-      num: "01",
-      tag: "MATCHMAKING",
-      title: "FIND YOUR MATCH",
-      desc: "Queue into 1v1 ranked or casual battles. Our dynamic MMR algorithm matches you with rival developers within ±50 ELO points in seconds.",
-      accent: "#FBBC05",
-      cardBg: "#FFF8E7",
-      icon: Users,
-      badge: "LATENCY < 20MS",
-      visual: (
-        <div className="mt-6 rounded-xl border-2 border-black bg-white p-4 font-mono text-xs brutal-shadow-sm">
-          <div className="flex items-center justify-between text-black font-bold border-b-2 border-black/10 pb-2">
-            <span className="text-[#2563EB]">[ SEARCHING... ]</span>
-            <span className="text-black/60">REGION: US-EAST</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded border-2 border-black bg-[#FBBC05] text-black font-black flex items-center justify-center text-xs">
-                YOU
-              </div>
-              <span className="text-black font-black">1,840 ELO</span>
-            </div>
-            <span className="rounded bg-[#EA4335] px-1.5 py-0.2 text-[10px] font-black text-white border border-black">VS</span>
-            <div className="flex items-center gap-2">
-              <span className="text-black font-black">1,855 ELO</span>
-              <div className="h-7 w-7 rounded border-2 border-black bg-[#2563EB] text-white font-black flex items-center justify-center text-xs">
-                RIVAL
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      num: "02",
-      tag: "ARENA DUEL",
-      title: "WRITE YOUR CODE",
-      desc: "Battle in real-time with zero-latency compilation, isolated secure Docker sandboxes, instant unit-test evaluation, and live rival telemetry.",
-      accent: "#2563EB",
-      cardBg: "#EAF2FF",
-      icon: Code,
-      badge: "LIVE TELEMETRY",
-      visual: (
-        <div className="mt-6 rounded-xl border-2 border-black bg-white p-4 font-mono text-xs brutal-shadow-sm">
-          <div className="flex items-center justify-between text-black font-bold border-b-2 border-black/10 pb-2">
-            <span className="text-[#34A853]">[ EXECUTION READY ]</span>
-            <span className="text-black/60">SANDBOX: DOCKER</span>
-          </div>
-          <div className="mt-3 space-y-1.5 text-xs font-bold text-black">
-            <div className="flex items-center justify-between">
-              <span>TEST SUITE #1</span>
-              <span className="text-[#34A853]">PASS (12ms)</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>TEST SUITE #2</span>
-              <span className="text-[#34A853]">PASS (18ms)</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>EDGE CASES</span>
-              <span className="text-[#34A853]">PASS (24ms)</span>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      num: "03",
-      tag: "LEADERBOARD",
-      title: "CLIMB THE RANK",
-      desc: "Earn XP on every win, unlock exclusive arcade developer cosmetics, upgrade your league from Bronze to Grandmaster, and dominate the global ladder.",
-      accent: "#7C3AED",
-      cardBg: "#F3E8FF",
-      icon: Trophy,
-      badge: "+25 ELO / WIN",
-      visual: (
-        <div className="mt-6 rounded-xl border-2 border-black bg-white p-4 font-mono text-xs brutal-shadow-sm">
-          <div className="flex items-center justify-between text-black font-bold border-b-2 border-black/10 pb-2">
-            <span className="text-[#7C3AED]">[ RANK PROMOTION ]</span>
-            <span className="text-black/60">DIAMOND LEAGUE</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between">
-            <div>
-              <div className="text-[10px] text-black/60 font-bold">NEW RATING</div>
-              <div className="text-base font-black text-black">2,165 ELO <span className="text-[#34A853] text-xs">+25</span></div>
-            </div>
-            <div className="text-right">
-              <div className="text-[10px] text-black/60 font-bold">STREAK MULTIPLIER</div>
-              <div className="text-xs font-black text-[#EA4335] flex items-center justify-end gap-1">
-                <Flame className="h-3.5 w-3.5 fill-[#EA4335]" /> 7 WINS (2X)
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-  ];
-
   return (
     <section
       id="how-it-works"
       ref={containerRef}
-      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-zinc-900/80 bg-[#060709] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden select-none scroll-mt-20"
     >
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
-            THREE STEPS. <br />
-            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
-              ONE ARENA.
+      {/* Background Subtle Radial Glow (CodeArena Signature Volt & Cyan Glow) */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] rounded-full blur-[180px] opacity-15"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(229, 255, 69, 0.12) 0%, rgba(0, 240, 255, 0.05) 50%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-[1320px] w-full flex flex-col items-center">
+        {/* ========================================================================= */}
+        {/* SECTION HEADER - Matching CORE FEATURES & LIVE BATTLE style */}
+        {/* ========================================================================= */}
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-16 px-2">
+          {/* Top Pill Badge (Exact match to other sections: #E5FF45 font-mono) */}
+          <div className="inline-flex items-center justify-center px-3.5 py-1 rounded-full border border-zinc-800 bg-[#0c0e14]/90 mb-3 shadow-xs">
+            <span className="text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest text-[#E5FF45] uppercase">
+              HOW IT WORKS
             </span>
+          </div>
+
+          {/* Main Title - Kept strictly on a SINGLE LINE with Grey 'One Arena.' */}
+          <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight whitespace-nowrap">
+            Three Steps. <span className="text-zinc-500">One Arena.</span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
-            From entering matchmaking to claiming ranking points, here is how CodeArena turns coding practice into an exhilarating competitive sport.
+          {/* Subtitle */}
+          <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed mt-3 font-normal max-w-xl text-center">
+            From entering matchmaking to claiming ranking points, here is how CodeArena turns
+            coding practice into an exhilarating competitive sport.
           </p>
         </div>
 
-        {/* 3 Steps Cards */}
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-8">
-          {steps.map((step, idx) => {
-            const Icon = step.icon;
-            const isDark = idx === 1;
-            return (
-              <div
-                key={step.num}
-                className={`step-card rounded-3xl border ${
-                  isDark
-                    ? "border-black bg-black text-white"
-                    : "border-black/10 bg-neutral-50 text-black"
-                } p-6 sm:p-7 lg:p-8 flex flex-col justify-between editorial-card`}
-              >
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`font-display text-4xl sm:text-5xl font-black tracking-tight ${
-                        isDark ? "text-[#E5FF45]" : "text-black"
-                      }`}
-                    >
-                      {step.num}
-                    </span>
-                    <span
-                      className={`rounded-full px-3 py-0.5 font-mono text-[10px] sm:text-[11px] font-black ${
-                        isDark ? "bg-[#E5FF45] text-black" : "bg-black text-white"
-                      }`}
-                    >
-                      {step.badge}
-                    </span>
-                  </div>
+        {/* ========================================================================= */}
+        {/* 3 STEPS GRID */}
+        {/* ========================================================================= */}
+        <div className="relative w-full">
 
-                  <div
-                    className={`mt-4 sm:mt-6 flex items-center gap-2 font-mono text-[11px] sm:text-xs font-black tracking-widest ${
-                      isDark ? "text-neutral-400" : "text-neutral-500"
-                    }`}
-                  >
-                    <Icon className="h-4 w-4 text-[#E5FF45]" />
-                    <span>[ {step.tag} ]</span>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-7 items-stretch">
+            {/* --------------------------------------------------------------------- */}
+            {/* CARD 01: Find Your Match (Amber / Matchmaking Theme) */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="step-card rounded-[24px] sm:rounded-[28px] border border-zinc-800/90 bg-[#090b10] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:border-zinc-700 transition-all duration-300">
+              <div className="pointer-events-none absolute -top-20 -left-20 w-44 h-44 rounded-full bg-amber-500/10 blur-[70px]" />
 
-                  <h3
-                    className={`mt-2 sm:mt-3 font-display text-xl sm:text-2xl font-black uppercase tracking-tight ${
-                      isDark ? "text-white" : "text-black"
-                    }`}
-                  >
-                    {step.title}
-                  </h3>
-
-                  <p
-                    className={`mt-2 sm:mt-3 text-xs sm:text-sm font-medium leading-relaxed ${
-                      isDark ? "text-neutral-300" : "text-neutral-600"
-                    }`}
-                  >
-                    {step.desc}
-                  </p>
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    01
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-[#06080c] text-zinc-300 font-mono text-[11px] font-medium">
+                    <Clock className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Latency &lt; 20ms</span>
+                  </span>
                 </div>
 
-                <div className="hidden sm:block mt-6">
-                  {step.visual}
+                {/* Icon in Amber glass container */}
+                <div className="w-12 h-12 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center justify-center text-amber-400 mt-5 shadow-sm">
+                  <Search className="w-5 h-5" />
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-4">
+                  Find Your Match
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mt-2 font-normal">
+                  Queue into 1v1 ranked or casual battles. Our dynamic MMR algorithm matches you
+                  with rival developers within 50 ELO points in seconds.
+                </p>
+              </div>
+
+              {/* Bottom Widget: Matchmaking Radar */}
+              <div className="mt-6 rounded-2xl bg-[#06080c] border border-zinc-800/90 p-4 shadow-lg">
+                <div className="text-xs font-mono text-zinc-400 mb-2.5">Searching...</div>
+                <div className="flex items-center justify-between">
+                  {/* Overlapping Avatars */}
+                  <div className="flex items-center -space-x-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80"
+                      alt="Player 1"
+                      className="w-7 h-7 rounded-full object-cover ring-2 ring-emerald-500"
+                    />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80"
+                      alt="Player 2"
+                      className="w-7 h-7 rounded-full object-cover ring-2 ring-blue-500"
+                    />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=80&auto=format&fit=crop&q=80"
+                      alt="Player 3"
+                      className="w-7 h-7 rounded-full object-cover ring-2 ring-amber-500"
+                    />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&auto=format&fit=crop&q=80"
+                      alt="Player 4"
+                      className="w-7 h-7 rounded-full object-cover ring-2 ring-rose-500"
+                    />
+                  </div>
+
+                  {/* Region & Radar pulse */}
+                  <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                    <span>Region: US-East</span>
+                    <span className="relative flex h-3.5 w-3.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-3.5 w-3.5 border-2 border-amber-500 bg-transparent" />
+                    </span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            </div>
+
+            {/* --------------------------------------------------------------------- */}
+            {/* CARD 02: Write Your Code (Hero Focus Card - CodeArena Volt / Emerald) */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="step-card rounded-[24px] sm:rounded-[28px] border-2 border-zinc-700 hover:border-[#E5FF45]/60 bg-[#090b10] p-5 sm:p-7 flex flex-col justify-between shadow-[0_0_30px_rgba(229,255,69,0.08)] relative overflow-hidden group transition-all duration-300">
+              <div className="pointer-events-none absolute -top-24 -right-24 w-52 h-52 rounded-full bg-[#E5FF45]/10 blur-[80px]" />
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    02
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-300 font-mono text-[11px] font-bold shadow-xs">
+                    <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
+                    <span>Live Telemetry</span>
+                  </span>
+                </div>
+
+                {/* Icon in Volt/Lime glass container */}
+                <div className="w-12 h-12 rounded-2xl bg-[#E5FF45]/10 border border-[#E5FF45]/30 flex items-center justify-center text-[#E5FF45] mt-5 font-mono font-bold text-lg shadow-sm">
+                  &lt;/&gt;
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-4">
+                  Write Your Code
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mt-2 font-normal">
+                  Battle in real-time with zero-latency compilation, isolated secure Docker
+                  sandboxes, instant unit-test evaluation, and live rival telemetry.
+                </p>
+              </div>
+
+              {/* Bottom Widget: Execution Ready + Test Suites */}
+              <div className="mt-6 rounded-2xl bg-[#06080c] border border-zinc-800/90 p-4 shadow-lg font-mono text-xs">
+                <div className="flex items-center justify-between border-b border-zinc-800/80 pb-2 mb-2.5 text-[11px]">
+                  <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Execution Ready
+                  </span>
+                  <span className="text-zinc-500">Sandbox: Docker</span>
+                </div>
+                <div className="space-y-1.5 text-[11px]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-300">Test Suite #1</span>
+                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Passed
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-300">Test Suite #2</span>
+                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Passed
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-zinc-300">Edge Cases</span>
+                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Passed
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* --------------------------------------------------------------------- */}
+            {/* CARD 03: Climb the Rank (Cyan / Leaderboard Theme) */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="step-card rounded-[24px] sm:rounded-[28px] border border-zinc-800/90 bg-[#090b10] p-5 sm:p-7 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:border-zinc-700 transition-all duration-300">
+              <div className="pointer-events-none absolute -top-20 -right-20 w-44 h-44 rounded-full bg-cyan-500/10 blur-[70px]" />
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    03
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-[#06080c] text-zinc-300 font-mono text-[11px] font-medium">
+                    <Trophy className="w-3.5 h-3.5 text-[#E5FF45]" />
+                    <span>+25 ELO / Win</span>
+                  </span>
+                </div>
+
+                {/* Icon in Cyan glass container */}
+                <div className="w-12 h-12 rounded-2xl bg-cyan-950/40 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mt-5 shadow-sm">
+                  <BarChart3 className="w-5 h-5" />
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-4">
+                  Climb the Rank
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mt-2 font-normal">
+                  Earn XP on every win, unlock exclusive arcade developer cosmetics, upgrade your
+                  league from Bronze to Grandmaster, and dominate.
+                </p>
+              </div>
+
+              {/* Bottom Widget: Current Rank Diamond League */}
+              <div className="mt-6 rounded-2xl bg-[#06080c] border border-zinc-800/90 p-4 shadow-lg flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-950/60 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-sm">
+                    <Crown className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-mono text-zinc-500 uppercase">Current Rank</div>
+                    <div className="text-sm font-bold text-white tracking-tight">Diamond League</div>
+                  </div>
+                </div>
+
+                <ChevronRight className="w-5 h-5 text-zinc-500" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -70,7 +70,7 @@ export function LeaderboardTable({
   return (
     <div className="rounded-3xl border-2 border-black bg-white p-5 sm:p-7 brutal-shadow space-y-6">
       {/* 1. Filter and Search Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-black/10">
+      <div className="relative z-20 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-black/10">
         {/* Tier Buttons */}
         <div className="flex flex-wrap items-center gap-1.5">
           {["ALL", "GRANDMASTER", "MASTER", "DIAMOND", "PLATINUM"].map((tier) => (

@@ -7,31 +7,27 @@ import { Intro } from "@/components/landing/Intro";
 import { BattleVisual } from "@/components/landing/BattleVisual";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { MatchTypes } from "@/components/landing/MatchTypes";
-import { Progression } from "@/components/landing/Progression";
 import { Features } from "@/components/landing/Features";
-import { Community } from "@/components/landing/Community";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 
 export default function LandingPage() {
   return (
     <SmoothScrollProvider>
-      <div className="relative min-h-screen bg-white text-black overflow-x-hidden selection:bg-[#E5FF45] selection:text-black">
+      <div className="relative min-h-screen bg-[#060709] text-white overflow-x-hidden selection:bg-white selection:text-black">
         {/* Sticky Funky Navbar */}
         <Navbar />
 
         {/* Main Landing Experience */}
-        <main id="main-content" className="pt-20 lg:pt-24">
+        <main id="main-content">
           {/* 1. Hero Section */}
           <Hero />
 
           {/* 2. Marquee Ticker */}
           <Marquee />
 
-          {/* 3. What is CodeArena? (Editorial Intro - Desktop/Tablet) */}
-          <div className="hidden md:block">
-            <Intro />
-          </div>
+          {/* 3. What We've Built (Features Showcase) */}
+          <Intro />
 
           {/* 4. Live Coding Battle Visual Showcase (Core Demo) */}
           <BattleVisual />
@@ -42,20 +38,10 @@ export default function LandingPage() {
           {/* 6. Match & Duel Modes */}
           <MatchTypes />
 
-          {/* 7. XP & RPG Progression (Desktop/Tablet) */}
-          <div className="hidden md:block">
-            <Progression />
-          </div>
 
-          {/* 8. Why CodeArena / Platform Features (Desktop/Tablet) */}
-          <div className="hidden md:block">
-            <Features />
-          </div>
+          {/* 7. Platform Specs & Features */}
+          <Features />
 
-          {/* 9. Community & Rivals (Desktop/Tablet) */}
-          <div className="hidden md:block">
-            <Community />
-          </div>
 
           {/* 10. Final Action CTA */}
           <FinalCTA />

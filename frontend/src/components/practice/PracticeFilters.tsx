@@ -48,8 +48,8 @@ export function PracticeFilters({
   };
 
   return (
-    <div className="rounded-2xl border-2 border-black bg-white p-3.5 brutal-shadow-sm space-y-3">
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+    <div className="relative z-30 rounded-2xl border-2 border-black bg-white p-3.5 brutal-shadow-sm space-y-3">
+      <div className="relative z-20 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
         {/* Search Input */}
         <div className="relative flex-1">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -109,7 +109,7 @@ export function PracticeFilters({
       </div>
 
       {/* Row 2: Difficulty Filter Bar & Results Count */}
-      <div className="flex items-center justify-between pt-2 border-t border-black/10 text-xs">
+      <div className="relative z-10 flex items-center justify-between pt-2 border-t border-black/10 text-xs">
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="font-mono text-[10px] font-bold text-neutral-400 uppercase mr-1">
             DIFFICULTY:

@@ -24,7 +24,7 @@ export function Features() {
       if (prefersReduced) return;
 
       gsap.fromTo(
-        ".feature-row",
+        ".feature-card",
         { y: 30, opacity: 0 },
         {
           scrollTrigger: {
@@ -34,7 +34,7 @@ export function Features() {
           },
           y: 0,
           opacity: 1,
-          stagger: 0.1,
+          stagger: 0.08,
           duration: 0.6,
           ease: "power2.out",
           clearProps: "transform,opacity",
@@ -48,111 +48,147 @@ export function Features() {
   const featureItems = [
     {
       num: "01",
-      title: "REAL-TIME MULTIPLAYER PVP",
+      title: "Real-Time Multiplayer PVP",
       desc: "Synchronous coding duels powered by sub-20ms WebSocket pipelines. Watch rival test progression live.",
-      tag: "SYNCHRONOUS",
+      tag: "SUB-20MS SYNC",
       icon: Swords,
-      color: "#2563EB",
-      bg: "#EAF2FF",
+      accentColor: "text-amber-400",
+      accentBg: "bg-amber-950/40 border-amber-500/30",
+      glowColor: "bg-amber-500/10",
     },
     {
       num: "02",
-      title: "SKILL-BASED MMR MATCHMAKING",
+      title: "Skill-Based MMR Matchmaking",
       desc: "Glicko-2 rating system ensures every match is balanced, competitive, and skill-advancing.",
       tag: "FAIR PLAY",
       icon: ShieldCheck,
-      color: "#34A853",
-      bg: "#E6F4EA",
+      accentColor: "text-emerald-400",
+      accentBg: "bg-emerald-950/40 border-emerald-500/30",
+      glowColor: "bg-emerald-500/10",
     },
     {
       num: "03",
-      title: "SANDBOX ISOLATED EXECUTION",
+      title: "Sandbox Isolated Execution",
       desc: "Zero-latency containerized code execution for TypeScript, Python, C++, Go, and Rust.",
       tag: "0-LATENCY",
       icon: Cpu,
-      color: "#EA4335",
-      bg: "#FCE8E6",
+      accentColor: "text-cyan-400",
+      accentBg: "bg-cyan-950/40 border-cyan-500/30",
+      glowColor: "bg-cyan-500/10",
     },
     {
       num: "04",
-      title: "PERFORMANCE & MEMORY ANALYTICS",
+      title: "Performance & Memory Analytics",
       desc: "Deep algorithmic complexity telemetry comparing your time and space efficiency against the global curve.",
       tag: "TELEMETRY",
       icon: LineChart,
-      color: "#7C3AED",
-      bg: "#F3E8FF",
+      accentColor: "text-purple-400",
+      accentBg: "bg-purple-950/40 border-purple-500/30",
+      glowColor: "bg-purple-500/10",
     },
     {
       num: "05",
-      title: "PRIVATE CLAN & SQUAD ROOMS",
+      title: "Private Clan & Squad Rooms",
       desc: "Host company hackathons, collegiate competitions, or weekly engineering team showdowns with custom rules.",
       tag: "CUSTOM LOBBY",
       icon: Lock,
-      color: "#FBBC05",
-      bg: "#FFF8E7",
+      accentColor: "text-rose-400",
+      accentBg: "bg-rose-950/40 border-rose-500/30",
+      glowColor: "bg-rose-500/10",
     },
     {
       num: "06",
-      title: "RPG XP & ACHIEVEMENT COSMETICS",
+      title: "RPG XP & Achievement Cosmetics",
       desc: "Unlock custom terminal syntax themes, animated badges, victory banners, and profile titles as you level up.",
       tag: "REWARDS",
       icon: Sparkles,
-      color: "#2563EB",
-      bg: "#EAF2FF",
+      accentColor: "text-[#E5FF45]",
+      accentBg: "bg-[#E5FF45]/10 border-[#E5FF45]/30",
+      glowColor: "bg-[#E5FF45]/10",
     },
   ];
 
   return (
     <section
-      id="features"
+      id="platform-features"
       ref={containerRef}
-      className="relative w-full border-b border-black/10 bg-white py-12 sm:py-16 lg:py-24 overflow-hidden"
+      className="relative w-full border-b border-zinc-900/80 bg-[#060709] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden select-none scroll-mt-20"
     >
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col items-start max-w-3xl mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-black leading-[0.98]">
-            MORE THAN <br />
-            <span className="text-black bg-[#E5FF45] px-3 py-0.5 rounded-full inline-block mt-1 sm:mt-2">
-              A CODE EDITOR.
+      {/* Background Subtle Radial Glow */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] rounded-full blur-[180px] opacity-15"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(229, 255, 69, 0.12) 0%, rgba(0, 240, 255, 0.05) 50%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-[1320px] w-full flex flex-col items-center">
+        {/* ========================================================================= */}
+        {/* SECTION HEADER - Consistent CodeArena Theme */}
+        {/* ========================================================================= */}
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-16 px-2">
+          {/* Top Pill Badge */}
+          <div className="inline-flex items-center justify-center px-3.5 py-1 rounded-full border border-zinc-800 bg-[#0c0e14]/90 mb-3 shadow-xs">
+            <span className="text-[10px] sm:text-[11px] font-mono font-semibold tracking-widest text-[#E5FF45] uppercase">
+              PLATFORM SPECS
             </span>
+          </div>
+
+          {/* Main Title - Single Line with Grey Accent (Title Case) */}
+          <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight whitespace-nowrap">
+            More Than <span className="text-zinc-500">A Code Editor</span>
           </h2>
 
-          <p className="mt-3 sm:mt-5 text-sm sm:text-lg text-neutral-600 font-medium leading-relaxed">
+          {/* Subtitle */}
+          <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed mt-3 font-normal max-w-xl text-center">
             Engineered from the ground up for speed, competition, and collaborative developer growth.
           </p>
         </div>
 
-        {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        {/* ========================================================================= */}
+        {/* 6 FEATURES GRID (3x2 Dark Luxury Bento) */}
+        {/* ========================================================================= */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
           {featureItems.map((item) => {
             const Icon = item.icon;
+
             return (
               <div
                 key={item.num}
-                className="feature-row rounded-3xl border border-black/10 bg-neutral-50 p-6 sm:p-7 flex flex-col justify-between editorial-card"
+                className="feature-card rounded-[22px] sm:rounded-[26px] border border-zinc-800/90 bg-[#090b10] p-5 sm:p-6 flex flex-col justify-between shadow-xl relative overflow-hidden group hover:border-zinc-700 transition-all duration-300"
               >
+                {/* Glow accent */}
+                <div
+                  className={`pointer-events-none absolute -top-20 -right-20 w-44 h-44 rounded-full ${item.glowColor} blur-[70px]`}
+                />
+
                 <div>
+                  {/* Top Row: Icon + Number & Tag */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-black text-[#E5FF45]">
-                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <div
+                      className={`w-10 h-10 rounded-xl border flex items-center justify-center ${item.accentBg} ${item.accentColor}`}
+                    >
+                      <Icon className="w-5 h-5" />
                     </div>
 
-                    <span className="rounded-full bg-black text-white px-3 py-0.5 font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider">
-                      {item.tag}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold text-zinc-500">
+                        {item.num}
+                      </span>
+                      <span className="rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold border border-zinc-800 bg-[#06080c] text-zinc-300 uppercase">
+                        {item.tag}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-neutral-400">
-                      {item.num}.
-                    </span>
-                    <h3 className="font-display text-lg sm:text-xl font-black uppercase tracking-tight text-black">
-                      {item.title}
-                    </h3>
-                  </div>
+                  {/* Title */}
+                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mt-2 group-hover:text-white transition-colors">
+                    {item.title}
+                  </h3>
 
-                  <p className="mt-2 text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
+                  {/* Description */}
+                  <p className="mt-2 text-xs sm:text-sm text-zinc-400 font-normal leading-relaxed">
                     {item.desc}
                   </p>
                 </div>

@@ -1,165 +1,165 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { Swords, Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, Code2 } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
-import { SoundToggle } from "@/components/sound/SoundToggle";
-
-const NAV_LINKS = [
-  { name: "Arena", href: "#arena-visual", id: "arena-visual" },
-  { name: "Practice", href: "#match-types", id: "match-types" },
-  { name: "How It Works", href: "#how-it-works", id: "how-it-works" },
-  { name: "Leaderboard", href: "#community", id: "community" },
-];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeTab, setActiveTab] = useState("Home");
   const { playClick, playHover, playClash } = useSoundEffects();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
+  const navItems = [
+    { name: "Home", href: "#hero" },
+    { name: "Live Arena", href: "#arena-visual" },
+    { name: "How It Works", href: "#how-it-works" },
+    { name: "Battle Modes", href: "#match-types" },
+    { name: "Features", href: "#platform-features" },
+  ];
 
-      for (const link of NAV_LINKS) {
-        const section = document.getElementById(link.id);
-        if (section) {
-          const top = section.offsetTop;
-          const height = section.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(link.id);
-            return;
+  // Scroll spy to highlight active nav tab as user scrolls through sections
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 160;
+      for (let i = navItems.length - 1; i >= 0; i--) {
+        const item = navItems[i];
+        const el = document.querySelector(item.href);
+        if (el) {
+          const top = (el as HTMLElement).offsetTop;
+          if (scrollPos >= top) {
+            setActiveTab(item.name);
+            break;
           }
         }
-      }
-      if (window.scrollY < 300) {
-        setActiveSection("");
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] w-full border-b border-black/10 bg-white/95 backdrop-blur-md shadow-xs">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-3.5">
-        {/* Left: Brand Logo */}
+    <header className="fixed top-0 left-0 right-0 z-[100] w-full bg-[#060709]/80 backdrop-blur-md border-b border-zinc-900/60 py-4 px-4 sm:px-8">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between">
+        {/* Left: Brand Logo matching screenshot (< > CODEARENA) */}
         <Link
           href="/"
           onClick={() => playClash()}
           onMouseEnter={() => playHover()}
-          className="group flex items-center gap-2.5 transition-transform hover:scale-[1.02] shrink-0"
+          className="flex items-center gap-2 group shrink-0"
           aria-label="CodeArena Home"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-[#E5FF45] group-hover:bg-[#E5FF45] group-hover:text-black transition-colors">
-            <Swords className="h-4 w-4" />
+          <div className="flex items-center justify-center text-white group-hover:scale-105 transition-transform">
+            <span className="font-mono text-xl sm:text-2xl font-bold tracking-tighter text-zinc-200">
+              &lt;&nbsp;&gt;
+            </span>
           </div>
-          <div className="flex items-center gap-1 font-display text-xl sm:text-2xl font-black tracking-tight text-black">
-            <span>CODE</span>
-            <span className="text-black underline decoration-[#E5FF45] decoration-2">ARENA</span>
-          </div>
+          <span className="font-display text-base sm:text-lg font-extrabold tracking-wider text-white uppercase">
+            CODEARENA
+          </span>
         </Link>
 
-        {/* Center: Main Navigation Links with Active Indicator */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-          {NAV_LINKS.map((link) => {
-            const isActive = activeSection === link.id;
+        {/* Center: Nav links pill group matching screenshot */}
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-transparent py-1 px-1 lg:px-2">
+          {navItems.map((item) => {
+            const isActive = activeTab === item.name;
             return (
               <a
-                key={link.name}
-                href={link.href}
-                onClick={() => playClick()}
+                key={item.name}
+                href={item.href}
+                onClick={() => {
+                  playClick();
+                  setActiveTab(item.name);
+                }}
                 onMouseEnter={() => playHover()}
-                className={`relative whitespace-nowrap px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
+                className={`text-xs lg:text-sm font-medium px-2.5 lg:px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap ${
                   isActive
-                    ? "bg-black text-white shadow-xs"
-                    : "text-neutral-600 hover:text-black hover:bg-neutral-100"
+                    ? "bg-white text-black font-semibold shadow-sm"
+                    : "text-zinc-400 hover:text-white"
                 }`}
               >
-                <span>{link.name}</span>
-                {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-[#E5FF45]" />
-                )}
+                {item.name}
               </a>
             );
           })}
         </nav>
 
-        {/* Right: Sound Toggle + Enter Arena CTA (Login button removed) */}
+        {/* Right: Action Buttons matching screenshot (Log In & Join Arena) */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
-          <SoundToggle />
+          <Link
+            href="/login"
+            onClick={() => playClick()}
+            onMouseEnter={() => playHover()}
+            className="text-xs sm:text-sm font-medium text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700 bg-zinc-900/40 hover:bg-zinc-900/90 px-4 sm:px-5 py-2 rounded-full transition-all"
+          >
+            Log In
+          </Link>
 
           <Link
             href="/login"
             onClick={() => playClash()}
             onMouseEnter={() => playHover()}
-            className="group inline-flex items-center gap-1.5 rounded-lg bg-[#E5FF45] border border-black/20 px-4 py-2 font-display text-xs font-black text-black hover:bg-[#DAF428] transition-all brutal-shadow-sm"
+            className="text-xs sm:text-sm font-semibold text-black bg-white hover:bg-zinc-200 px-5 sm:px-6 py-2 rounded-full shadow-md transition-all active:scale-95"
           >
-            <span>ENTER ARENA</span>
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            Join Arena
           </Link>
         </div>
 
-        {/* Mobile Hamburger & Sound Toggle */}
+        {/* Mobile Hamburger Toggle */}
         <div className="flex md:hidden items-center gap-2">
-          <SoundToggle className="p-1.5" />
           <button
             type="button"
             onClick={() => {
               playClick();
               setIsOpen(!isOpen);
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-black/20 bg-white text-black focus:outline-none"
-            aria-expanded={isOpen}
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white focus:outline-none"
             aria-label="Toggle navigation menu"
           >
-            {isOpen ? <X className="h-4 w-4 text-[#FF5030]" /> : <Menu className="h-4 w-4" />}
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer Menu */}
       {isOpen && (
-        <div className="border-t border-black/10 bg-white px-4 py-4 md:hidden shadow-xl">
-          <div className="flex flex-col gap-2">
-            {NAV_LINKS.map((link) => {
-              const isActive = activeSection === link.id;
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => {
-                    playClick();
-                    setIsOpen(false);
-                  }}
-                  className={`flex items-center justify-between rounded-lg p-3 text-xs font-black uppercase tracking-wider transition-all ${
-                    isActive
-                      ? "bg-black text-white"
-                      : "bg-neutral-50 text-black hover:bg-neutral-100"
-                  }`}
-                >
-                  <span>{link.name}</span>
-                  <ArrowUpRight className="h-4 w-4 opacity-50" />
-                </a>
-              );
-            })}
-
-            <div className="mt-2 pt-3 border-t border-black/10 flex flex-col gap-2">
-              <Link
-                href="/login"
-                onClick={() => {
-                  playClash();
-                  setIsOpen(false);
-                }}
-                className="flex items-center justify-center gap-2 rounded-lg border border-black/20 bg-[#E5FF45] py-3 text-center font-display text-xs font-black uppercase tracking-wider text-black brutal-shadow-sm"
-              >
-                <span>ENTER THE ARENA NOW</span>
-                <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </div>
+        <div className="md:hidden mt-3 pt-3 border-t border-zinc-800/80 bg-[#090b0e] rounded-2xl p-4 flex flex-col gap-2 shadow-2xl">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={() => {
+                playClick();
+                setActiveTab(item.name);
+                setIsOpen(false);
+              }}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === item.name
+                  ? "bg-white text-black font-semibold"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+              }`}
+            >
+              {item.name}
+            </a>
+          ))}
+          <div className="mt-2 pt-3 border-t border-zinc-800 flex flex-col gap-2">
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="text-center py-2.5 rounded-full border border-zinc-800 text-sm font-medium text-zinc-200 hover:bg-zinc-900"
+            >
+              Log In
+            </Link>
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="text-center py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 shadow-md"
+            >
+              Join Arena
+            </Link>
           </div>
         </div>
       )}

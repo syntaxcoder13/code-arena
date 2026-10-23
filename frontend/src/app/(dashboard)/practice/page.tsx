@@ -91,18 +91,18 @@ function PracticeContent() {
       tl.fromTo(
         ".practice-entrance-header",
         { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.3 }
+        { opacity: 1, y: 0, duration: 0.3, clearProps: "transform" }
       )
         .fromTo(
           ".practice-entrance-filters",
           { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.25 },
+          { opacity: 1, y: 0, duration: 0.25, clearProps: "transform" },
           "-=0.1"
         )
         .fromTo(
           ".practice-entrance-grid",
           { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.3 },
+          { opacity: 1, y: 0, duration: 0.3, clearProps: "transform" },
           "-=0.1"
         );
     }, containerRef);
@@ -251,7 +251,7 @@ function PracticeContent() {
       ) : (
         <>
           {/* Streamlined Filter Bar */}
-          <div className="practice-entrance-filters">
+          <div className="practice-entrance-filters relative z-30">
             <PracticeFilters
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
@@ -266,7 +266,7 @@ function PracticeContent() {
           </div>
 
           {/* Problem Catalog Grid */}
-          <div className="practice-entrance-grid">
+          <div className="practice-entrance-grid relative z-10">
             {filteredProblems.length === 0 ? (
               <div className="rounded-2xl border-2 border-black bg-white p-10 text-center brutal-shadow-sm space-y-3">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border-2 border-black bg-neutral-100">

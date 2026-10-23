@@ -53,7 +53,7 @@ export function ProfileDropdown({ onOpenFeedback, onOpenUnavailable }: ProfileDr
   const initials = getInitials(displayName);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className={`relative ${isOpen ? "z-50" : "z-10"}`} ref={dropdownRef}>
       <button
         type="button"
         onClick={toggleDropdown}

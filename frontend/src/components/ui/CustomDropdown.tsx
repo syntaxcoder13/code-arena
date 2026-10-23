@@ -17,6 +17,7 @@ interface CustomDropdownProps {
   prefixLabel?: string;
   className?: string;
   minWidth?: string;
+  align?: "left" | "right";
 }
 
 export function CustomDropdown({
@@ -26,6 +27,7 @@ export function CustomDropdown({
   prefixLabel,
   className = "",
   minWidth = "min-w-[160px]",
+  align = "left",
 }: CustomDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -74,7 +76,10 @@ export function CustomDropdown({
   };
 
   return (
-    <div className={`relative inline-block text-left ${className}`} ref={dropdownRef}>
+    <div
+      className={`relative inline-block text-left ${isOpen ? "z-50" : "z-10"} ${className}`}
+      ref={dropdownRef}
+    >
       {/* Trigger Button */}
       <button
         type="button"
@@ -104,7 +109,7 @@ export function CustomDropdown({
       {isOpen && (
         <div
           role="listbox"
-          className={`absolute right-0 sm:left-0 z-50 mt-1.5 ${minWidth} rounded-xl border-2 border-black bg-white p-1.5 brutal-shadow animate-in fade-in zoom-in-95 duration-100 max-h-60 overflow-y-auto custom-code-scroll`}
+          className={`absolute ${align === "right" ? "right-0" : "left-0"} z-50 mt-1.5 ${minWidth} rounded-xl border-2 border-black bg-white p-1.5 brutal-shadow animate-in fade-in zoom-in-95 duration-100 max-h-60 overflow-y-auto custom-code-scroll`}
         >
           {options.map((option) => {
             const isSelected = option.value === value;

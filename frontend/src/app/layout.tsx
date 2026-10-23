@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Space_Grotesk, Caveat, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Space_Grotesk, Caveat, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -13,6 +13,13 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  style: ["normal", "italic"],
 });
 
 const caveat = Caveat({
@@ -66,7 +73,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${caveat.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${caveat.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body

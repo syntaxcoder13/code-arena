@@ -31,14 +31,14 @@ export function GithubAuthButton({
       onClick={handleClick}
       onMouseEnter={() => !disabled && !isLoading && playHover()}
       disabled={disabled || isLoading}
-      aria-label="Continue with GitHub"
-      className={`group relative flex w-full items-center justify-center gap-3.5 rounded-xl border-[2.5px] border-black bg-[#121316] px-5 py-3.5 font-display text-sm sm:text-base font-black text-white brutal-btn hover:bg-black transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none active:scale-[0.99] ${className}`}
+      aria-label="Continue With GitHub"
+      className={`group relative flex w-full items-center justify-center gap-3 rounded-xl bg-white hover:bg-zinc-200 text-black font-bold text-sm sm:text-base px-6 py-3.5 shadow-xl shadow-white/5 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none active:scale-[0.98] ${className}`}
     >
       {isLoading ? (
-        <Loader2 className="h-5 w-5 animate-spin text-white" />
+        <Loader2 className="h-5 w-5 animate-spin text-black" />
       ) : (
         <svg
-          className="h-5 w-5 shrink-0 fill-current text-white transition-transform group-hover:scale-110"
+          className="h-5 w-5 shrink-0 fill-current text-black transition-transform group-hover:scale-110"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
@@ -50,8 +50,9 @@ export function GithubAuthButton({
         </svg>
       )}
       <span className="tracking-tight">
-        {isLoading ? "Connecting to GitHub..." : "Continue with GitHub"}
+        {isLoading ? "Connecting To GitHub..." : "Continue With GitHub"}
       </span>
     </button>
   );
 }
+
