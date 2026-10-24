@@ -117,11 +117,13 @@ export default function LoginPage() {
       </main>
 
       {/* Bottom Subtle Status Footer */}
-      <footer className="shrink-0 w-full py-3 border-t border-zinc-900/60 bg-[#060709] text-center font-mono text-[11px] text-zinc-400 z-10">
-        <div className="flex items-center justify-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>CodeArena Auth Engines Operational</span>
-          <span className="text-zinc-700">|</span>
+      <footer className="shrink-0 w-full py-3 px-4 border-t border-zinc-900/60 bg-[#060709] text-center font-mono text-[10px] sm:text-[11px] text-zinc-400 z-10">
+        <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+          <span className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span>CodeArena Auth Engines Operational</span>
+          </span>
+          <span className="text-zinc-700 hidden sm:inline">|</span>
           <span>© 2026 CodeArena Inc.</span>
         </div>
       </footer>

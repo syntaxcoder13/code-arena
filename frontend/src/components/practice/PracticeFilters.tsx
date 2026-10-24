@@ -86,7 +86,7 @@ export function PracticeFilters({
         />
 
         {/* Status Filter */}
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex flex-wrap items-center gap-1.5">
           {(["ALL", "UNSOLVED", "SOLVED", "BOOKMARKED"] as StatusFilter[]).map((status) => {
             const isActive = selectedStatus === status;
             return (
@@ -95,7 +95,7 @@ export function PracticeFilters({
                 type="button"
                 onClick={() => handleStatusClick(status)}
                 onMouseEnter={() => playHover()}
-                className={`px-3 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full font-mono text-[10px] font-bold uppercase transition-all cursor-pointer ${
                   isActive
                     ? "bg-white text-black border border-white shadow-xs"
                     : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-white"
@@ -109,7 +109,7 @@ export function PracticeFilters({
       </div>
 
       {/* Row 2: Difficulty Filter Bar & Results Count */}
-      <div className="relative z-10 flex items-center justify-between pt-2 border-t border-zinc-800 text-xs">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-zinc-800 text-xs">
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="font-mono text-[10px] font-medium text-zinc-500 uppercase mr-1">
             DIFFICULTY:

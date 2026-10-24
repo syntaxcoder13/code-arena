@@ -180,7 +180,7 @@ export function ArenaWorkspace({
       {/* ======================================================== */}
       {/* LEFT COLUMN: Problem Statement / Telemetry / Rival Dossier (5 cols) */}
       {/* ======================================================== */}
-      <div className="lg:col-span-5 flex flex-col h-[750px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
+      <div className="lg:col-span-5 flex flex-col h-[460px] lg:h-[750px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
         {/* Left Tabs Header */}
         <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 p-1.5 shrink-0">
           <div className="flex items-center gap-1 font-mono text-xs font-semibold uppercase">
@@ -423,7 +423,7 @@ export function ArenaWorkspace({
       {/* ======================================================== */}
       {/* RIGHT COLUMN: Monaco Editor & Interactive Test Matrix (7 cols) */}
       {/* ======================================================== */}
-      <div className="lg:col-span-7 flex flex-col h-[750px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
+      <div className="lg:col-span-7 flex flex-col h-[580px] lg:h-[750px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
         {/* Editor Controls Bar */}
         <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 p-2 sm:p-2.5 px-3 shrink-0">
           <div className="flex items-center gap-2">
@@ -481,7 +481,7 @@ export function ArenaWorkspace({
         {/* Bottom Test Matrix & Duel Action Controls */}
         <div className="border-t border-zinc-800 bg-zinc-950/70 flex flex-col shrink-0 max-h-[300px]">
           {/* Subtabs for tests */}
-          <div className="flex items-center justify-between border-b border-zinc-800/80 bg-zinc-900/40 px-3 py-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800/80 bg-zinc-900/40 px-3 py-1.5">
             <div className="flex items-center gap-1.5 font-mono text-xs font-semibold">
               <button
                 type="button"
@@ -634,7 +634,7 @@ export function ArenaWorkspace({
           </div>
 
           {/* Action Footer: Run Sample vs Submit Duel */}
-          <div className="flex items-center justify-between border-t border-zinc-800 bg-zinc-900/50 p-2.5 sm:p-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-zinc-800 bg-zinc-900/50 p-2.5 sm:p-3">
             <button
               type="button"
               disabled={isEvaluating || isSubmitting}

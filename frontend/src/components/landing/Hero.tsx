@@ -115,37 +115,37 @@ export function Hero() {
             </span>
           </div>
 
-          {/* Desktop Headline (Single Line) */}
-          <h1 className="hidden md:block text-5xl md:text-6xl lg:text-7xl xl:text-[76px] font-extrabold tracking-tight text-white leading-[1.08] mb-4 whitespace-nowrap">
+          {/* Desktop Headline (Single Line when wide enough) */}
+          <h1 className="hidden md:block text-4xl md:text-5xl lg:text-6xl xl:text-[74px] font-extrabold tracking-tight text-white leading-[1.08] mb-4 xl:whitespace-nowrap">
             Code. Compete. Conquer.
           </h1>
 
-          {/* Mobile Headline (Exact 3 Lines as in mobile screenshot) */}
-          <h1 className="md:hidden text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.12] mb-3 text-center">
+          {/* Mobile Headline (Clean centered 3-line headline with fluid font sizing) */}
+          <h1 className="md:hidden text-3xl xs:text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.15] mb-3 text-center">
             Code.<br />
             Compete.<br />
             Conquer.
           </h1>
 
           {/* Desktop Subtitle */}
-          <p className="hidden md:block text-zinc-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-normal mb-8 sm:mb-9 text-center">
+          <p className="hidden md:block text-zinc-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed font-normal mb-8 sm:mb-9 text-center px-4">
             Challenge developers in real-time coding battles. Prove your skills,
             climb the ranks, and own the arena.
           </p>
 
-          {/* Mobile Subtitle (Centered, exact 3 lines width) */}
-          <p className="md:hidden text-zinc-400 text-[12.5px] max-w-[270px] mx-auto leading-relaxed font-normal mb-6 text-center">
+          {/* Mobile Subtitle (Centered) */}
+          <p className="md:hidden text-zinc-400 text-xs sm:text-sm max-w-[300px] mx-auto leading-relaxed font-normal mb-6 text-center px-2">
             Challenge developers in real-time coding battles. Prove your skills,
             climb the ranks, and own the arena.
           </p>
 
           {/* Desktop Buttons */}
-          <div className="hidden md:flex flex-wrap items-center justify-center gap-6 sm:gap-8 mb-14 sm:mb-16">
+          <div className="hidden md:flex flex-wrap items-center justify-center gap-5 lg:gap-8 mb-12 sm:mb-16">
             <Link
               href="/login"
               onClick={() => playClash()}
               onMouseEnter={() => playHover()}
-              className="group inline-flex items-center gap-3.5 bg-white hover:bg-zinc-200 text-black font-semibold px-6 sm:px-7 py-3 rounded-full text-base shadow-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95"
+              className="group inline-flex items-center gap-3.5 bg-white hover:bg-zinc-200 text-black font-semibold px-6 sm:px-7 py-3 rounded-full text-base shadow-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 whitespace-nowrap"
             >
               <span>Enter The Arena</span>
               <span className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center transition-transform group-hover:translate-x-0.5">
@@ -157,18 +157,18 @@ export function Hero() {
               href="#battle-visual"
               onClick={() => playClick()}
               onMouseEnter={() => playHover()}
-              className="text-zinc-300 hover:text-white text-base font-medium underline underline-offset-8 decoration-zinc-700 hover:decoration-white transition-all duration-200"
+              className="text-zinc-300 hover:text-white text-base font-medium underline underline-offset-8 decoration-zinc-700 hover:decoration-white transition-all duration-200 whitespace-nowrap"
             >
               Explore Battles
             </Link>
           </div>
 
-          {/* Mobile Buttons (Centered vertical layout matching screenshot) */}
-          <div className="flex md:hidden flex-col items-center gap-3.5 mb-8 w-full">
+          {/* Mobile Buttons (Centered vertical layout) */}
+          <div className="flex md:hidden flex-col items-center gap-3.5 mb-8 w-full px-4">
             <Link
               href="/login"
               onClick={() => playClash()}
-              className="w-full max-w-[270px] py-3 px-6 rounded-full bg-white text-black font-semibold text-sm flex items-center justify-center gap-3 shadow-xl active:scale-95"
+              className="w-full max-w-[280px] py-3 px-6 rounded-full bg-white text-black font-semibold text-sm flex items-center justify-center gap-3 shadow-xl active:scale-95"
             >
               <span>Enter The Arena</span>
               <span className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center">
@@ -187,10 +187,11 @@ export function Hero() {
         </div>
 
         {/* ========================================================================= */}
-        {/* 2. MOBILE VIEW: EXACT 3 CARDS ONLY (WRITE, BATTLE, EXECUTE) */}
+        {/* ========================================================================= */}
+        {/* 2. MOBILE & TABLET VIEW: 3 FEATURE SHOWCASE CARDS (WRITE, BATTLE, EXECUTE) */}
         {/* ========================================================================= */}
         <div className="w-full lg:hidden flex flex-col items-center">
-          <div className="grid grid-cols-3 gap-2 w-full max-w-[390px] mx-auto items-end px-1">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3.5 w-full max-w-[420px] sm:max-w-[560px] md:max-w-[660px] mx-auto items-end px-1 sm:px-3">
             {/* --- Mobile Card 1: WRITE (Indigo/Purple Dome) --- */}
             <div
               className="flex flex-col rounded-t-full rounded-b-2xl border border-indigo-500/40 overflow-hidden shadow-xl"
@@ -200,21 +201,21 @@ export function Hero() {
               }}
             >
               {/* Dome Header */}
-              <div className="pt-6 pb-2 px-1 flex flex-col items-center justify-center text-center">
-                <div className="w-6 h-6 flex items-center justify-center text-indigo-200 mb-0.5">
-                  <Code2 className="w-5 h-5 stroke-[2.4]" />
+              <div className="pt-5 sm:pt-7 pb-2 px-1 flex flex-col items-center justify-center text-center">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-indigo-200 mb-0.5">
+                  <Code2 className="w-4.5 sm:w-5.5 h-4.5 sm:h-5.5 stroke-[2.4]" />
                 </div>
-                <h3 className="text-[10px] font-extrabold tracking-wider text-white uppercase">
+                <h3 className="text-[10px] sm:text-xs font-extrabold tracking-wider text-white uppercase">
                   WRITE
                 </h3>
-                <p className="text-[7.5px] text-indigo-200/80 mt-0.5 font-medium leading-tight">
+                <p className="text-[7.5px] sm:text-[9.5px] text-indigo-200/80 mt-0.5 font-medium leading-tight">
                   Real code editor
                 </p>
               </div>
 
               {/* Inner Dark Code Box */}
-              <div className="m-1 p-2 bg-[#090c13]/95 rounded-xl border border-white/10 flex flex-col justify-center min-h-[66px]">
-                <div className="font-mono text-[8px] leading-[1.35] text-zinc-300">
+              <div className="m-1 sm:m-1.5 p-2 sm:p-2.5 bg-[#090c13]/95 rounded-xl border border-white/10 flex flex-col justify-center min-h-[66px] sm:min-h-[80px]">
+                <div className="font-mono text-[8px] sm:text-[9.5px] leading-[1.35] text-zinc-300">
                   <div>
                     <span className="text-pink-400 font-semibold">def</span> solve():
                   </div>
@@ -234,36 +235,36 @@ export function Hero() {
               }}
             >
               {/* Dome Header */}
-              <div className="pt-6 pb-2 px-1 flex flex-col items-center justify-center text-center">
-                <div className="w-6 h-6 flex items-center justify-center text-rose-200 mb-0.5">
-                  <Swords className="w-5 h-5 stroke-[2.4]" />
+              <div className="pt-5 sm:pt-7 pb-2 px-1 flex flex-col items-center justify-center text-center">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-rose-200 mb-0.5">
+                  <Swords className="w-4.5 sm:w-5.5 h-4.5 sm:h-5.5 stroke-[2.4]" />
                 </div>
-                <h3 className="text-[10px] font-extrabold tracking-wider text-white uppercase">
+                <h3 className="text-[10px] sm:text-xs font-extrabold tracking-wider text-white uppercase">
                   BATTLE
                 </h3>
-                <p className="text-[7.5px] text-rose-200/80 mt-0.5 font-medium leading-tight">
+                <p className="text-[7.5px] sm:text-[9.5px] text-rose-200/80 mt-0.5 font-medium leading-tight">
                   1v1 in real-time
                 </p>
               </div>
 
               {/* Inner Dark VS Box */}
-              <div className="m-1 p-2 bg-[#090c13]/95 rounded-xl border border-white/10 flex flex-col justify-between gap-1.5 min-h-[66px]">
+              <div className="m-1 sm:m-1.5 p-2 sm:p-2.5 bg-[#090c13]/95 rounded-xl border border-white/10 flex flex-col justify-between gap-1.5 min-h-[66px] sm:min-h-[80px]">
                 {/* 🔴 LIVE Badge */}
                 <div className="flex justify-center">
-                  <span className="bg-rose-950/80 border border-rose-800/60 text-rose-300 text-[7px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="bg-rose-950/80 border border-rose-800/60 text-rose-300 text-[7px] sm:text-[8px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1">
                     <span className="w-1 h-1 rounded-full bg-rose-500 animate-pulse" />
                     LIVE
                   </span>
                 </div>
 
                 {/* Matchup: Blue Avatar VS Pink Avatar */}
-                <div className="flex items-center justify-center gap-1.5">
-                  <div className="w-5 h-5 rounded-full bg-cyan-900/60 border border-cyan-400 text-cyan-200 flex items-center justify-center">
-                    <User className="w-3 h-3 text-cyan-300" />
+                <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-cyan-900/60 border border-cyan-400 text-cyan-200 flex items-center justify-center">
+                    <User className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-cyan-300" />
                   </div>
-                  <span className="text-[7px] font-bold text-zinc-400">VS</span>
-                  <div className="w-5 h-5 rounded-full bg-rose-900/60 border border-rose-400 text-rose-200 flex items-center justify-center">
-                    <User className="w-3 h-3 text-rose-300" />
+                  <span className="text-[7px] sm:text-[8px] font-bold text-zinc-400">VS</span>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-rose-900/60 border border-rose-400 text-rose-200 flex items-center justify-center">
+                    <User className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-rose-300" />
                   </div>
                 </div>
               </div>
@@ -278,41 +279,41 @@ export function Hero() {
               }}
             >
               {/* Dome Header */}
-              <div className="pt-6 pb-2 px-1 flex flex-col items-center justify-center text-center">
-                <div className="w-6 h-6 flex items-center justify-center text-teal-200 mb-0.5">
-                  <Terminal className="w-5 h-5 stroke-[2.4]" />
+              <div className="pt-5 sm:pt-7 pb-2 px-1 flex flex-col items-center justify-center text-center">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-teal-200 mb-0.5">
+                  <Terminal className="w-4.5 sm:w-5.5 h-4.5 sm:h-5.5 stroke-[2.4]" />
                 </div>
-                <h3 className="text-[10px] font-extrabold tracking-wider text-white uppercase">
+                <h3 className="text-[10px] sm:text-xs font-extrabold tracking-wider text-white uppercase">
                   EXECUTE
                 </h3>
-                <p className="text-[7.5px] text-teal-200/80 mt-0.5 font-medium leading-tight">
+                <p className="text-[7.5px] sm:text-[9.5px] text-teal-200/80 mt-0.5 font-medium leading-tight">
                   Instant feedback
                 </p>
               </div>
 
               {/* Inner Dark Test Cases Box */}
-              <div className="m-1 p-2 bg-[#090c13]/95 rounded-xl border border-white/10 flex flex-col justify-center gap-1 min-h-[66px]">
+              <div className="m-1 sm:m-1.5 p-2 sm:p-2.5 bg-[#090c13]/95 rounded-xl border border-white/10 flex flex-col justify-center gap-1 min-h-[66px] sm:min-h-[80px]">
                 <div className="space-y-1">
-                  <div className="flex items-center justify-between text-[7px]">
-                    <div className="flex items-center gap-1 text-zinc-300">
+                  <div className="flex items-center justify-between text-[7px] sm:text-[8.5px] gap-1">
+                    <div className="flex items-center gap-1 text-zinc-300 min-w-0">
                       <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
-                      <span className="truncate">Test Case 1</span>
+                      <span className="truncate">Case 1</span>
                     </div>
-                    <span className="text-emerald-400 font-semibold">Passed</span>
+                    <span className="text-emerald-400 font-semibold shrink-0">Passed</span>
                   </div>
-                  <div className="flex items-center justify-between text-[7px]">
-                    <div className="flex items-center gap-1 text-zinc-300">
+                  <div className="flex items-center justify-between text-[7px] sm:text-[8.5px] gap-1">
+                    <div className="flex items-center gap-1 text-zinc-300 min-w-0">
                       <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
-                      <span className="truncate">Test Case 2</span>
+                      <span className="truncate">Case 2</span>
                     </div>
-                    <span className="text-emerald-400 font-semibold">Passed</span>
+                    <span className="text-emerald-400 font-semibold shrink-0">Passed</span>
                   </div>
-                  <div className="flex items-center justify-between text-[7px]">
-                    <div className="flex items-center gap-1 text-zinc-300">
+                  <div className="flex items-center justify-between text-[7px] sm:text-[8.5px] gap-1">
+                    <div className="flex items-center gap-1 text-zinc-300 min-w-0">
                       <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
-                      <span className="truncate">Test Case 3</span>
+                      <span className="truncate">Case 3</span>
                     </div>
-                    <span className="text-emerald-400 font-semibold">Passed</span>
+                    <span className="text-emerald-400 font-semibold shrink-0">Passed</span>
                   </div>
                 </div>
               </div>
@@ -324,7 +325,7 @@ export function Hero() {
         {/* 3. DESKTOP VIEW: FULL 6 ARCHED SHOWCASE CARDS */}
         {/* ========================================================================= */}
         <div className="w-full hidden lg:block overflow-x-auto pb-6 pt-2 no-scrollbar">
-          <div className="grid grid-cols-6 gap-3.5 sm:gap-4 items-stretch">
+          <div className="grid grid-cols-6 gap-3.5 xl:gap-4 items-stretch min-w-[1140px] xl:min-w-full">
             {/* ------------------------------------------------------------------- */}
             {/* DESKTOP CARD 1: WRITE (Cyan/Teal) */}
             {/* ------------------------------------------------------------------- */}
@@ -856,8 +857,8 @@ export function Hero() {
 
                 <div className="grid grid-cols-12 text-[8.5px] text-zinc-500 uppercase tracking-wider font-semibold border-b border-zinc-900 pb-1">
                   <span className="col-span-2">#</span>
-                  <span className="col-span-7">Player</span>
-                  <span className="col-span-3 text-right">Rating</span>
+                  <span className="col-span-6">Player</span>
+                  <span className="col-span-4 text-right">Rating</span>
                 </div>
 
                 <div className="space-y-1">
@@ -910,7 +911,7 @@ export function Hero() {
                       <span className={`col-span-2 font-bold ${player.rankColor}`}>
                         {player.rank}
                       </span>
-                      <div className="col-span-7 flex items-center gap-1.5 overflow-hidden">
+                      <div className="col-span-6 flex items-center gap-1.5 min-w-0 pr-1">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={player.avatar}
@@ -921,7 +922,7 @@ export function Hero() {
                           {player.name}
                         </span>
                       </div>
-                      <span className="col-span-3 text-right font-mono text-[9px] font-medium text-white">
+                      <span className="col-span-4 text-right font-mono text-[9px] font-medium text-white shrink-0">
                         {player.rating}
                       </span>
                     </div>

@@ -127,8 +127,8 @@ export function MatchTypes() {
             </span>
           </div>
 
-          {/* Main Title - Single Line with Grey Accent (Title Case) */}
-          <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight whitespace-nowrap">
+          {/* Main Title - Responsive single line on desktop */}
+          <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight md:whitespace-nowrap">
             Choose Your <span className="text-zinc-500">Battle Mode</span>
           </h2>
 
@@ -158,7 +158,7 @@ export function MatchTypes() {
 
                 <div>
                   {/* Top Header Row */}
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2.5 mb-4">
                     <div className="flex items-center gap-2.5">
                       <div
                         className={`w-9 h-9 rounded-xl border flex items-center justify-center ${mode.accentBg} ${mode.accentColor}`}
@@ -170,7 +170,7 @@ export function MatchTypes() {
                       </span>
                     </div>
 
-                    <span className="rounded-full px-3 py-1 font-mono text-[10px] sm:text-[11px] font-bold border border-zinc-800 bg-[#06080c] text-zinc-300">
+                    <span className="rounded-full px-3 py-1 font-mono text-[10px] sm:text-[11px] font-bold border border-zinc-800 bg-[#06080c] text-zinc-300 whitespace-nowrap">
                       {mode.badge}
                     </span>
                   </div>

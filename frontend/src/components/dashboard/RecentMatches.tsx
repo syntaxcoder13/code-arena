@@ -94,8 +94,8 @@ export function RecentMatches({ onExploreArena }: RecentMatchesProps) {
             <span className="text-[10px] text-zinc-500">SCHEMA VERIFIED</span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left font-mono text-xs">
+          <div className="overflow-x-auto -mx-1 px-1">
+            <table className="w-full min-w-[520px] text-left font-mono text-xs">
               <thead>
                 <tr className="border-b border-zinc-800 text-zinc-500 text-[10px] uppercase font-bold">
                   <th className="pb-2">RESULT</th>

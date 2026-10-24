@@ -103,16 +103,33 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Main Content Column */}
         <div className="flex-1 flex flex-col h-screen min-w-0 bg-transparent overflow-hidden relative z-10">
-          {/* Mobile Menu Trigger for screens < lg */}
-          <div className="lg:hidden p-3 pb-0 flex items-center">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open navigation menu"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-800 bg-[#0C0E14] text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors shadow-sm cursor-pointer"
-            >
-              <Menu className="h-4 w-4" />
-            </button>
+          {/* Mobile Top Bar for screens < lg */}
+          <div className="lg:hidden shrink-0 px-4 py-3 border-b border-zinc-850 bg-[#080A0F]/90 backdrop-blur-md flex items-center justify-between z-20">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="Open navigation menu"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-800 bg-[#0C0E14] text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors shadow-sm cursor-pointer shrink-0"
+              >
+                <Menu className="h-4 w-4" />
+              </button>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-lg font-bold tracking-tighter text-zinc-200">
+                  &lt;&nbsp;&gt;
+                </span>
+                <span className="font-display text-sm sm:text-base font-extrabold tracking-wider text-white uppercase">
+                  CODEARENA
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-[10px] font-mono font-bold text-emerald-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="hidden xs:inline">ARENA</span> LIVE
+              </span>
+            </div>
           </div>
 
           {/* Independent Scrollable Area: ONLY this region scrolls */}

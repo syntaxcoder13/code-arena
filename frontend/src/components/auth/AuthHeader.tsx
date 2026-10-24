@@ -44,15 +44,16 @@ export function AuthHeader({
         </Link>
 
         {/* Right: Back CTA Button */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <Link
             href={backHref}
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="group inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-[#090b10] hover:bg-zinc-900 px-4 py-2 font-mono text-xs font-semibold text-zinc-300 hover:text-white transition-all shadow-sm hover:border-zinc-700 cursor-pointer"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-zinc-800 bg-[#090b10] hover:bg-zinc-900 px-3 sm:px-4 py-1.5 sm:py-2 font-mono text-xs font-semibold text-zinc-300 hover:text-white transition-all shadow-sm hover:border-zinc-700 cursor-pointer"
           >
-            <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5 text-zinc-400 group-hover:text-white" />
-            <span>{backLabel}</span>
+            <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5 text-zinc-400 group-hover:text-white shrink-0" />
+            <span className="hidden xs:inline">{backLabel}</span>
+            <span className="xs:hidden">Home</span>
           </Link>
         </div>
       </div>

@@ -131,8 +131,8 @@ function LeaderboardContent() {
         </div>
 
         {/* Timeframe Filter Pills */}
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="rounded-full border border-zinc-800 bg-zinc-900/80 p-1 flex items-center font-mono text-xs shadow-xs">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+          <div className="rounded-full border border-zinc-800 bg-zinc-900/80 p-1 flex items-center font-mono text-[11px] sm:text-xs shadow-xs shrink-0">
             <button
               type="button"
               onClick={() => {

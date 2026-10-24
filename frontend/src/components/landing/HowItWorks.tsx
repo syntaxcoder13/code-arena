@@ -74,8 +74,8 @@ export function HowItWorks() {
             </span>
           </div>
 
-          {/* Main Title - Kept strictly on a SINGLE LINE with Grey 'One Arena.' */}
-          <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight whitespace-nowrap">
+          {/* Main Title - Responsive single line on desktop */}
+          <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight md:whitespace-nowrap">
             Three Steps. <span className="text-zinc-500">One Arena.</span>
           </h2>
 
@@ -99,12 +99,12 @@ export function HowItWorks() {
               <div className="pointer-events-none absolute -top-20 -left-20 w-44 h-44 rounded-full bg-amber-500/10 blur-[70px]" />
 
               <div>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
                     01
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-[#06080c] text-zinc-300 font-mono text-[11px] font-medium">
-                    <Clock className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-[#06080c] text-zinc-300 font-mono text-[11px] font-medium whitespace-nowrap">
+                    <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>Latency &lt; 20ms</span>
                   </span>
                 </div>
@@ -126,9 +126,9 @@ export function HowItWorks() {
               {/* Bottom Widget: Matchmaking Radar */}
               <div className="mt-6 rounded-2xl bg-[#06080c] border border-zinc-800/90 p-4 shadow-lg">
                 <div className="text-xs font-mono text-zinc-400 mb-2.5">Searching...</div>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   {/* Overlapping Avatars */}
-                  <div className="flex items-center -space-x-2">
+                  <div className="flex items-center -space-x-2 shrink-0">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80"
@@ -156,7 +156,7 @@ export function HowItWorks() {
                   </div>
 
                   {/* Region & Radar pulse */}
-                  <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                  <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 shrink-0">
                     <span>Region: US-East</span>
                     <span className="relative flex h-3.5 w-3.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
@@ -174,12 +174,12 @@ export function HowItWorks() {
               <div className="pointer-events-none absolute -top-24 -right-24 w-52 h-52 rounded-full bg-[#E5FF45]/10 blur-[80px]" />
 
               <div>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
                     02
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-300 font-mono text-[11px] font-bold shadow-xs">
-                    <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-300 font-mono text-[11px] font-bold shadow-xs whitespace-nowrap">
+                    <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400 shrink-0" />
                     <span>Live Telemetry</span>
                   </span>
                 </div>
@@ -237,12 +237,12 @@ export function HowItWorks() {
               <div className="pointer-events-none absolute -top-20 -right-20 w-44 h-44 rounded-full bg-cyan-500/10 blur-[70px]" />
 
               <div>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
                     03
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-[#06080c] text-zinc-300 font-mono text-[11px] font-medium">
-                    <Trophy className="w-3.5 h-3.5 text-[#E5FF45]" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-[#06080c] text-zinc-300 font-mono text-[11px] font-medium whitespace-nowrap">
+                    <Trophy className="w-3.5 h-3.5 text-[#E5FF45] shrink-0" />
                     <span>+25 ELO / Win</span>
                   </span>
                 </div>

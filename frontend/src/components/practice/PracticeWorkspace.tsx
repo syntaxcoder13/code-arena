@@ -225,7 +225,7 @@ export function PracticeWorkspace({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
       {/* Left Column: Problem Details (5 cols) */}
-      <div className="lg:col-span-5 rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-[740px]">
+      <div className="lg:col-span-5 rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-[460px] lg:h-[740px]">
         {/* Problem Header */}
         <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -386,7 +386,7 @@ export function PracticeWorkspace({
       </div>
 
       {/* Right Column: Code Editor & Test Runner (7 cols) */}
-      <div className="lg:col-span-7 flex flex-col h-[740px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
+      <div className="lg:col-span-7 flex flex-col h-[580px] lg:h-[740px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
         {/* Editor Header: Language selector, Reset button */}
         <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 p-2.5 px-3">
           <CustomDropdown

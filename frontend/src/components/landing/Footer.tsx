@@ -31,11 +31,11 @@ export function Footer() {
             </p>
 
             {/* Server Operational Pill */}
-            <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-[#090b10] px-3.5 py-1 font-mono text-[11px] text-zinc-400 shadow-xs">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-zinc-300 font-medium">ALL ENGINES OPERATIONAL</span>
-              <span className="text-zinc-700">|</span>
-              <span className="text-emerald-400 font-bold">&lt; 15ms PING</span>
+            <div className="mt-5 inline-flex flex-wrap items-center gap-2 rounded-full border border-zinc-800 bg-[#090b10] px-3.5 py-1 font-mono text-[10.5px] sm:text-[11px] text-zinc-400 shadow-xs">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <span className="text-zinc-300 font-medium whitespace-nowrap">ALL ENGINES OPERATIONAL</span>
+              <span className="text-zinc-700 hidden xs:inline">|</span>
+              <span className="text-emerald-400 font-bold whitespace-nowrap">&lt; 15ms PING</span>
             </div>
           </div>
 
@@ -68,11 +68,11 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright line */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400 text-center sm:text-left">
           <div>
             © 2026 CodeArena Inc. All rights reserved.
           </div>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-5">
             <Link href="/privacy" className="hover:text-zinc-300 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-zinc-300 transition-colors">Terms of Service</Link>
             <Link href="/security" className="hover:text-zinc-300 transition-colors">Security</Link>

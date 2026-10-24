@@ -27,8 +27,8 @@ export function FinalCTA() {
           </span>
         </div>
 
-        {/* Main Title - Single Line with Grey Accent (Title Case) */}
-        <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight whitespace-nowrap">
+        {/* Main Title - Responsive single line on desktop */}
+        <h2 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight md:whitespace-nowrap">
           Ready To Enter <span className="text-zinc-500">The Arena?</span>
         </h2>
 

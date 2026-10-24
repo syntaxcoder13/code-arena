@@ -62,8 +62,8 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Center: Nav links pill group matching screenshot */}
-        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-transparent py-1 px-1 lg:px-2">
+        {/* Center: Nav links pill group matching screenshot (desktop only >= lg) */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2 bg-transparent py-1 px-2">
           {navItems.map((item) => {
             const isActive = activeTab === item.name;
             return (
@@ -75,7 +75,7 @@ export function Navbar() {
                   setActiveTab(item.name);
                 }}
                 onMouseEnter={() => playHover()}
-                className={`text-xs lg:text-sm font-medium px-2.5 lg:px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap ${
+                className={`text-xs xl:text-sm font-medium px-3 xl:px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap ${
                   isActive
                     ? "bg-white text-black font-semibold shadow-sm"
                     : "text-zinc-400 hover:text-white"
@@ -88,7 +88,7 @@ export function Navbar() {
         </nav>
 
         {/* Right: Action Buttons matching screenshot (Log In & Join Arena) */}
-        <div className="hidden md:flex items-center gap-3 shrink-0">
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
           <Link
             href="/login"
             onClick={() => playClick()}
@@ -102,21 +102,29 @@ export function Navbar() {
             href="/login"
             onClick={() => playClash()}
             onMouseEnter={() => playHover()}
-            className="text-xs sm:text-sm font-semibold text-black bg-white hover:bg-zinc-200 px-5 sm:px-6 py-2 rounded-full shadow-md transition-all active:scale-95"
+            className="text-xs sm:text-sm font-semibold text-black bg-white hover:bg-zinc-200 px-5 sm:px-6 py-2 rounded-full shadow-md transition-all active:scale-95 whitespace-nowrap"
           >
             Join Arena
           </Link>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        {/* Mobile & Tablet Right Controls */}
+        <div className="flex lg:hidden items-center gap-2.5">
+          <Link
+            href="/login"
+            onClick={() => playClash()}
+            className="hidden sm:inline-flex text-xs font-semibold text-black bg-white hover:bg-zinc-200 px-4 py-1.5 rounded-full shadow-md transition-all active:scale-95"
+          >
+            Join Arena
+          </Link>
+
           <button
             type="button"
             onClick={() => {
               playClick();
               setIsOpen(!isOpen);
             }}
-            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white focus:outline-none"
+            className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white focus:outline-none cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -124,9 +132,9 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       {isOpen && (
-        <div className="md:hidden mt-3 pt-3 border-t border-zinc-800/80 bg-[#090b0e] rounded-2xl p-4 flex flex-col gap-2 shadow-2xl">
+        <div className="lg:hidden mt-3 pt-3 border-t border-zinc-800/80 bg-[#090b0e] rounded-2xl p-4 flex flex-col gap-2 shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -136,7 +144,7 @@ export function Navbar() {
                 setActiveTab(item.name);
                 setIsOpen(false);
               }}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 activeTab === item.name
                   ? "bg-white text-black font-semibold"
                   : "text-zinc-400 hover:text-white hover:bg-zinc-900"

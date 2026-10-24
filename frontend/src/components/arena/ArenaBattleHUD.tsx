@@ -53,19 +53,19 @@ export function ArenaBattleHUD({
   return (
     <header className="rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 p-3 sm:p-4 backdrop-blur-xl shadow-xl space-y-3">
       {/* Top Banner: Mode & Stakes */}
-      <div className="flex items-center justify-between border-b border-zinc-800 pb-2.5 text-xs font-mono">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2.5 text-xs font-mono">
         <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+          <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
           <span className="font-display font-bold uppercase text-white tracking-wider text-[11px] sm:text-xs">
             {modeConfig.title}
           </span>
           <span className="text-zinc-600">•</span>
-          <span className="font-medium text-zinc-400 hidden sm:inline">BEST OF 1</span>
+          <span className="font-medium text-zinc-400 hidden xs:inline">BEST OF 1</span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 bg-zinc-900/60 px-3 py-0.5 rounded-full border border-zinc-800 text-[11px] font-semibold">
-            <span className="text-zinc-500">STAKES:</span>
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 bg-zinc-900/60 px-2.5 sm:px-3 py-0.5 rounded-full border border-zinc-800 text-[10px] sm:text-[11px] font-semibold">
+            <span className="text-zinc-500 hidden sm:inline">STAKES:</span>
             <span className="text-emerald-400">+{modeConfig.eloWager.win} ELO</span>
             <span className="text-zinc-600">/</span>
             <span className="text-rose-400">-{modeConfig.eloWager.loss} ELO</span>
@@ -78,10 +78,10 @@ export function ArenaBattleHUD({
               onSurrender();
             }}
             title="Forfeit / Leave Match"
-            className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 transition-colors cursor-pointer text-[10px] font-semibold uppercase"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/30 transition-colors cursor-pointer text-[10px] font-semibold uppercase shrink-0"
           >
-            <Flag className="h-3 w-3" />
-            <span className="hidden xs:inline">FORFEIT</span>
+            <Flag className="h-3 w-3 shrink-0" />
+            <span>FORFEIT</span>
           </button>
         </div>
       </div>

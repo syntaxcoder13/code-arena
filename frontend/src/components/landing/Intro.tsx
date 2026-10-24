@@ -185,17 +185,17 @@ export function Intro() {
               </div>
 
               {/* Visual Speed Badge */}
-              <div className="my-3.5 sm:my-4 p-3 sm:p-3.5 rounded-xl bg-[#06080b] border border-zinc-800/80 flex items-center justify-between gap-3">
+              <div className="my-3.5 sm:my-4 p-3 sm:p-3.5 rounded-xl bg-[#06080b] border border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
                 <div className="shrink-0">
                   <div className="text-[9.5px] sm:text-[10px] text-zinc-500 font-mono">BENCHMARK</div>
                   <div className="text-xl sm:text-2xl font-bold font-mono text-emerald-400">12 ms</div>
                 </div>
-                <div className="text-right">
+                <div className="text-right shrink-0">
                   <div className="text-xs font-semibold text-white flex items-center justify-end gap-1 whitespace-nowrap">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                     <span>All Tests Passed</span>
                   </div>
-                  <div className="text-[9.5px] sm:text-[10px] text-zinc-400 mt-0.5">Python • C++ • JS • Rust</div>
+                  <div className="text-[9.5px] sm:text-[10px] text-zinc-400 mt-0.5 whitespace-nowrap">Python • C++ • JS • Rust</div>
                 </div>
               </div>
 
@@ -211,8 +211,8 @@ export function Intro() {
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-[10px] sm:text-[10.5px] font-bold uppercase tracking-wider">
-                    <Target className="w-3 h-3 text-cyan-400" />
+                  <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-[10px] sm:text-[10.5px] font-bold uppercase tracking-wider whitespace-nowrap">
+                    <Target className="w-3 h-3 text-cyan-400 shrink-0" />
                     <span>FAIR MATCHMAKING</span>
                   </span>
                   <span className="font-mono text-xs font-semibold text-zinc-500">03</span>
@@ -227,7 +227,7 @@ export function Intro() {
               </div>
 
               {/* Visual Rank Badge */}
-              <div className="my-3.5 sm:my-4 p-3 sm:p-3.5 rounded-xl bg-[#06080b] border border-zinc-800/80 flex items-center justify-between gap-2.5">
+              <div className="my-3.5 sm:my-4 p-3 sm:p-3.5 rounded-xl bg-[#06080b] border border-zinc-800/80 flex flex-wrap items-center justify-between gap-2.5">
                 <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
                   <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
                     <Trophy className="w-4 h-4 shrink-0" />
