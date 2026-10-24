@@ -126,7 +126,7 @@ function ProfileContent() {
       </div>
 
       {/* 2. Profile Tabs Navigation Bar */}
-      <div className="profile-entrance-tabs flex flex-wrap items-center justify-between gap-3 border-b-2 border-black pb-3">
+      <div className="profile-entrance-tabs flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-3">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           {TABS.map((tab) => {
             const Icon = tab.icon;
@@ -137,21 +137,20 @@ function ProfileContent() {
                 type="button"
                 onClick={() => handleTabChange(tab.id as TabKey)}
                 onMouseEnter={() => playHover()}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 font-display text-xs sm:text-sm font-black uppercase tracking-wider transition-all cursor-pointer ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 font-display text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all cursor-pointer ${
                   isActive
-                    ? "border-2 border-black bg-black text-[#E5FF45] brutal-shadow-sm"
-                    : "border-2 border-transparent text-neutral-600 hover:border-black hover:bg-white hover:text-black"
+                    ? "bg-white text-black shadow-sm font-bold"
+                    : "border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:bg-zinc-800"
                 }`}
               >
                 <Icon
-                  className={`h-4 w-4 ${isActive ? "text-[#E5FF45]" : "text-neutral-500"}`}
+                  className={`h-4 w-4 ${isActive ? "text-black" : "text-zinc-400"}`}
                 />
                 <span>{tab.label}</span>
               </button>
             );
           })}
         </div>
-
       </div>
 
       {/* 3. Tab Contents */}

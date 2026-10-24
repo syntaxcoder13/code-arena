@@ -30,11 +30,11 @@ const ICON_MAP: Record<string, React.ElementType> = {
 };
 
 const RARITY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  COMMON: { bg: "bg-neutral-100", text: "text-neutral-700", border: "border-black/20" },
-  RARE: { bg: "bg-blue-100", text: "text-blue-700", border: "border-blue-600" },
-  EPIC: { bg: "bg-purple-100", text: "text-purple-700", border: "border-purple-600" },
-  LEGENDARY: { bg: "bg-amber-100", text: "text-amber-800", border: "border-amber-600" },
-  MYTHIC: { bg: "bg-[#E5FF45]", text: "text-black", border: "border-black" },
+  COMMON: { bg: "bg-zinc-800", text: "text-zinc-300", border: "border-zinc-700" },
+  RARE: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/20" },
+  EPIC: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20" },
+  LEGENDARY: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/20" },
+  MYTHIC: { bg: "bg-[#E5FF45]/10", text: "text-[#E5FF45]", border: "border-[#E5FF45]/30" },
 };
 
 export function ProfileBadgesTab() {
@@ -54,31 +54,31 @@ export function ProfileBadgesTab() {
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       {/* 1. Header Summary Banner */}
-      <div className="rounded-3xl border-2 border-black bg-white p-5 sm:p-7 brutal-shadow">
+      <div className="rounded-3xl border border-zinc-800/80 bg-[#0C0E14]/90 p-5 sm:p-7 backdrop-blur-xl shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl border-2 border-black bg-[#E5FF45] text-black brutal-shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#E5FF45]/30 bg-[#E5FF45]/10 text-[#E5FF45]">
               <Trophy className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-display text-lg font-black uppercase text-black">
+              <h3 className="font-display text-lg font-bold uppercase text-white">
                 HONORS & BATTLE TROPHIES
               </h3>
-              <p className="font-mono text-xs text-neutral-500">
+              <p className="font-mono text-xs text-zinc-400">
                 Unlock prestigious achievements by prevailing in arena combat
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 font-mono text-xs">
-            <div className="px-3 py-1.5 rounded-xl border-2 border-black bg-[#FFFBF0] font-black text-black brutal-shadow-sm">
+            <div className="px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-800/80 font-bold text-white">
               UNLOCKED: {unlockedCount} / {totalBadges}
             </div>
           </div>
         </div>
 
         {/* Filter Categories */}
-        <div className="mt-5 pt-4 border-t border-black/10 flex flex-wrap items-center gap-2">
+        <div className="mt-5 pt-4 border-t border-zinc-800/80 flex flex-wrap items-center gap-2">
           {[
             { id: "ALL", label: "ALL BADGES" },
             { id: "UNLOCKED", label: "UNLOCKED" },
@@ -97,10 +97,10 @@ export function ProfileBadgesTab() {
                 setFilterCat(cat.id);
               }}
               onMouseEnter={() => playHover()}
-              className={`rounded-xl px-3 py-1 font-display text-xs font-black uppercase transition-all cursor-pointer ${
+              className={`rounded-full px-3.5 py-1 font-display text-xs font-semibold uppercase transition-all cursor-pointer ${
                 filterCat === cat.id
-                  ? "border-2 border-black bg-black text-[#E5FF45] brutal-shadow-sm"
-                  : "border-2 border-transparent text-neutral-600 hover:border-black hover:bg-neutral-100 hover:text-black"
+                  ? "bg-white text-black font-bold shadow-xs"
+                  : "border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:bg-zinc-800"
               }`}
             >
               {cat.label}
@@ -122,8 +122,10 @@ export function ProfileBadgesTab() {
           return (
             <div
               key={badge.id}
-              className={`rounded-3xl border-2 border-black p-5 flex flex-col justify-between transition-all duration-200 brutal-shadow ${
-                badge.unlocked ? "bg-white" : "bg-neutral-50 opacity-80"
+              className={`rounded-3xl border p-5 flex flex-col justify-between transition-all duration-200 backdrop-blur-xl shadow-xl ${
+                badge.unlocked
+                  ? "border-zinc-800/80 bg-[#0C0E14]/90"
+                  : "border-zinc-800/50 bg-[#0C0E14]/50 opacity-70"
               }`}
             >
               <div>
@@ -131,8 +133,10 @@ export function ProfileBadgesTab() {
                 <div className="flex items-center justify-between mb-4">
                   {/* Icon Box */}
                   <div
-                    className={`flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-black brutal-shadow-sm ${
-                      badge.unlocked ? "bg-[#E5FF45] text-black" : "bg-neutral-200 text-neutral-500"
+                    className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${
+                      badge.unlocked
+                        ? "border-[#E5FF45]/30 bg-[#E5FF45]/10 text-[#E5FF45]"
+                        : "border-zinc-800 bg-zinc-900 text-zinc-500"
                     }`}
                   >
                     {badge.unlocked ? <Icon className="h-6 w-6" /> : <Lock className="h-5 w-5" />}
@@ -140,27 +144,27 @@ export function ProfileBadgesTab() {
 
                   {/* Rarity Tag */}
                   <span
-                    className={`font-mono text-[9px] font-black uppercase px-2 py-0.5 rounded-md border ${rarity.border} ${rarity.bg} ${rarity.text}`}
+                    className={`font-mono text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${rarity.border} ${rarity.bg} ${rarity.text}`}
                   >
                     {badge.rarity}
                   </span>
                 </div>
 
                 {/* Title & Desc */}
-                <h4 className="font-display text-sm font-black uppercase text-black">
+                <h4 className="font-display text-sm font-bold uppercase text-white">
                   {badge.title}
                 </h4>
-                <p className="mt-1 text-xs text-neutral-600 font-medium leading-relaxed">
+                <p className="mt-1 text-xs text-zinc-400 font-normal leading-relaxed">
                   {badge.description}
                 </p>
               </div>
 
               {/* Progress and Reward */}
-              <div className="mt-5 pt-3 border-t border-black/10">
+              <div className="mt-5 pt-3 border-t border-zinc-800/80">
                 <div className="flex items-center justify-between font-mono text-[10px] mb-1.5">
-                  <span className="text-neutral-500 font-bold">
+                  <span className="text-zinc-500">
                     {badge.unlocked ? (
-                      <span className="text-[#15803d] font-black flex items-center gap-1">
+                      <span className="text-emerald-400 font-semibold flex items-center gap-1">
                         <CheckCircle2 className="h-3 w-3" />
                         UNLOCKED ({badge.unlockedAt})
                       </span>
@@ -170,14 +174,14 @@ export function ProfileBadgesTab() {
                       </span>
                     )}
                   </span>
-                  <span className="font-black text-black">+{badge.rewardXp} XP</span>
+                  <span className="font-bold text-[#E5FF45]">+{badge.rewardXp} XP</span>
                 </div>
 
                 {/* Progress bar */}
-                <div className="h-2 w-full rounded-full border border-black bg-neutral-100 overflow-hidden">
+                <div className="h-2 w-full rounded-full border border-zinc-800 bg-zinc-900 overflow-hidden">
                   <div
                     className={`h-full ${
-                      badge.unlocked ? "bg-[#22c55e]" : "bg-[#00F0FF]"
+                      badge.unlocked ? "bg-emerald-400" : "bg-cyan-400"
                     } transition-all duration-500`}
                     style={{ width: `${progressPercent}%` }}
                   />

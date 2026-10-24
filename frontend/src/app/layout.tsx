@@ -78,7 +78,7 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="min-h-screen bg-[#FFFBF0] text-[#121316] selection:bg-[#FBBC05] selection:text-black antialiased overflow-x-hidden font-body"
+        className="min-h-screen bg-[#060709] text-white selection:bg-white selection:text-black antialiased overflow-x-hidden font-body"
       >
         <SoundProvider>{children}</SoundProvider>
       </body>

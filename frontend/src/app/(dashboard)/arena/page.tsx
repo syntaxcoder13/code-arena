@@ -486,7 +486,7 @@ export default function ArenaPage() {
     <DashboardLayout>
       <Suspense
         fallback={
-          <div className="flex h-64 items-center justify-center font-mono text-xs text-black">
+          <div className="flex h-64 items-center justify-center font-mono text-xs text-zinc-400">
             Initializing Code Arena Combat System...
           </div>
         }

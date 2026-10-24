@@ -46,29 +46,29 @@ const RARITY_STYLES: Record<
   { border: string; bg: string; text: string }
 > = {
   COMMON: {
-    border: "border-black/20",
-    bg: "bg-neutral-100",
-    text: "text-neutral-700",
+    border: "border-zinc-700",
+    bg: "bg-zinc-800/80",
+    text: "text-zinc-300",
   },
   RARE: {
-    border: "border-blue-600",
-    bg: "bg-blue-100",
-    text: "text-blue-800",
+    border: "border-cyan-500/40",
+    bg: "bg-cyan-500/10",
+    text: "text-[#00F0FF]",
   },
   EPIC: {
-    border: "border-purple-600",
-    bg: "bg-purple-100",
-    text: "text-purple-800",
+    border: "border-purple-500/40",
+    bg: "bg-purple-500/10",
+    text: "text-purple-300",
   },
   LEGENDARY: {
-    border: "border-amber-600",
-    bg: "bg-amber-100",
-    text: "text-amber-900",
+    border: "border-amber-500/40",
+    bg: "bg-amber-500/10",
+    text: "text-amber-300",
   },
   MYTHIC: {
-    border: "border-black",
-    bg: "bg-[#E5FF45]",
-    text: "text-black",
+    border: "border-[#E5FF45]/40",
+    bg: "bg-[#E5FF45]/10",
+    text: "text-[#E5FF45]",
   },
 };
 
@@ -94,10 +94,10 @@ export function AchievementCard({ achievement, onSelect }: AchievementCardProps)
         onSelect(achievement);
       }}
       onMouseEnter={() => playHover()}
-      className={`group relative rounded-3xl border-2 border-black p-5 flex flex-col justify-between transition-all duration-200 cursor-pointer ${
+      className={`group relative rounded-3xl border border-zinc-800/80 p-5 flex flex-col justify-between transition-all duration-200 cursor-pointer text-white selection:bg-white selection:text-black ${
         achievement.unlocked
-          ? "bg-white brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5"
-          : "bg-neutral-50/90 brutal-shadow-sm hover:border-black"
+          ? "bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl hover:border-zinc-700 hover:shadow-2xl hover:translate-y-[-2px]"
+          : "bg-[#0C0E14]/50 opacity-75 hover:opacity-100 hover:border-zinc-700"
       }`}
     >
       <div>
@@ -105,10 +105,10 @@ export function AchievementCard({ achievement, onSelect }: AchievementCardProps)
         <div className="flex items-start justify-between gap-3 mb-4">
           {/* Icon in Framed Box */}
           <div
-            className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl border-2 border-black brutal-shadow-sm transition-transform group-hover:scale-105 ${
+            className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl border transition-transform group-hover:scale-105 shadow-inner ${
               achievement.unlocked
-                ? "bg-[#E5FF45] text-black"
-                : "bg-neutral-200 text-neutral-500"
+                ? "border-zinc-700 bg-zinc-900 text-[#E5FF45]"
+                : "border-zinc-800 bg-zinc-950 text-zinc-600"
             }`}
           >
             {achievement.unlocked ? (
@@ -121,11 +121,11 @@ export function AchievementCard({ achievement, onSelect }: AchievementCardProps)
           {/* Rarity & XP Reward Badges */}
           <div className="flex flex-col items-end gap-1.5">
             <span
-              className={`font-mono text-[9px] font-black uppercase px-2 py-0.5 rounded-md border ${rarity.border} ${rarity.bg} ${rarity.text}`}
+              className={`font-mono text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${rarity.border} ${rarity.bg} ${rarity.text}`}
             >
               {achievement.rarity}
             </span>
-            <span className="font-mono text-xs font-black text-[#2563EB]">
+            <span className="font-mono text-xs font-bold text-[#00F0FF]">
               +{achievement.rewardXp} XP
             </span>
           </div>
@@ -133,21 +133,21 @@ export function AchievementCard({ achievement, onSelect }: AchievementCardProps)
 
         {/* Title & Description */}
         <div className="space-y-1">
-          <h3 className="font-display text-base font-black uppercase tracking-tight text-black group-hover:underline">
+          <h3 className="font-display text-base font-bold uppercase tracking-tight text-white group-hover:text-zinc-200">
             {achievement.title}
           </h3>
-          <p className="font-mono text-xs text-neutral-600 leading-relaxed">
+          <p className="font-mono text-xs text-zinc-400 leading-relaxed">
             {achievement.description}
           </p>
         </div>
       </div>
 
       {/* Progress & Unlock Status */}
-      <div className="mt-5 pt-3 border-t border-black/10">
+      <div className="mt-5 pt-3 border-t border-zinc-800">
         <div className="flex items-center justify-between font-mono text-[11px] mb-1.5">
-          <span className="text-neutral-500 font-bold">
+          <span className="text-zinc-400 font-medium">
             {achievement.unlocked ? (
-              <span className="flex items-center gap-1 text-[#15803d] font-black">
+              <span className="flex items-center gap-1 text-emerald-400 font-bold">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 CLAIMED ({achievement.unlockedAt})
               </span>
@@ -158,16 +158,16 @@ export function AchievementCard({ achievement, onSelect }: AchievementCardProps)
             )}
           </span>
 
-          <span className="font-black text-black">
+          <span className="font-bold text-white">
             {progressPercent}%
           </span>
         </div>
 
         {/* Progress Bar */}
-        <div className="h-2.5 w-full rounded-full border border-black bg-neutral-100 overflow-hidden">
+        <div className="h-2 w-full rounded-full border border-zinc-800 bg-zinc-950 overflow-hidden">
           <div
             className={`h-full transition-all duration-500 ${
-              achievement.unlocked ? "bg-[#22c55e]" : "bg-[#00F0FF]"
+              achievement.unlocked ? "bg-emerald-400" : "bg-[#E5FF45]"
             }`}
             style={{ width: `${progressPercent}%` }}
           />

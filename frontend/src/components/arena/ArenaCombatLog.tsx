@@ -53,14 +53,14 @@ export function ArenaCombatLog({ events }: ArenaCombatLogProps) {
   };
 
   return (
-    <div className="flex flex-col h-full rounded-xl border border-black/15 bg-[#0F172A] text-white overflow-hidden font-mono text-xs">
+    <div className="flex flex-col h-full rounded-xl border border-zinc-800 bg-[#0C0E14] text-white overflow-hidden font-mono text-xs">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 bg-[#1E293B] px-3 py-2">
-        <div className="flex items-center gap-1.5 font-black uppercase text-[10px] tracking-wider text-[#E5FF45]">
+      <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/60 px-3 py-2">
+        <div className="flex items-center gap-1.5 font-bold uppercase text-[10px] tracking-wider text-[#E5FF45]">
           <Terminal className="h-3.5 w-3.5" />
           <span>COMBAT TELEMETRY FEED</span>
         </div>
-        <span className="text-[10px] text-neutral-400">{events.length} EVENTS</span>
+        <span className="text-[10px] text-zinc-500">{events.length} EVENTS</span>
       </div>
 
       {/* Feed list */}

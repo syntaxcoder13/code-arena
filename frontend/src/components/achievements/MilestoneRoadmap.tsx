@@ -13,24 +13,24 @@ export function MilestoneRoadmap({ currentLevel }: MilestoneRoadmapProps) {
   const { playHover, playClick } = useSoundEffects();
 
   return (
-    <div className="rounded-3xl border-2 border-black bg-white p-6 sm:p-8 brutal-shadow space-y-6">
+    <div className="rounded-3xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl p-6 sm:p-8 shadow-xl space-y-6 text-white selection:bg-white selection:text-black">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl border-2 border-black bg-[#00F0FF] text-black brutal-shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-500/10 text-[#00F0FF] shadow-inner">
             <Gift className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-display text-lg sm:text-xl font-black uppercase tracking-tight text-black">
+            <h3 className="font-display text-lg sm:text-xl font-bold uppercase tracking-tight text-white">
               CAREER UNLOCK ROADMAP
             </h3>
-            <p className="font-mono text-xs text-neutral-500">
+            <p className="font-mono text-xs text-zinc-400">
               Rank milestone rewards, features, custom titles, and cosmetics unlocked as you level up
             </p>
           </div>
         </div>
 
-        <span className="font-mono text-xs font-black px-3 py-1.5 rounded-xl border-2 border-black bg-[#FFFBF0] text-black brutal-shadow-sm">
+        <span className="font-mono text-xs font-bold px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-800 text-zinc-200">
           CURRENT: LVL {currentLevel}
         </span>
       </div>
@@ -46,41 +46,41 @@ export function MilestoneRoadmap({ currentLevel }: MilestoneRoadmapProps) {
               <div
                 key={milestone.level}
                 onMouseEnter={() => playHover()}
-                className={`relative flex-1 rounded-2xl border-2 border-black p-5 flex flex-col justify-between transition-all ${
+                className={`relative flex-1 rounded-2xl p-5 flex flex-col justify-between transition-all ${
                   isUnlocked
-                    ? "bg-[#FFFBF0] brutal-shadow-sm"
+                    ? "bg-zinc-900/60 border border-zinc-700 shadow-sm"
                     : isNext
-                    ? "bg-white ring-2 ring-black brutal-shadow"
-                    : "bg-neutral-50 opacity-75"
+                    ? "bg-zinc-900 border border-[#00F0FF]/50 shadow-[0_0_15px_rgba(0,240,255,0.15)] ring-1 ring-[#00F0FF]/40"
+                    : "bg-zinc-950/40 border border-zinc-800/80 opacity-60"
                 }`}
               >
                 <div>
                   {/* Top Level Pill & Status */}
                   <div className="flex items-center justify-between mb-3">
                     <span
-                      className={`font-mono text-xs font-black px-2.5 py-0.5 rounded-lg border border-black ${
+                      className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full border ${
                         isUnlocked
-                          ? "bg-[#E5FF45] text-black"
+                          ? "bg-[#E5FF45] border-black text-black"
                           : isNext
-                          ? "bg-[#00F0FF] text-black"
-                          : "bg-neutral-200 text-neutral-600"
+                          ? "bg-[#00F0FF] border-black text-black"
+                          : "bg-zinc-800 border-zinc-700 text-zinc-400"
                       }`}
                     >
                       LEVEL {milestone.level}
                     </span>
 
                     {isUnlocked ? (
-                      <span className="flex items-center gap-1 font-mono text-[10px] font-black text-[#15803d]">
+                      <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-emerald-400">
                         <Check className="h-3.5 w-3.5 stroke-[3]" />
                         <span>UNLOCKED</span>
                       </span>
                     ) : isNext ? (
-                      <span className="flex items-center gap-1 font-mono text-[10px] font-black text-[#2563EB]">
+                      <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-[#00F0FF]">
                         <Sparkles className="h-3.5 w-3.5" />
                         <span>NEXT UP</span>
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-neutral-400">
+                      <span className="flex items-center gap-1 font-mono text-[10px] font-medium text-zinc-500">
                         <Lock className="h-3 w-3" />
                         <span>LOCKED</span>
                       </span>
@@ -88,18 +88,18 @@ export function MilestoneRoadmap({ currentLevel }: MilestoneRoadmapProps) {
                   </div>
 
                   {/* Title & Reward Name */}
-                  <h4 className="font-display text-sm font-black uppercase text-black">
+                  <h4 className="font-display text-sm font-bold uppercase text-white">
                     {milestone.rewardName}
                   </h4>
-                  <p className="mt-1 font-mono text-[11px] text-neutral-600 leading-relaxed">
+                  <p className="mt-1 font-mono text-[11px] text-zinc-400 leading-relaxed">
                     {milestone.rewardDescription}
                   </p>
                 </div>
 
                 {/* Reward Type Tag */}
-                <div className="mt-4 pt-3 border-t border-black/10 flex items-center justify-between font-mono text-[10px]">
-                  <span className="text-neutral-500 font-bold">TYPE: {milestone.rewardType}</span>
-                  <span className="font-bold text-black">{milestone.requiredXp} XP</span>
+                <div className="mt-4 pt-3 border-t border-zinc-800 flex items-center justify-between font-mono text-[10px]">
+                  <span className="text-zinc-500 font-medium">TYPE: {milestone.rewardType}</span>
+                  <span className="font-bold text-zinc-300">{milestone.requiredXp} XP</span>
                 </div>
               </div>
             );

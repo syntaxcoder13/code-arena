@@ -74,8 +74,26 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <DashboardUIContext.Provider value={contextValue}>
-      {/* Outer Viewport Container: Fixed Height & Hidden Global Overflow */}
-      <div className="h-screen w-full bg-[#FFFBF0] text-black selection:bg-[#E5FF45] selection:text-black flex overflow-hidden antialiased">
+      {/* Outer Viewport Container: Fixed Height & Hidden Global Overflow matching landing page obsidian theme */}
+      <div className="h-screen w-full bg-[#060709] text-white selection:bg-white selection:text-black flex overflow-hidden antialiased relative">
+        {/* Ambient background glow & radial gradient matching landing page */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden select-none">
+          <div
+            className="absolute top-0 right-1/4 w-[600px] h-[300px] rounded-full blur-[140px] pointer-events-none opacity-40"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(229, 255, 69, 0.08) 0%, rgba(0, 240, 255, 0.03) 50%, transparent 80%)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-1/3 w-[500px] h-[250px] rounded-full blur-[120px] pointer-events-none opacity-30"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(99, 102, 241, 0.08) 0%, transparent 70%)",
+            }}
+          />
+        </div>
+
         {/* Left Sidebar: Fixed / Stick on Desktop */}
         <DashboardSidebar
           mobileOpen={mobileMenuOpen}
@@ -84,14 +102,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         />
 
         {/* Main Content Column */}
-        <div className="flex-1 flex flex-col h-screen min-w-0 bg-[#FFFBF0] overflow-hidden">
+        <div className="flex-1 flex flex-col h-screen min-w-0 bg-transparent overflow-hidden relative z-10">
           {/* Mobile Menu Trigger for screens < lg */}
           <div className="lg:hidden p-3 pb-0 flex items-center">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open navigation menu"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-black bg-white text-black hover:bg-[#E5FF45] transition-colors brutal-shadow-sm cursor-pointer"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-800 bg-[#0C0E14] text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors shadow-sm cursor-pointer"
             >
               <Menu className="h-4 w-4" />
             </button>

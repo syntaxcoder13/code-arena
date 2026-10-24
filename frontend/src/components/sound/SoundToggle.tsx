@@ -24,10 +24,10 @@ export function SoundToggle({ className = "", showLabel = false }: SoundTogglePr
       onClick={handleToggle}
       title={isMuted ? "Unmute Sound Effects" : "Mute Sound Effects"}
       aria-label={isMuted ? "Unmute Sound Effects" : "Mute Sound Effects"}
-      className={`group relative flex items-center justify-center gap-1.5 rounded-xl border-2 border-black font-display font-black text-xs transition-all active:scale-95 cursor-pointer brutal-shadow-sm ${
+      className={`group relative flex items-center justify-center gap-1.5 rounded-full border font-display font-semibold text-xs transition-all active:scale-95 cursor-pointer ${
         isMuted
-          ? "bg-zinc-200 text-zinc-600 hover:bg-zinc-300"
-          : "bg-[#FBBC05] text-black hover:bg-[#FACC15]"
+          ? "border-zinc-700 bg-zinc-800/80 text-zinc-400 hover:text-white hover:bg-zinc-750"
+          : "border-zinc-300 bg-white text-black hover:bg-zinc-200 shadow-sm"
       } ${className || "p-2"}`}
     >
       {isMuted ? (

@@ -135,20 +135,20 @@ function AchievementsContent() {
   return (
     <div ref={containerRef} className="space-y-6 sm:space-y-8 max-w-[1380px] mx-auto pb-16">
       {/* 1. Header Section */}
-      <div className="achievements-entrance-header flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-black pb-5">
+      <div className="achievements-entrance-header flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
         <div>
-          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-neutral-500 uppercase tracking-wider">
-            <Award className="h-3.5 w-3.5 text-[#2563EB]" />
+          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
+            <Award className="h-3.5 w-3.5 text-[#00F0FF]" />
             <span>CAREER</span>
-            <span className="text-neutral-400">{"//"}</span>
-            <span className="text-black font-black">ACHIEVEMENTS</span>
+            <span className="text-zinc-600">{"//"}</span>
+            <span className="text-zinc-300 font-bold">ACHIEVEMENTS</span>
           </div>
 
-          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-black mt-1">
+          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-white mt-1">
             TROPHIES, HONORS & MILESTONES
           </h1>
 
-          <p className="mt-1 text-xs sm:text-sm text-neutral-600 font-medium max-w-2xl">
+          <p className="mt-1 text-xs sm:text-sm text-zinc-400 font-normal max-w-2xl">
             Track your competitive coding milestones, unlock prestigious title insignias, and earn massive XP boosts across arena battles.
           </p>
         </div>
@@ -172,7 +172,7 @@ function AchievementsContent() {
       {/* 4. Controls: Category Tabs & Search */}
       <div className="space-y-4">
         {/* Category Pill Bar */}
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 border-b-2 border-black pb-3">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 border-b border-zinc-800 pb-3">
           {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             const isActive = activeCategory === cat.id;
@@ -183,14 +183,14 @@ function AchievementsContent() {
                 type="button"
                 onClick={() => handleCategoryChange(cat.id)}
                 onMouseEnter={() => playHover()}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2 font-display text-xs sm:text-sm font-black uppercase tracking-wider transition-all cursor-pointer ${
+                className={`flex items-center gap-2 rounded-full px-4 py-2 font-display text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${
                   isActive
-                    ? "border-2 border-black bg-black text-[#E5FF45] brutal-shadow-sm"
-                    : "border-2 border-transparent text-neutral-600 hover:border-black hover:bg-white hover:text-black"
+                    ? "border border-white bg-white text-black shadow-xs"
+                    : "border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:bg-zinc-800 hover:text-white"
                 }`}
               >
                 <Icon
-                  className={`h-4 w-4 ${isActive ? "text-[#E5FF45]" : "text-neutral-500"}`}
+                  className={`h-4 w-4 ${isActive ? "text-black" : "text-zinc-500"}`}
                 />
                 <span>{cat.label}</span>
               </button>
@@ -212,10 +212,10 @@ function AchievementsContent() {
                 key={st.id}
                 type="button"
                 onClick={() => handleStatusChange(st.id as StatusFilter)}
-                className={`rounded-xl px-3 py-1 font-mono text-xs font-bold uppercase transition-all cursor-pointer ${
+                className={`rounded-full px-3 py-1 font-mono text-xs font-bold uppercase transition-all cursor-pointer ${
                   activeStatus === st.id
-                    ? "bg-[#E5FF45] text-black border border-black font-black brutal-shadow-xs"
-                    : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 border border-transparent"
+                    ? "bg-white text-black border border-white font-bold shadow-xs"
+                    : "bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-white"
                 }`}
               >
                 {st.label}
@@ -225,13 +225,13 @@ function AchievementsContent() {
 
           {/* Search Box */}
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-neutral-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
             <input
               type="text"
               placeholder="Search trophy, criteria..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border-2 border-black bg-white pl-9 pr-3.5 py-1.5 font-mono text-xs text-black placeholder:text-neutral-400 focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 pl-9 pr-3.5 py-1.5 font-mono text-xs text-white placeholder:text-zinc-500 focus:outline-hidden focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600"
             />
           </div>
         </div>
@@ -240,12 +240,12 @@ function AchievementsContent() {
       {/* 5. Achievement Cards Grid */}
       <div className="achievements-entrance-grid">
         {filteredAchievements.length === 0 ? (
-          <div className="rounded-3xl border-2 border-black bg-white p-12 text-center brutal-shadow">
-            <Award className="mx-auto h-10 w-10 text-neutral-400 mb-2" />
-            <h3 className="font-display text-lg font-black uppercase text-black">
+          <div className="rounded-3xl border border-zinc-800/80 bg-[#0C0E14] p-12 text-center shadow-xl">
+            <Award className="mx-auto h-10 w-10 text-zinc-600 mb-2" />
+            <h3 className="font-display text-lg font-bold uppercase text-white">
               NO ACHIEVEMENTS FOUND
             </h3>
-            <p className="font-mono text-xs text-neutral-500 mt-1">
+            <p className="font-mono text-xs text-zinc-400 mt-1">
               Try adjusting your category or status filters to view other honors.
             </p>
           </div>

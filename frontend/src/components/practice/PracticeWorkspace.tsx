@@ -225,25 +225,25 @@ export function PracticeWorkspace({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
       {/* Left Column: Problem Details (5 cols) */}
-      <div className="lg:col-span-5 rounded-2xl border-2 border-black bg-white brutal-shadow-sm overflow-hidden flex flex-col h-[740px]">
+      <div className="lg:col-span-5 rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden flex flex-col h-[740px]">
         {/* Problem Header */}
-        <div className="p-4 border-b-2 border-black bg-neutral-50 flex items-center justify-between">
+        <div className="p-4 border-b border-zinc-800 bg-zinc-900/50 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span
-              className={`font-mono text-[10px] font-black uppercase px-2 py-0.5 rounded border ${
+              className={`font-mono text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${
                 problem.difficulty === "EASY"
-                  ? "bg-[#DCFCE7] text-[#15803D] border-[#15803D]"
+                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                   : problem.difficulty === "MEDIUM"
-                  ? "bg-[#FEF3C7] text-[#B45309] border-[#B45309]"
-                  : "bg-[#FEE2E2] text-[#B91C1C] border-[#B91C1C]"
+                  ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                  : "bg-rose-500/10 text-rose-400 border-rose-500/20"
               }`}
             >
               {problem.difficulty}
             </span>
-            <span className="font-mono text-[10px] font-bold text-neutral-600 bg-white px-2 py-0.5 rounded border border-black/10">
+            <span className="font-mono text-[10px] font-medium text-zinc-300 bg-zinc-800/80 px-2.5 py-0.5 rounded-full border border-zinc-700/50">
               {problem.category}
             </span>
-            <span className="font-mono text-[10px] font-bold text-neutral-600">
+            <span className="font-mono text-[10px] font-semibold text-[#E5FF45]">
               +{problem.xpReward} XP
             </span>
           </div>
@@ -255,10 +255,10 @@ export function PracticeWorkspace({
               onToggleBookmark(problem.id);
             }}
             title={isBookmarked ? "Remove Bookmark" : "Bookmark Problem"}
-            className="p-1 text-neutral-400 hover:text-black transition-colors cursor-pointer"
+            className="p-1 text-zinc-400 hover:text-white transition-colors cursor-pointer"
           >
             {isBookmarked ? (
-              <BookmarkCheck className="h-4 w-4 text-[#2563EB] fill-[#2563EB]" />
+              <BookmarkCheck className="h-4 w-4 text-[#E5FF45] fill-[#E5FF45]" />
             ) : (
               <Bookmark className="h-4 w-4" />
             )}
@@ -268,34 +268,34 @@ export function PracticeWorkspace({
         {/* Scrollable Problem Content */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 custom-code-scroll space-y-5">
           {/* Statement */}
-          <div className="font-body text-xs sm:text-sm text-neutral-800 leading-relaxed whitespace-pre-line">
+          <div className="font-body text-xs sm:text-sm text-zinc-300 leading-relaxed whitespace-pre-line">
             {problem.description}
           </div>
 
           {/* Examples */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
-              <Code2 className="h-3.5 w-3.5 text-[#2563EB]" />
+            <h4 className="font-display text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
+              <Code2 className="h-3.5 w-3.5 text-cyan-400" />
               EXAMPLES
             </h4>
             {problem.examples.map((ex, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-black/20 bg-neutral-50 p-3 font-mono text-xs space-y-1.5"
+                className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3 font-mono text-xs space-y-2"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-neutral-500 text-[11px]">
+                  <span className="font-semibold text-zinc-400 text-[11px]">
                     Example {idx + 1}
                   </span>
                   <button
                     type="button"
                     onClick={() => handleCopyExample(ex.input, idx)}
-                    className="flex items-center gap-1 text-[10px] text-neutral-500 hover:text-black cursor-pointer"
+                    className="flex items-center gap-1 text-[10px] text-zinc-400 hover:text-white cursor-pointer transition-colors"
                   >
                     {copiedExampleIndex === idx ? (
                       <>
-                        <Check className="h-3 w-3 text-[#16A34A]" />
-                        <span className="text-[#16A34A]">Copied</span>
+                        <Check className="h-3 w-3 text-emerald-400" />
+                        <span className="text-emerald-400">Copied</span>
                       </>
                     ) : (
                       <>
@@ -306,19 +306,19 @@ export function PracticeWorkspace({
                   </button>
                 </div>
 
-                <div className="bg-white p-2 rounded-lg border border-black/10">
-                  <span className="text-neutral-400 block text-[9px] font-bold">INPUT</span>
-                  <code className="text-black text-xs">{ex.input}</code>
+                <div className="bg-black/50 p-2.5 rounded-lg border border-zinc-800/80">
+                  <span className="text-zinc-500 block text-[9px] font-semibold">INPUT</span>
+                  <code className="text-zinc-200 text-xs">{ex.input}</code>
                 </div>
 
-                <div className="bg-white p-2 rounded-lg border border-black/10">
-                  <span className="text-neutral-400 block text-[9px] font-bold">OUTPUT</span>
-                  <code className="text-[#16A34A] font-bold text-xs">{ex.output}</code>
+                <div className="bg-black/50 p-2.5 rounded-lg border border-zinc-800/80">
+                  <span className="text-zinc-500 block text-[9px] font-semibold">OUTPUT</span>
+                  <code className="text-emerald-400 font-semibold text-xs">{ex.output}</code>
                 </div>
 
                 {ex.explanation && (
-                  <p className="text-neutral-600 font-body text-xs pt-0.5">
-                    <strong>Explanation:</strong> {ex.explanation}
+                  <p className="text-zinc-400 font-body text-xs pt-0.5">
+                    <strong className="text-zinc-200">Explanation:</strong> {ex.explanation}
                   </p>
                 )}
               </div>
@@ -327,11 +327,11 @@ export function PracticeWorkspace({
 
           {/* Constraints */}
           <div className="space-y-2">
-            <h4 className="font-display text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
-              <Layers className="h-3.5 w-3.5 text-[#DC2626]" />
+            <h4 className="font-display text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
+              <Layers className="h-3.5 w-3.5 text-rose-400" />
               CONSTRAINTS
             </h4>
-            <ul className="list-disc list-inside font-mono text-xs text-neutral-700 bg-neutral-50 p-3 rounded-xl border border-black/10 space-y-1">
+            <ul className="list-disc list-inside font-mono text-xs text-zinc-300 bg-zinc-900/40 p-3 rounded-xl border border-zinc-800/80 space-y-1">
               {problem.constraints.map((c, i) => (
                 <li key={i}>{c}</li>
               ))}
@@ -341,8 +341,8 @@ export function PracticeWorkspace({
           {/* Collapsible Hints */}
           {problem.hints && problem.hints.length > 0 && (
             <div className="space-y-2 pt-1">
-              <h4 className="font-display text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
-                <Lightbulb className="h-3.5 w-3.5 text-[#EAB308]" />
+              <h4 className="font-display text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
+                <Lightbulb className="h-3.5 w-3.5 text-amber-400" />
                 HINTS
               </h4>
               <div className="space-y-2">
@@ -355,16 +355,16 @@ export function PracticeWorkspace({
                         playClick();
                         setActiveHintIndex(isRevealed ? null : idx);
                       }}
-                      className="rounded-xl border border-black/20 bg-neutral-50 p-2.5 cursor-pointer hover:bg-neutral-100 transition-colors"
+                      className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 cursor-pointer hover:bg-zinc-900/70 transition-colors"
                     >
-                      <div className="flex items-center justify-between font-mono text-xs font-bold text-neutral-700">
+                      <div className="flex items-center justify-between font-mono text-xs font-semibold text-zinc-300">
                         <span>Hint {idx + 1}</span>
-                        <span className="text-[10px] text-[#2563EB] uppercase">
+                        <span className="text-[10px] text-cyan-400 uppercase font-semibold">
                           {isRevealed ? "Hide ✕" : "Reveal 💡"}
                         </span>
                       </div>
                       {isRevealed && (
-                        <p className="mt-2 text-xs font-body text-neutral-800 bg-amber-50 p-2.5 rounded-lg border border-amber-200">
+                        <p className="mt-2 text-xs font-body text-amber-200 bg-amber-500/10 p-2.5 rounded-lg border border-amber-500/20">
                           {hint}
                         </p>
                       )}
@@ -376,9 +376,9 @@ export function PracticeWorkspace({
           )}
 
           {/* Complexity Target */}
-          <div className="p-3 bg-neutral-50 rounded-xl border border-black/10 flex items-center justify-between font-mono text-[11px] text-neutral-600">
+          <div className="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80 flex items-center justify-between font-mono text-[11px] text-zinc-400">
             <span>Target Complexity:</span>
-            <span className="font-bold text-black">
+            <span className="font-semibold text-zinc-200">
               Time: {problem.optimalComplexity.time} • Space: {problem.optimalComplexity.space}
             </span>
           </div>
@@ -386,9 +386,9 @@ export function PracticeWorkspace({
       </div>
 
       {/* Right Column: Code Editor & Test Runner (7 cols) */}
-      <div className="lg:col-span-7 flex flex-col h-[740px] rounded-2xl border-2 border-black bg-white brutal-shadow-sm overflow-hidden">
+      <div className="lg:col-span-7 flex flex-col h-[740px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
         {/* Editor Header: Language selector, Reset button */}
-        <div className="flex items-center justify-between border-b-2 border-black bg-neutral-100 p-2.5 px-3">
+        <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 p-2.5 px-3">
           <CustomDropdown
             prefixLabel="LANG"
             options={WORKSPACE_LANGUAGE_OPTIONS}
@@ -401,7 +401,7 @@ export function PracticeWorkspace({
             type="button"
             onClick={handleResetCode}
             title="Reset to starter code"
-            className="flex items-center gap-1 font-mono text-[11px] font-bold text-neutral-600 hover:text-black bg-white border border-black/20 px-2.5 py-1 rounded-lg cursor-pointer transition-colors"
+            className="flex items-center gap-1 font-mono text-[11px] font-semibold text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-700/80 px-3 py-1 rounded-full cursor-pointer transition-colors"
           >
             <RotateCcw className="h-3 w-3" />
             <span>Reset</span>
@@ -431,7 +431,7 @@ export function PracticeWorkspace({
         </div>
 
         {/* Bottom Test Runner & Output Console */}
-        <div className="border-t-2 border-black bg-neutral-50 p-3 sm:p-4 space-y-3">
+        <div className="border-t border-zinc-800 bg-zinc-950/70 p-3 sm:p-4 space-y-3">
           {/* Action Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             {/* Test Case Pill Selector */}
@@ -446,10 +446,10 @@ export function PracticeWorkspace({
                       playClick();
                       setActiveTestCaseIndex(idx);
                     }}
-                    className={`px-2.5 py-1 rounded-lg font-bold uppercase transition-all cursor-pointer ${
+                    className={`px-3 py-1 rounded-full font-semibold uppercase transition-all cursor-pointer ${
                       activeTestCaseIndex === idx
-                        ? "bg-black text-[#E5FF45] border-2 border-black"
-                        : "bg-white text-neutral-600 border border-black/20 hover:bg-neutral-100"
+                        ? "bg-white text-black shadow-sm"
+                        : "bg-zinc-900/60 text-zinc-400 border border-zinc-800 hover:text-white hover:bg-zinc-800"
                     }`}
                   >
                     Case {idx + 1}
@@ -461,10 +461,10 @@ export function PracticeWorkspace({
                   playClick();
                   setActiveTestCaseIndex(99);
                 }}
-                className={`px-2.5 py-1 rounded-lg font-bold uppercase transition-all cursor-pointer ${
+                className={`px-3 py-1 rounded-full font-semibold uppercase transition-all cursor-pointer ${
                   activeTestCaseIndex === 99
-                    ? "bg-black text-[#E5FF45] border-2 border-black"
-                    : "bg-white text-neutral-600 border border-black/20 hover:bg-neutral-100"
+                    ? "bg-white text-black shadow-sm"
+                    : "bg-zinc-900/60 text-zinc-400 border border-zinc-800 hover:text-white hover:bg-zinc-800"
                 }`}
               >
                 Custom Input
@@ -478,9 +478,9 @@ export function PracticeWorkspace({
                 disabled={isRunning || isSubmitting}
                 onClick={() => runEvaluation(false)}
                 onMouseEnter={() => playHover()}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 border-black bg-white hover:bg-neutral-100 font-display text-xs font-black uppercase text-black brutal-shadow-sm cursor-pointer disabled:opacity-50"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-zinc-700 bg-zinc-900/80 hover:bg-zinc-800 font-display text-xs font-semibold uppercase text-zinc-200 hover:text-white transition-colors cursor-pointer disabled:opacity-50"
               >
-                <Play className="h-3.5 w-3.5 fill-black" />
+                <Play className="h-3.5 w-3.5 fill-current" />
                 <span>{isRunning ? "RUNNING..." : "RUN CODE"}</span>
               </button>
 
@@ -489,19 +489,19 @@ export function PracticeWorkspace({
                 disabled={isRunning || isSubmitting}
                 onClick={() => runEvaluation(true)}
                 onMouseEnter={() => playHover()}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl border-2 border-black bg-black font-display text-xs font-black uppercase text-[#E5FF45] brutal-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-transform cursor-pointer disabled:opacity-50"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white font-display text-xs font-semibold uppercase text-black hover:bg-zinc-200 shadow-md transition-colors cursor-pointer disabled:opacity-50"
               >
-                <Sparkles className="h-3.5 w-3.5" />
+                <Sparkles className="h-3.5 w-3.5 text-black" />
                 <span>{isSubmitting ? "VERIFYING..." : "SUBMIT"}</span>
               </button>
             </div>
           </div>
 
           {/* Test Case Detail or Custom Input View */}
-          <div className="bg-white rounded-xl border border-black/20 p-3 font-mono text-xs">
+          <div className="bg-black/50 rounded-xl border border-zinc-800/80 p-3 font-mono text-xs">
             {activeTestCaseIndex === 99 ? (
               <div className="space-y-1.5">
-                <span className="font-bold text-neutral-500 text-[10px] block">
+                <span className="font-semibold text-zinc-400 text-[10px] block">
                   CUSTOM ARGUMENT INPUT:
                 </span>
                 <input
@@ -509,23 +509,23 @@ export function PracticeWorkspace({
                   value={customInput}
                   onChange={(e) => setCustomInput(e.target.value)}
                   placeholder="e.g. [5, 10, 15, 20], 35"
-                  className="w-full bg-neutral-50 p-2 rounded-lg border border-black/20 text-black text-xs font-mono"
+                  className="w-full bg-zinc-900/90 p-2 rounded-lg border border-zinc-700 text-white text-xs font-mono placeholder:text-zinc-500 focus:outline-none focus:border-white"
                 />
               </div>
             ) : (
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-neutral-500 font-bold text-[10px]">
+                  <span className="text-zinc-400 font-semibold text-[10px]">
                     CASE {activeTestCaseIndex + 1} INPUT:
                   </span>
-                  <span className="text-neutral-400 text-[10px]">
+                  <span className="text-zinc-500 text-[10px]">
                     Expected:{" "}
-                    <strong className="text-black">
+                    <strong className="text-zinc-200">
                       {problem.testCases[activeTestCaseIndex]?.expectedOutput}
                     </strong>
                   </span>
                 </div>
-                <div className="bg-neutral-50 p-1.5 rounded border border-black/10 text-neutral-800">
+                <div className="bg-zinc-900/60 p-2 rounded border border-zinc-800 text-zinc-300">
                   {problem.testCases[activeTestCaseIndex]?.input}
                 </div>
               </div>
@@ -534,12 +534,12 @@ export function PracticeWorkspace({
             {/* Status Output Line */}
             {testResults.status !== "IDLE" && (
               <div
-                className={`mt-2.5 pt-2 border-t border-black/10 flex items-center justify-between text-xs font-bold ${
+                className={`mt-2.5 pt-2 border-t border-zinc-800/80 flex items-center justify-between text-xs font-semibold ${
                   testResults.status === "SUCCESS"
-                    ? "text-[#16A34A]"
+                    ? "text-emerald-400"
                     : testResults.status === "FAILED"
-                    ? "text-[#DC2626]"
-                    : "text-[#B45309]"
+                    ? "text-rose-400"
+                    : "text-amber-400"
                 }`}
               >
                 <div className="flex items-center gap-1.5">
@@ -550,7 +550,7 @@ export function PracticeWorkspace({
                   )}
                   <span>{testResults.message}</span>
                 </div>
-                <div className="font-mono text-[10px] text-neutral-500 font-normal">
+                <div className="font-mono text-[10px] text-zinc-500 font-normal">
                   {testResults.runtimeMs}ms • {testResults.memoryMb}MB
                 </div>
               </div>
@@ -558,15 +558,15 @@ export function PracticeWorkspace({
           </div>
 
           {/* Keyboard Shortcuts Hint */}
-          <div className="flex items-center justify-between font-mono text-[10px] text-neutral-400">
+          <div className="flex items-center justify-between font-mono text-[10px] text-zinc-500">
             <span>
-              <kbd className="bg-white border px-1 rounded">Ctrl</kbd> +{" "}
-              <kbd className="bg-white border px-1 rounded">Enter</kbd> to Run
+              <kbd className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">Ctrl</kbd> +{" "}
+              <kbd className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">Enter</kbd> to Run
             </span>
             <span>
-              <kbd className="bg-white border px-1 rounded">Ctrl</kbd> +{" "}
-              <kbd className="bg-white border px-1 rounded">Shift</kbd> +{" "}
-              <kbd className="bg-white border px-1 rounded">Enter</kbd> to Submit
+              <kbd className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">Ctrl</kbd> +{" "}
+              <kbd className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">Shift</kbd> +{" "}
+              <kbd className="bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded">Enter</kbd> to Submit
             </span>
           </div>
         </div>

@@ -539,18 +539,18 @@ function SettingsContent() {
   return (
     <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto pb-16">
       {/* 1. Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-black pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-5">
         <div>
-          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-neutral-500 uppercase tracking-wider">
-            <Terminal className="h-3.5 w-3.5 text-[#2563EB]" />
+          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-zinc-400 uppercase tracking-wider">
+            <Terminal className="h-3.5 w-3.5 text-cyan-400" />
             <span>SYSTEM</span>
-            <span className="text-neutral-400">{"//"}</span>
-            <span className="text-black font-black">SETTINGS</span>
+            <span className="text-zinc-600">{"//"}</span>
+            <span className="text-[#E5FF45] font-semibold">SETTINGS</span>
           </div>
-          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-black mt-1">
-            CONFIGURATION & PREFERENCES
+          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-1">
+            Configuration & Preferences
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-neutral-600 font-medium">
+          <p className="mt-1 text-xs sm:text-sm text-zinc-400">
             Fine-tune your combat profile, code editor environment, audio triggers, and security.
           </p>
         </div>
@@ -561,21 +561,21 @@ function SettingsContent() {
             type="button"
             onClick={handleSave}
             onMouseEnter={() => playHover()}
-            className={`inline-flex items-center gap-2 rounded-xl border-2 border-black px-5 py-2.5 font-display text-xs sm:text-sm font-black uppercase tracking-wider transition-all cursor-pointer brutal-shadow-sm ${
+            className={`inline-flex items-center gap-2 rounded-full px-5 py-2 font-display text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md ${
               isSavedJustNow
-                ? "bg-[#34A853] text-white scale-105"
-                : "bg-[#E5FF45] text-black hover:bg-[#DAF428]"
+                ? "bg-emerald-400 text-black scale-105"
+                : "bg-white text-black hover:bg-zinc-200"
             }`}
           >
             {isSavedJustNow ? (
               <>
                 <Check className="h-4 w-4 stroke-[3]" />
-                <span>SAVED INSTANTLY!</span>
+                <span>Saved Instantly!</span>
               </>
             ) : (
               <>
                 <Save className="h-4 w-4" />
-                <span>SAVE PREFERENCES</span>
+                <span>Save Preferences</span>
               </>
             )}
           </button>
@@ -584,22 +584,22 @@ function SettingsContent() {
 
       {/* Toast Notification */}
       {showSavedToast && (
-        <div className="flex items-center gap-3 rounded-xl border-2 border-black bg-[#34A853] p-3 text-white brutal-shadow-sm animate-in fade-in slide-in-from-top-2 duration-200">
-          <CheckCircle2 className="h-5 w-5 shrink-0" />
-          <p className="font-display text-xs sm:text-sm font-black uppercase tracking-wide">
+        <div className="flex items-center gap-3 rounded-2xl border border-emerald-500/50 bg-emerald-500/10 p-3.5 text-emerald-300 shadow-lg backdrop-blur-md animate-in fade-in slide-in-from-top-2 duration-200">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" />
+          <p className="font-display text-xs sm:text-sm font-semibold tracking-wide">
             Preferences saved successfully and synced in real-time across your arena!
           </p>
         </div>
       )}
 
       {/* 2. Modern Tab Navigation Bar */}
-      <div className="flex flex-wrap gap-2 border-b border-black/10 pb-3">
+      <div className="flex flex-wrap gap-2 border-b border-zinc-800 pb-3">
         {[
-          { id: "profile", label: "PROFILE & ACCOUNT", icon: User },
-          { id: "editor", label: "CODE EDITOR", icon: Code2 },
-          { id: "sound", label: "AUDIO & HAPTICS", icon: Volume2 },
-          { id: "notifications", label: "NOTIFICATIONS", icon: Bell },
-          { id: "security", label: "SECURITY & CLOUD", icon: Shield },
+          { id: "profile", label: "Profile & Account", icon: User },
+          { id: "editor", label: "Code Editor", icon: Code2 },
+          { id: "sound", label: "Audio & Haptics", icon: Volume2 },
+          { id: "notifications", label: "Notifications", icon: Bell },
+          { id: "security", label: "Security & Cloud", icon: Shield },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -610,13 +610,13 @@ function SettingsContent() {
               type="button"
               onClick={() => switchTab(tab.id as SettingsTab)}
               onMouseEnter={() => playHover()}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2 font-display text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+              className={`flex items-center gap-2 rounded-full px-4 py-2 font-display text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                 isActive
-                  ? "border-2 border-black bg-black text-[#E5FF45] brutal-shadow-sm"
-                  : "border-2 border-transparent text-neutral-600 hover:border-black hover:bg-neutral-100 hover:text-black"
+                  ? "border border-zinc-700 bg-zinc-800 text-white shadow-md shadow-black/40"
+                  : "border border-transparent text-zinc-400 hover:text-white hover:bg-zinc-900/60"
               }`}
             >
-              <Icon className={`h-3.5 w-3.5 ${isActive ? "text-[#E5FF45]" : "text-neutral-500"}`} />
+              <Icon className={`h-3.5 w-3.5 ${isActive ? "text-[#E5FF45]" : "text-zinc-500"}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -629,44 +629,44 @@ function SettingsContent() {
       {activeTab === "profile" && (
         <div className="space-y-6 animate-in fade-in duration-150">
           {/* Avatar & Identity Box */}
-          <section className="rounded-2xl sm:rounded-3xl border-2 border-black bg-white p-6 brutal-shadow">
-            <h2 className="font-display text-base sm:text-lg font-black uppercase text-black mb-4 flex items-center gap-2">
-              <User className="h-4 w-4 text-[#2563EB]" />
-              <span>PUBLIC COMBAT IDENTITY</span>
+          <section className="rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-6 backdrop-blur-xl shadow-xl">
+            <h2 className="font-display text-base sm:text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <User className="h-4 w-4 text-cyan-400" />
+              <span>Public Combat Identity</span>
             </h2>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 pb-6 border-b border-black/10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 pb-6 border-b border-zinc-800">
               {/* Avatar Preview */}
               <div className="relative shrink-0">
                 {prefs.avatarUrl ? (
                   <img
                     src={prefs.avatarUrl}
                     alt={prefs.name}
-                    className="h-20 w-20 rounded-2xl object-cover border-2 border-black brutal-shadow-sm"
+                    className="h-20 w-20 rounded-2xl object-cover border border-zinc-700 shadow-md"
                   />
                 ) : (
-                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-black bg-black text-[#E5FF45] font-display text-2xl font-black brutal-shadow-sm">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-900 text-[#E5FF45] font-display text-2xl font-bold shadow-md">
                     <span>{currentInitials}</span>
                   </div>
                 )}
-                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-black bg-[#E5FF45] text-xs font-black text-black">
+                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-black/40 bg-[#E5FF45] text-xs font-bold text-black">
                   ✓
                 </span>
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="font-display text-lg font-black text-black uppercase truncate">
+                <h3 className="font-display text-lg font-bold text-white truncate">
                   {prefs.name || "Developer"}
                 </h3>
-                <p className="font-mono text-xs text-neutral-500 mt-0.5">
+                <p className="font-mono text-xs text-zinc-400 mt-0.5">
                   @{prefs.username.toLowerCase().replace(/[^a-z0-9_]/g, "")} • {prefs.email}
                 </p>
                 <div className="mt-2.5 flex flex-wrap gap-2">
-                  <span className="font-mono text-[10px] font-black uppercase px-2 py-0.5 bg-[#E5FF45] border border-black rounded-md text-black">
-                    {session?.provider ? `${session.provider} VERIFIED` : "ACTIVE SESSION"}
+                  <span className="font-mono text-[10px] font-bold uppercase px-2.5 py-0.5 bg-[#E5FF45]/15 border border-[#E5FF45]/30 rounded-full text-[#E5FF45]">
+                    {session?.provider ? `${session.provider} Verified` : "Active Session"}
                   </span>
-                  <span className="font-mono text-[10px] font-bold uppercase px-2 py-0.5 bg-neutral-100 border border-black/20 rounded-md text-neutral-600">
-                    TIER 0 // UNRANKED
+                  <span className="font-mono text-[10px] font-medium uppercase px-2.5 py-0.5 bg-zinc-900 border border-zinc-800 rounded-full text-zinc-400">
+                    Tier 0 // Unranked
                   </span>
                 </div>
               </div>
@@ -676,7 +676,7 @@ function SettingsContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-6">
               {/* Display Name */}
               <div>
-                <label className="block font-mono text-xs font-bold text-neutral-700 uppercase mb-1.5">
+                <label className="block font-mono text-xs font-medium text-zinc-400 uppercase mb-1.5">
                   Display Name
                 </label>
                 <input
@@ -684,20 +684,20 @@ function SettingsContent() {
                   value={prefs.name}
                   onChange={(e) => setPrefs({ ...prefs, name: e.target.value })}
                   placeholder="Your Name (e.g. Surya Pratap Singh)"
-                  className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-display text-sm font-bold text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45] brutal-shadow-sm transition-all"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-display text-sm font-medium text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40 transition-all"
                 />
-                <p className="mt-1 font-mono text-[10px] text-neutral-400">
+                <p className="mt-1 font-mono text-[10px] text-zinc-500">
                   Displayed on top dashboard greeting and arena battle cards.
                 </p>
               </div>
 
               {/* Username Handle */}
               <div>
-                <label className="block font-mono text-xs font-bold text-neutral-700 uppercase mb-1.5">
+                <label className="block font-mono text-xs font-medium text-zinc-400 uppercase mb-1.5">
                   Username Handle
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono text-sm font-bold text-neutral-400">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono text-sm font-medium text-zinc-500">
                     @
                   </span>
                   <input
@@ -705,14 +705,14 @@ function SettingsContent() {
                     value={prefs.username}
                     onChange={(e) => setPrefs({ ...prefs, username: e.target.value })}
                     placeholder="username"
-                    className="w-full rounded-xl border-2 border-black bg-neutral-50 pl-8 pr-3.5 py-2 font-mono text-sm font-bold text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45] brutal-shadow-sm transition-all"
+                    className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 pl-8 pr-3.5 py-2 font-mono text-sm text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40 transition-all"
                   />
                 </div>
               </div>
 
               {/* Email Address */}
               <div>
-                <label className="block font-mono text-xs font-bold text-neutral-700 uppercase mb-1.5">
+                <label className="block font-mono text-xs font-medium text-zinc-400 uppercase mb-1.5">
                   Account Email
                 </label>
                 <input
@@ -720,13 +720,13 @@ function SettingsContent() {
                   value={prefs.email}
                   onChange={(e) => setPrefs({ ...prefs, email: e.target.value })}
                   placeholder="name@gmail.com"
-                  className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-mono text-sm text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45] brutal-shadow-sm transition-all"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-mono text-sm text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40 transition-all"
                 />
               </div>
 
               {/* Avatar URL */}
               <div>
-                <label className="block font-mono text-xs font-bold text-neutral-700 uppercase mb-1.5">
+                <label className="block font-mono text-xs font-medium text-zinc-400 uppercase mb-1.5">
                   Avatar Image URL (Optional)
                 </label>
                 <input
@@ -734,13 +734,13 @@ function SettingsContent() {
                   value={prefs.avatarUrl}
                   onChange={(e) => setPrefs({ ...prefs, avatarUrl: e.target.value })}
                   placeholder="https://example.com/avatar.jpg"
-                  className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-mono text-xs text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45] brutal-shadow-sm transition-all"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-mono text-xs text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40 transition-all"
                 />
               </div>
 
               {/* Bio Quote */}
               <div className="md:col-span-2">
-                <label className="block font-mono text-xs font-bold text-neutral-700 uppercase mb-1.5">
+                <label className="block font-mono text-xs font-medium text-zinc-400 uppercase mb-1.5">
                   Combat Bio / Status Tagline
                 </label>
                 <textarea
@@ -748,19 +748,19 @@ function SettingsContent() {
                   value={prefs.bio}
                   onChange={(e) => setPrefs({ ...prefs, bio: e.target.value })}
                   placeholder="Write a short summary about your coding speed or algorithms."
-                  className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-body text-sm font-medium text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45] brutal-shadow-sm transition-all"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-body text-sm font-medium text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40 transition-all"
                 />
               </div>
             </div>
           </section>
 
           {/* Primary Language Selection */}
-          <section className="rounded-2xl sm:rounded-3xl border-2 border-black bg-white p-6 brutal-shadow">
-            <h2 className="font-display text-base sm:text-lg font-black uppercase text-black mb-1 flex items-center gap-2">
-              <Terminal className="h-4 w-4 text-[#2563EB]" />
-              <span>PRIMARY COMBAT LANGUAGE</span>
+          <section className="rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-6 backdrop-blur-xl shadow-xl">
+            <h2 className="font-display text-base sm:text-lg font-bold text-white mb-1 flex items-center gap-2">
+              <Terminal className="h-4 w-4 text-cyan-400" />
+              <span>Primary Combat Language</span>
             </h2>
-            <p className="font-mono text-xs text-neutral-500 mb-4">
+            <p className="font-mono text-xs text-zinc-400 mb-4">
               Your default weapon when entering live multiplayer code matches.
             </p>
 
@@ -776,17 +776,17 @@ function SettingsContent() {
                       setPrefs({ ...prefs, preferredLanguage: lang.id });
                     }}
                     onMouseEnter={() => playHover()}
-                    className={`flex items-center justify-between rounded-xl p-3 border-2 transition-all cursor-pointer text-left ${
+                    className={`flex items-center justify-between rounded-xl p-3 border transition-all cursor-pointer text-left ${
                       isSelected
-                        ? "border-black bg-[#E5FF45] text-black brutal-shadow-sm font-black"
-                        : "border-black/20 bg-neutral-50 text-neutral-700 hover:border-black hover:bg-white"
+                        ? "border-[#E5FF45] bg-[#E5FF45]/15 text-white ring-1 ring-[#E5FF45] shadow-md shadow-[#E5FF45]/10 font-bold"
+                        : "border-zinc-800/80 bg-zinc-900/40 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/80"
                     }`}
                   >
                     <div>
-                      <p className="font-display text-xs font-black">{lang.name}</p>
-                      <p className="font-mono text-[10px] text-neutral-500 mt-0.5">{lang.ext}</p>
+                      <p className="font-display text-xs font-bold text-white">{lang.name}</p>
+                      <p className="font-mono text-[10px] text-zinc-500 mt-0.5">{lang.ext}</p>
                     </div>
-                    {isSelected && <Check className="h-4 w-4 text-black shrink-0" />}
+                    {isSelected && <Check className="h-4 w-4 text-[#E5FF45] shrink-0" />}
                   </button>
                 );
               })}
@@ -798,18 +798,18 @@ function SettingsContent() {
       {/* TAB 2: CODE EDITOR */}
       {activeTab === "editor" && (
         <div className="space-y-6 animate-in fade-in duration-150">
-          <section className="rounded-2xl sm:rounded-3xl border-2 border-black bg-white p-6 brutal-shadow">
-            <h2 className="font-display text-base sm:text-lg font-black uppercase text-black mb-1 flex items-center gap-2">
-              <Code2 className="h-4 w-4 text-[#2563EB]" />
-              <span>ARENA EDITOR CONFIGURATION</span>
+          <section className="rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-6 backdrop-blur-xl shadow-xl">
+            <h2 className="font-display text-base sm:text-lg font-bold text-white mb-1 flex items-center gap-2">
+              <Code2 className="h-4 w-4 text-cyan-400" />
+              <span>Arena Editor Configuration</span>
             </h2>
-            <p className="font-mono text-xs text-neutral-500 mb-6">
+            <p className="font-mono text-xs text-zinc-400 mb-6">
               Customize syntax themes, typography, indent size, and code completion behavior.
             </p>
 
             {/* Themes Selector */}
             <div className="mb-6">
-              <label className="block font-mono text-xs font-bold text-neutral-700 uppercase mb-2">
+              <label className="block font-mono text-xs font-medium text-zinc-400 uppercase mb-2">
                 Editor Syntax Theme
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -830,29 +830,29 @@ function SettingsContent() {
                         });
                       }}
                       onMouseEnter={() => playHover()}
-                      className={`group text-left rounded-xl sm:rounded-2xl border-2 transition-all cursor-pointer p-3.5 flex flex-col justify-between gap-3 ${
+                      className={`group text-left rounded-xl sm:rounded-2xl border transition-all cursor-pointer p-3.5 flex flex-col justify-between gap-3 ${
                         isSelected
-                          ? "border-black bg-[#FFFBF0] ring-2 ring-black brutal-shadow-sm"
-                          : "border-black/25 bg-white hover:border-black hover:bg-[#FFFBF0]/60"
+                          ? "border-[#E5FF45] bg-zinc-800/90 ring-1 ring-[#E5FF45] shadow-lg shadow-[#E5FF45]/10"
+                          : "border-zinc-800/80 bg-zinc-900/40 hover:border-zinc-700 hover:bg-zinc-900/80"
                       }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5 min-w-0">
                           <span
-                            className={`h-2.5 w-2.5 rounded-full border border-black shrink-0 ${
-                              isSelected ? "bg-[#E5FF45]" : "bg-neutral-200"
+                            className={`h-2.5 w-2.5 rounded-full border border-black/40 shrink-0 ${
+                              isSelected ? "bg-[#E5FF45]" : "bg-zinc-600"
                             }`}
                           />
-                          <span className="font-display text-xs font-black uppercase text-black truncate">
+                          <span className="font-display text-xs font-bold text-white truncate">
                             {theme.name}
                           </span>
                         </div>
                         {isSelected ? (
-                          <span className="font-mono text-[9px] font-black uppercase px-1.5 py-0.5 rounded border border-black bg-[#E5FF45] text-black shrink-0">
-                            ACTIVE
+                          <span className="font-mono text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-[#E5FF45] text-black shrink-0">
+                            Active
                           </span>
                         ) : (
-                          <span className="font-mono text-[9px] font-bold uppercase text-neutral-400 shrink-0">
+                          <span className="font-mono text-[9px] font-medium uppercase text-zinc-500 shrink-0">
                             {theme.tag}
                           </span>
                         )}
@@ -860,7 +860,7 @@ function SettingsContent() {
 
                       {/* Mini Editor Window Preview */}
                       <div
-                        className="rounded-lg border-2 border-black/80 overflow-hidden shadow-inner p-2.5 font-mono text-[10px] leading-relaxed select-none transition-transform group-hover:scale-[1.01]"
+                        className="rounded-lg border border-zinc-700/80 overflow-hidden shadow-inner p-2.5 font-mono text-[10px] leading-relaxed select-none transition-transform group-hover:scale-[1.01]"
                         style={{ backgroundColor: theme.bg }}
                       >
                         <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-white/10 opacity-70">
@@ -869,7 +869,7 @@ function SettingsContent() {
                             <span className="w-1.5 h-1.5 rounded-full bg-[#FFBD2E]" />
                             <span className="w-1.5 h-1.5 rounded-full bg-[#27C93F]" />
                           </div>
-                          <span className="text-[8px] tracking-wider uppercase text-neutral-400 font-bold">
+                          <span className="text-[8px] tracking-wider uppercase text-zinc-400 font-bold">
                             ARENA
                           </span>
                         </div>
@@ -885,8 +885,8 @@ function SettingsContent() {
                       </div>
 
                       {/* Color Palette Swatches */}
-                      <div className="flex items-center justify-between pt-1 border-t border-black/10">
-                        <span className="font-mono text-[9px] text-neutral-500 font-bold uppercase">
+                      <div className="flex items-center justify-between pt-1 border-t border-zinc-800">
+                        <span className="font-mono text-[9px] text-zinc-500 font-medium uppercase">
                           Palette
                         </span>
                         <div className="flex items-center gap-1">
@@ -906,10 +906,10 @@ function SettingsContent() {
             </div>
 
             {/* Typography & Format Options */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-6 border-b border-black/10">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-6 border-b border-zinc-800">
               {/* Font Size */}
               <div>
-                <label className="block font-mono text-xs font-black text-black uppercase mb-2">
+                <label className="block font-mono text-xs font-medium text-zinc-300 uppercase mb-2">
                   Font Size ({prefs.fontSize}px)
                 </label>
                 <div className="flex items-center gap-2">
@@ -928,10 +928,10 @@ function SettingsContent() {
                         });
                       }}
                       onMouseEnter={() => playHover()}
-                      className={`flex-1 py-2 rounded-xl border-2 font-mono text-xs font-black transition-all cursor-pointer ${
+                      className={`flex-1 py-2 rounded-xl border font-mono text-xs font-bold transition-all cursor-pointer ${
                         prefs.fontSize === size
-                          ? "border-black bg-[#E5FF45] text-black brutal-shadow-sm"
-                          : "border-black bg-white text-black hover:bg-[#FFFBF0] hover:brutal-shadow-sm"
+                          ? "border-[#E5FF45] bg-[#E5FF45] text-black shadow-md shadow-[#E5FF45]/20"
+                          : "border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-zinc-700 hover:text-white"
                       }`}
                     >
                       {size}px
@@ -942,7 +942,7 @@ function SettingsContent() {
 
               {/* Tab Size */}
               <div>
-                <label className="block font-mono text-xs font-black text-black uppercase mb-2">
+                <label className="block font-mono text-xs font-medium text-zinc-300 uppercase mb-2">
                   Tab Indentation
                 </label>
                 <div className="flex items-center gap-2">
@@ -961,10 +961,10 @@ function SettingsContent() {
                         });
                       }}
                       onMouseEnter={() => playHover()}
-                      className={`flex-1 py-2 rounded-xl border-2 font-mono text-xs font-black transition-all cursor-pointer ${
+                      className={`flex-1 py-2 rounded-xl border font-mono text-xs font-bold transition-all cursor-pointer ${
                         prefs.tabSize === spaces
-                          ? "border-black bg-[#E5FF45] text-black brutal-shadow-sm"
-                          : "border-black bg-white text-black hover:bg-[#FFFBF0] hover:brutal-shadow-sm"
+                          ? "border-[#E5FF45] bg-[#E5FF45] text-black shadow-md shadow-[#E5FF45]/20"
+                          : "border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-zinc-700 hover:text-white"
                       }`}
                     >
                       {spaces} Spaces
@@ -975,7 +975,7 @@ function SettingsContent() {
 
               {/* Keybindings */}
               <div>
-                <label className="block font-mono text-xs font-black text-black uppercase mb-2">
+                <label className="block font-mono text-xs font-medium text-zinc-300 uppercase mb-2">
                   Keybinding Profile
                 </label>
                 <div className="flex items-center gap-2">
@@ -997,10 +997,10 @@ function SettingsContent() {
                         });
                       }}
                       onMouseEnter={() => playHover()}
-                      className={`flex-1 py-2 rounded-xl border-2 font-mono text-xs font-black transition-all cursor-pointer ${
+                      className={`flex-1 py-2 rounded-xl border font-mono text-xs font-bold transition-all cursor-pointer ${
                         prefs.keybinding === kb.id
-                          ? "border-black bg-[#E5FF45] text-black brutal-shadow-sm"
-                          : "border-black bg-white text-black hover:bg-[#FFFBF0] hover:brutal-shadow-sm"
+                          ? "border-[#E5FF45] bg-[#E5FF45] text-black shadow-md shadow-[#E5FF45]/20"
+                          : "border-zinc-800 bg-zinc-900/60 text-zinc-300 hover:border-zinc-700 hover:text-white"
                       }`}
                     >
                       {kb.label}
@@ -1015,7 +1015,7 @@ function SettingsContent() {
               {[
                 {
                   id: "wordWrap",
-                  label: "WORD WRAP",
+                  label: "Word Wrap",
                   desc: "Wrap long algorithmic lines inside editor",
                   val: prefs.wordWrap,
                   onText: "WRAPPED",
@@ -1023,7 +1023,7 @@ function SettingsContent() {
                 },
                 {
                   id: "minimap",
-                  label: "CODE MINIMAP",
+                  label: "Code Minimap",
                   desc: "Display interactive right-hand code overview",
                   val: prefs.minimap,
                   onText: "VISIBLE",
@@ -1031,7 +1031,7 @@ function SettingsContent() {
                 },
                 {
                   id: "lineNumbers",
-                  label: "LINE NUMBERS",
+                  label: "Line Numbers",
                   desc: "Show gutter line counter and break points",
                   val: prefs.lineNumbers,
                   onText: "ON",
@@ -1039,7 +1039,7 @@ function SettingsContent() {
                 },
                 {
                   id: "bracketMatching",
-                  label: "BRACKET PAIR COLORS",
+                  label: "Bracket Pair Colors",
                   desc: "Highlight matching parentheses and braces",
                   val: prefs.bracketMatching,
                   onText: "RAINBOW",
@@ -1063,35 +1063,35 @@ function SettingsContent() {
                       return next;
                     });
                   }}
-                  className={`flex items-center justify-between p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
+                  className={`flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer ${
                     toggle.val
-                      ? "border-black bg-white brutal-shadow-sm"
-                      : "border-black/15 bg-neutral-50/70 hover:border-black hover:bg-white"
+                      ? "border-zinc-700 bg-zinc-900/70 shadow-sm"
+                      : "border-zinc-800/80 bg-zinc-900/30 hover:border-zinc-700 hover:bg-zinc-900/60"
                   }`}
                 >
                   <div className="pr-3">
                     <div className="flex items-center gap-2">
-                      <p className="font-display text-xs font-black text-black uppercase">{toggle.label}</p>
+                      <p className="font-display text-xs font-bold text-white">{toggle.label}</p>
                       <span
-                        className={`font-mono text-[9px] font-black uppercase px-1.5 py-0.5 rounded border ${
+                        className={`font-mono text-[9px] font-bold uppercase px-1.5 py-0.5 rounded border ${
                           toggle.val
-                            ? "bg-[#E5FF45] border-black text-black"
-                            : "bg-neutral-200 border-neutral-300 text-neutral-500"
+                            ? "bg-[#E5FF45]/15 border-[#E5FF45]/40 text-[#E5FF45]"
+                            : "bg-zinc-800 border-zinc-700 text-zinc-500"
                         }`}
                       >
                         {toggle.val ? toggle.onText : toggle.offText}
                       </span>
                     </div>
-                    <p className="font-mono text-[11px] text-neutral-500 mt-1">{toggle.desc}</p>
+                    <p className="font-mono text-[11px] text-zinc-400 mt-1">{toggle.desc}</p>
                   </div>
                   <div
-                    className={`h-7 w-12 rounded-full border-2 border-black p-0.5 transition-colors shrink-0 ${
-                      toggle.val ? "bg-[#E5FF45]" : "bg-neutral-200"
+                    className={`h-7 w-12 rounded-full p-0.5 transition-colors shrink-0 ${
+                      toggle.val ? "bg-[#E5FF45]" : "bg-zinc-800 border border-zinc-700"
                     }`}
                   >
                     <div
-                      className={`h-5 w-5 rounded-full bg-black transition-transform ${
-                        toggle.val ? "translate-x-5" : "translate-x-0"
+                      className={`h-6 w-6 rounded-full transition-transform ${
+                        toggle.val ? "bg-black translate-x-5" : "bg-zinc-400 translate-x-0"
                       }`}
                     />
                   </div>
@@ -1100,20 +1100,20 @@ function SettingsContent() {
             </div>
 
             {/* Live Interactive Monaco Editor Preview */}
-            <div className="mt-6 pt-5 border-t border-black/10">
+            <div className="mt-6 pt-5 border-t border-zinc-800">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] font-black text-black uppercase">
-                    LIVE ARENA MONACO EDITOR
+                  <span className="font-mono text-[11px] font-bold text-white uppercase tracking-wider">
+                    Live Arena Monaco Editor
                   </span>
-                  <span className="h-2 w-2 rounded-full bg-[#34A853] animate-ping" />
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
                 </div>
-                <span className="font-mono text-[10px] text-neutral-500 font-bold truncate max-w-md text-right">
+                <span className="font-mono text-[10px] text-zinc-400 font-medium truncate max-w-md text-right">
                   {prefs.preferredLanguage} • {prefs.fontSize}px • {prefs.tabSize} Spaces • {prefs.keybinding === "vim" ? "VIM" : "STD"} • Wrap: {prefs.wordWrap ? "ON" : "OFF"} • Minimap: {prefs.minimap ? "ON" : "OFF"}
                 </span>
               </div>
 
-              <div className="rounded-2xl border-2 border-black overflow-hidden brutal-shadow">
+              <div className="rounded-2xl border border-zinc-800 overflow-hidden shadow-2xl">
                 <MonacoEditor
                   height="260px"
                   language={
@@ -1156,30 +1156,30 @@ function SettingsContent() {
       {/* TAB 3: AUDIO & HAPTICS */}
       {activeTab === "sound" && (
         <div className="space-y-6 animate-in fade-in duration-150">
-          <section className="rounded-2xl sm:rounded-3xl border-2 border-black bg-white p-6 brutal-shadow">
-            <h2 className="font-display text-base sm:text-lg font-black uppercase text-black mb-1 flex items-center gap-2">
-              <Volume2 className="h-4 w-4 text-[#2563EB]" />
-              <span>ARCADE SOUND & AUDIO EFFECTS</span>
+          <section className="rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-6 backdrop-blur-xl shadow-xl">
+            <h2 className="font-display text-base sm:text-lg font-bold text-white mb-1 flex items-center gap-2">
+              <Volume2 className="h-4 w-4 text-cyan-400" />
+              <span>Arcade Sound & Audio Effects</span>
             </h2>
-            <p className="font-mono text-xs text-neutral-500 mb-6">
+            <p className="font-mono text-xs text-zinc-400 mb-6">
               Configure battle stings, match start clashing audio, and feedback jingles.
             </p>
 
             {/* Master Sound Switch */}
-            <div className="flex items-center justify-between p-4 rounded-2xl border-2 border-black bg-[#FFFBF0] mb-6 brutal-shadow-sm">
+            <div className="flex items-center justify-between p-4 rounded-2xl border border-zinc-800 bg-zinc-900/50 mb-6 shadow-inner">
               <div className="flex items-center gap-3">
                 <div
-                  className={`h-10 w-10 rounded-xl border-2 border-black flex items-center justify-center ${
-                    !isMuted ? "bg-[#E5FF45] text-black" : "bg-neutral-200 text-neutral-500"
+                  className={`h-10 w-10 rounded-xl border border-zinc-700 flex items-center justify-center ${
+                    !isMuted ? "bg-[#E5FF45] text-black shadow-md shadow-[#E5FF45]/20" : "bg-zinc-800 text-zinc-500"
                   }`}
                 >
                   {!isMuted ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
                 </div>
                 <div>
-                  <h3 className="font-display text-sm font-black uppercase text-black">
+                  <h3 className="font-display text-sm font-bold text-white">
                     Master Sound System
                   </h3>
-                  <p className="font-mono text-xs text-neutral-600 mt-0.5">
+                  <p className="font-mono text-xs text-zinc-400 mt-0.5">
                     {!isMuted ? "Sound effects currently ENABLED" : "All audio effects MUTED"}
                   </p>
                 </div>
@@ -1191,23 +1191,23 @@ function SettingsContent() {
                   toggleMute();
                   if (isMuted) playSuccess();
                 }}
-                className={`px-4 py-2 rounded-xl border-2 border-black font-display text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-full font-display text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm ${
                   !isMuted
-                    ? "bg-black text-[#E5FF45] brutal-shadow-sm"
-                    : "bg-white text-black hover:bg-[#E5FF45]"
+                    ? "border border-zinc-700 bg-zinc-800 text-white hover:bg-zinc-700"
+                    : "bg-white text-black hover:bg-zinc-200"
                 }`}
               >
-                {!isMuted ? "MUTE SOUNDS" : "ENABLE SOUNDS"}
+                {!isMuted ? "Mute Sounds" : "Enable Sounds"}
               </button>
             </div>
 
             {/* Volume Slider */}
-            <div className="p-4 rounded-xl border-2 border-black/15 bg-neutral-50 mb-6">
+            <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 mb-6">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-bold text-neutral-700 uppercase">
+                <span className="font-mono text-xs font-medium text-zinc-400 uppercase">
                   Master Volume Output
                 </span>
-                <span className="font-mono text-xs font-black text-black">
+                <span className="font-mono text-xs font-bold text-white">
                   {Math.round(volume * 100)}%
                 </span>
               </div>
@@ -1218,16 +1218,16 @@ function SettingsContent() {
                 step="0.05"
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
-                className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-[#2563EB]"
+                className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#E5FF45]"
               />
             </div>
 
             {/* Audio Testing Laboratory */}
-            <div className="pt-4 border-t border-black/10">
-              <h3 className="font-mono text-xs font-black uppercase tracking-wider text-neutral-500 mb-3">
-                SOUND EFFECT TEST BENCH
+            <div className="pt-4 border-t border-zinc-800">
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
+                Sound Effect Test Bench
               </h3>
-              <p className="font-mono text-xs text-neutral-600 mb-4">
+              <p className="font-mono text-xs text-zinc-500 mb-4">
                 Click any sound button below to test the game audio triggers.
               </p>
 
@@ -1235,37 +1235,37 @@ function SettingsContent() {
                 <button
                   type="button"
                   onClick={() => playClash()}
-                  className="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-black bg-white hover:bg-[#E5FF45] text-black transition-all cursor-pointer brutal-shadow-sm"
+                  className="flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:bg-zinc-800 text-white transition-all cursor-pointer"
                 >
-                  <Swords className="h-5 w-5 mb-1.5 text-black" />
-                  <span className="font-display text-xs font-black uppercase">Battle Clash</span>
+                  <Swords className="h-5 w-5 mb-1.5 text-cyan-400" />
+                  <span className="font-display text-xs font-semibold">Battle Clash</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => playSuccess()}
-                  className="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-black bg-white hover:bg-[#E5FF45] text-black transition-all cursor-pointer brutal-shadow-sm"
+                  className="flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:bg-zinc-800 text-white transition-all cursor-pointer"
                 >
-                  <Sparkles className="h-5 w-5 mb-1.5 text-[#34A853]" />
-                  <span className="font-display text-xs font-black uppercase">Success Chime</span>
+                  <Sparkles className="h-5 w-5 mb-1.5 text-emerald-400" />
+                  <span className="font-display text-xs font-semibold">Success Chime</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => playVictory()}
-                  className="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-black bg-white hover:bg-[#E5FF45] text-black transition-all cursor-pointer brutal-shadow-sm"
+                  className="flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:bg-zinc-800 text-white transition-all cursor-pointer"
                 >
-                  <Flame className="h-5 w-5 mb-1.5 text-[#FBBC05]" />
-                  <span className="font-display text-xs font-black uppercase">Victory Stinger</span>
+                  <Flame className="h-5 w-5 mb-1.5 text-amber-400" />
+                  <span className="font-display text-xs font-semibold">Victory Stinger</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => playDefeat()}
-                  className="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-black bg-white hover:bg-[#E5FF45] text-black transition-all cursor-pointer brutal-shadow-sm"
+                  className="flex flex-col items-center justify-center p-3 rounded-xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 hover:bg-zinc-800 text-white transition-all cursor-pointer"
                 >
-                  <AlertTriangle className="h-5 w-5 mb-1.5 text-red-500" />
-                  <span className="font-display text-xs font-black uppercase">Defeat Cue</span>
+                  <AlertTriangle className="h-5 w-5 mb-1.5 text-rose-400" />
+                  <span className="font-display text-xs font-semibold">Defeat Cue</span>
                 </button>
               </div>
             </div>
@@ -1276,12 +1276,12 @@ function SettingsContent() {
       {/* TAB 4: NOTIFICATIONS */}
       {activeTab === "notifications" && (
         <div className="space-y-6 animate-in fade-in duration-150">
-          <section className="rounded-2xl sm:rounded-3xl border-2 border-black bg-white p-6 brutal-shadow">
-            <h2 className="font-display text-base sm:text-lg font-black uppercase text-black mb-1 flex items-center gap-2">
-              <Bell className="h-4 w-4 text-[#2563EB]" />
-              <span>NOTIFICATION & ALERT CHANNELS</span>
+          <section className="rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-6 backdrop-blur-xl shadow-xl">
+            <h2 className="font-display text-base sm:text-lg font-bold text-white mb-1 flex items-center gap-2">
+              <Bell className="h-4 w-4 text-cyan-400" />
+              <span>Notification & Alert Channels</span>
             </h2>
-            <p className="font-mono text-xs text-neutral-500 mb-6">
+            <p className="font-mono text-xs text-zinc-400 mb-6">
               Choose which combat matches, tournament invites, and daily algorithm updates you receive.
             </p>
 
@@ -1315,22 +1315,26 @@ function SettingsContent() {
                       [item.id]: !prefs[item.id as keyof UserPreferences],
                     });
                   }}
-                  className="flex items-center justify-between p-4 rounded-xl border-2 border-black/15 hover:border-black bg-neutral-50 transition-all cursor-pointer"
+                  className={`flex items-center justify-between p-4 rounded-xl border transition-all cursor-pointer ${
+                    item.val
+                      ? "border-zinc-700 bg-zinc-900/60 shadow-sm"
+                      : "border-zinc-800/80 bg-zinc-900/30 hover:border-zinc-700 hover:bg-zinc-900/60"
+                  }`}
                 >
                   <div className="pr-4">
-                    <h4 className="font-display text-sm font-black text-black uppercase">
+                    <h4 className="font-display text-sm font-bold text-white">
                       {item.title}
                     </h4>
-                    <p className="font-mono text-xs text-neutral-500 mt-0.5">{item.desc}</p>
+                    <p className="font-mono text-xs text-zinc-400 mt-0.5">{item.desc}</p>
                   </div>
                   <div
-                    className={`h-6 w-11 rounded-full border-2 border-black p-0.5 transition-colors shrink-0 ${
-                      item.val ? "bg-[#E5FF45]" : "bg-neutral-300"
+                    className={`h-6 w-11 rounded-full p-0.5 transition-colors shrink-0 ${
+                      item.val ? "bg-[#E5FF45]" : "bg-zinc-800 border border-zinc-700"
                     }`}
                   >
                     <div
-                      className={`h-4 w-4 rounded-full bg-black transition-transform ${
-                        item.val ? "translate-x-5" : "translate-x-0"
+                      className={`h-5 w-5 rounded-full transition-transform ${
+                        item.val ? "bg-black translate-x-5" : "bg-zinc-400 translate-x-0"
                       }`}
                     />
                   </div>
@@ -1344,44 +1348,44 @@ function SettingsContent() {
       {/* TAB 5: SECURITY & CLOUD */}
       {activeTab === "security" && (
         <div className="space-y-6 animate-in fade-in duration-150">
-          <section className="rounded-2xl sm:rounded-3xl border-2 border-black bg-white p-6 brutal-shadow">
-            <h2 className="font-display text-base sm:text-lg font-black uppercase text-black mb-1 flex items-center gap-2">
-              <Shield className="h-4 w-4 text-[#2563EB]" />
-              <span>AUTHENTICATION & SESSION SECURITY</span>
+          <section className="rounded-2xl sm:rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-6 backdrop-blur-xl shadow-xl">
+            <h2 className="font-display text-base sm:text-lg font-bold text-white mb-1 flex items-center gap-2">
+              <Shield className="h-4 w-4 text-cyan-400" />
+              <span>Authentication & Session Security</span>
             </h2>
-            <p className="font-mono text-xs text-neutral-500 mb-6">
+            <p className="font-mono text-xs text-zinc-400 mb-6">
               Manage your connected OAuth identity, browser sessions, and stored tokens.
             </p>
 
             {/* Connected Account */}
-            <div className="p-4 rounded-xl border-2 border-black bg-neutral-50 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-900/40 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="font-mono text-[10px] font-black uppercase text-neutral-500">
-                  CONNECTED IDENTITY PROVIDER
+                <span className="font-mono text-[10px] font-bold uppercase text-zinc-500">
+                  Connected Identity Provider
                 </span>
-                <p className="font-display text-sm font-black text-black uppercase mt-0.5">
-                  {session?.provider ? `${session.provider.toUpperCase()} OAUTH 2.0` : "LOCAL GUEST ACCOUNT"}
+                <p className="font-display text-sm font-bold text-white uppercase mt-0.5">
+                  {session?.provider ? `${session.provider.toUpperCase()} OAuth 2.0` : "Local Guest Account"}
                 </p>
-                <p className="font-mono text-xs text-neutral-500 mt-0.5">
+                <p className="font-mono text-xs text-zinc-400 mt-0.5">
                   ID: {session?.id || "demo_usr_01"} • Authenticated
                 </p>
               </div>
 
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs font-black uppercase px-3 py-1 bg-[#E5FF45] border border-black rounded-lg text-black self-start sm:self-auto">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase px-3 py-1 bg-emerald-500/15 border border-emerald-500/30 rounded-full text-emerald-400 self-start sm:self-auto">
                 <Check className="h-3.5 w-3.5" />
-                ACTIVE & SYNCED
+                Active & Synced
               </span>
             </div>
 
             {/* Active Browser Session Card */}
-            <div className="p-4 rounded-xl border-2 border-black/15 bg-white mb-6">
+            <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 mb-6">
               <div className="flex items-center gap-3">
-                <Monitor className="h-5 w-5 text-neutral-600" />
+                <Monitor className="h-5 w-5 text-cyan-400" />
                 <div>
-                  <h4 className="font-display text-xs font-black uppercase text-black">
+                  <h4 className="font-display text-xs font-bold text-white">
                     Current Browser Session
                   </h4>
-                  <p className="font-mono text-[11px] text-neutral-500">
+                  <p className="font-mono text-[11px] text-zinc-400">
                     Windows / Chrome Desktop • Local Storage Session Active
                   </p>
                 </div>
@@ -1389,12 +1393,12 @@ function SettingsContent() {
             </div>
 
             {/* Danger Zone */}
-            <div className="pt-6 border-t-2 border-red-200">
-              <h3 className="font-display text-sm font-black uppercase text-red-600 mb-1 flex items-center gap-1.5">
-                <AlertTriangle className="h-4 w-4 text-red-500" />
-                <span>DANGER ZONE</span>
+            <div className="pt-6 border-t border-rose-950/60">
+              <h3 className="font-display text-sm font-bold text-rose-400 mb-1 flex items-center gap-1.5">
+                <AlertTriangle className="h-4 w-4 text-rose-400" />
+                <span>Danger Zone</span>
               </h3>
-              <p className="font-mono text-xs text-neutral-500 mb-4">
+              <p className="font-mono text-xs text-zinc-400 mb-4">
                 Actions here will reset your local profile data or log you out of CodeArena.
               </p>
 
@@ -1402,34 +1406,34 @@ function SettingsContent() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="rounded-xl border-2 border-black bg-black px-4 py-2 font-display text-xs font-black uppercase text-[#E5FF45] hover:bg-neutral-800 transition-all cursor-pointer"
+                  className="rounded-full border border-zinc-700 bg-zinc-900/80 px-4 py-2 font-display text-xs font-bold uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all cursor-pointer"
                 >
-                  LOG OUT CURRENT SESSION
+                  Log Out Current Session
                 </button>
 
                 {!showResetConfirm ? (
                   <button
                     type="button"
                     onClick={() => setShowResetConfirm(true)}
-                    className="rounded-xl border-2 border-red-500 bg-red-50 px-4 py-2 font-display text-xs font-black uppercase text-red-600 hover:bg-red-500 hover:text-white transition-all cursor-pointer"
+                    className="rounded-full border border-rose-800/80 bg-rose-950/40 px-4 py-2 font-display text-xs font-bold uppercase text-rose-300 hover:bg-rose-900/60 transition-all cursor-pointer"
                   >
-                    RESET PREFERENCES TO DEFAULT
+                    Reset Preferences to Default
                   </button>
                 ) : (
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={handleResetToDefaults}
-                      className="rounded-xl border-2 border-red-600 bg-red-600 px-3.5 py-2 font-display text-xs font-black uppercase text-white hover:bg-red-700 cursor-pointer"
+                      className="rounded-full bg-rose-600 px-4 py-2 font-display text-xs font-bold uppercase text-white hover:bg-rose-500 cursor-pointer shadow-md"
                     >
-                      CONFIRM RESET
+                      Confirm Reset
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowResetConfirm(false)}
-                      className="rounded-xl border-2 border-black bg-white px-3 py-2 font-display text-xs font-bold uppercase text-black cursor-pointer"
+                      className="rounded-full border border-zinc-700 bg-zinc-900/80 px-4 py-2 font-display text-xs font-semibold text-zinc-300 hover:text-white cursor-pointer"
                     >
-                      CANCEL
+                      Cancel
                     </button>
                   </div>
                 )}
@@ -1440,11 +1444,11 @@ function SettingsContent() {
       )}
 
       {/* Instant Action Sticky Bottom Bar */}
-      <div className="sticky bottom-4 z-40 p-3.5 sm:p-4 rounded-2xl border-2 border-black bg-white/95 backdrop-blur-md brutal-shadow flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="sticky bottom-4 z-40 p-3.5 sm:p-4 rounded-2xl border border-zinc-800 bg-[#0C0E14]/95 backdrop-blur-xl shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#34A853] animate-pulse shrink-0" />
-          <p className="font-mono text-xs font-bold text-neutral-700">
-            Real-time sync active • Press <kbd className="px-1.5 py-0.5 rounded border border-black bg-neutral-100 font-mono text-[10px] font-black">Ctrl</kbd> + <kbd className="px-1.5 py-0.5 rounded border border-black bg-neutral-100 font-mono text-[10px] font-black">S</kbd> to save anytime
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+          <p className="font-mono text-xs text-zinc-400">
+            Real-time sync active • Press <kbd className="px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 font-mono text-[10px] text-zinc-200">Ctrl</kbd> + <kbd className="px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 font-mono text-[10px] text-zinc-200">S</kbd> to save anytime
           </p>
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -1452,30 +1456,30 @@ function SettingsContent() {
             type="button"
             onClick={() => setShowResetConfirm(true)}
             onMouseEnter={() => playHover()}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl border-2 border-black bg-white px-3.5 py-2 font-display text-xs font-black uppercase text-neutral-800 hover:bg-[#FFFBF0] transition-all cursor-pointer"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-full border border-zinc-700 bg-zinc-900/80 px-4 py-2 font-display text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all cursor-pointer"
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            <span>RESET</span>
+            <span>Reset</span>
           </button>
           <button
             type="button"
             onClick={handleSave}
             onMouseEnter={() => playHover()}
-            className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-xl border-2 border-black px-5 py-2 font-display text-xs font-black uppercase tracking-wider transition-all cursor-pointer brutal-shadow-sm ${
+            className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 font-display text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md ${
               isSavedJustNow
-                ? "bg-[#34A853] text-white scale-105"
-                : "bg-[#E5FF45] text-black hover:bg-[#DAF428]"
+                ? "bg-emerald-400 text-black scale-105"
+                : "bg-white text-black hover:bg-zinc-200"
             }`}
           >
             {isSavedJustNow ? (
               <>
                 <Check className="h-3.5 w-3.5 stroke-[3]" />
-                <span>SAVED INSTANTLY!</span>
+                <span>Saved Instantly!</span>
               </>
             ) : (
               <>
                 <Save className="h-3.5 w-3.5" />
-                <span>SAVE PREFERENCES</span>
+                <span>Save Preferences</span>
               </>
             )}
           </button>

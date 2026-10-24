@@ -120,62 +120,62 @@ export function PracticeVictoryModal({
         className="pointer-events-none fixed inset-0 z-[251]"
       />
 
-      <div className="relative z-[252] w-full max-w-lg rounded-3xl border-3 border-black bg-white p-6 sm:p-8 brutal-shadow-xl text-black text-center animate-in zoom-in-95 duration-200">
+      <div className="relative z-[252] w-full max-w-lg rounded-3xl border border-zinc-800 bg-[#0C0E14]/95 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl text-white text-center animate-in zoom-in-95 duration-200">
         {/* Top Trophy Icon */}
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-black bg-[#E5FF45] brutal-shadow-sm mb-4">
-          <Trophy className="h-8 w-8 text-black fill-black" />
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-[#E5FF45]/30 bg-[#E5FF45]/10 text-[#E5FF45] shadow-[0_0_20px_rgba(229,255,69,0.2)] mb-4">
+          <Trophy className="h-8 w-8 text-[#E5FF45] fill-[#E5FF45]/20" />
         </div>
 
         {/* Victory Badges */}
-        <div className="inline-flex items-center gap-1.5 font-mono text-xs font-black uppercase tracking-wider text-[#16A34A] bg-[#DCFCE7] border border-[#16A34A] px-3 py-1 rounded-full mb-2">
+        <div className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full mb-2">
           <CheckCircle2 className="h-4 w-4" />
           <span>ALL TEST CASES PASSED</span>
         </div>
 
-        <h2 className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-black">
+        <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
           CHALLENGE CONQUERED!
         </h2>
 
-        <p className="mt-1 font-body text-xs sm:text-sm text-neutral-600">
-          Flawless algorithm execution on <strong className="text-black">{problem.title}</strong>.
+        <p className="mt-1 font-body text-xs sm:text-sm text-zinc-400">
+          Flawless algorithm execution on <strong className="text-white">{problem.title}</strong>.
         </p>
 
         {/* XP & Rewards Banner */}
-        <div className="mt-5 rounded-2xl border-2 border-black bg-[#FFFBF0] p-4 brutal-shadow-sm space-y-3">
+        <div className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 space-y-3">
           <div className="flex items-center justify-around">
             <div className="text-center">
-              <span className="block font-mono text-[10px] text-neutral-500 uppercase font-bold">
+              <span className="block font-mono text-[10px] text-zinc-500 uppercase font-semibold">
                 EXPERIENCE
               </span>
-              <span className="font-display text-2xl font-black text-[#2563EB]">
+              <span className="font-display text-2xl font-bold text-[#E5FF45]">
                 +{problem.xpReward} XP
               </span>
             </div>
 
-            <div className="h-8 w-[1px] bg-black/20" />
+            <div className="h-8 w-[1px] bg-zinc-800" />
 
             <div className="text-center">
-              <span className="block font-mono text-[10px] text-neutral-500 uppercase font-bold">
+              <span className="block font-mono text-[10px] text-zinc-500 uppercase font-semibold">
                 PRACTICE STREAK
               </span>
-              <div className="flex items-center justify-center gap-1 font-display text-2xl font-black text-[#EA580C]">
-                <Flame className="h-5 w-5 fill-[#EA580C]" />
+              <div className="flex items-center justify-center gap-1 font-display text-2xl font-bold text-amber-400">
+                <Flame className="h-5 w-5 fill-amber-400" />
                 <span>{streakDays} DAYS</span>
               </div>
             </div>
           </div>
 
           {/* Runtime and memory metrics */}
-          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-black/10 font-mono text-xs">
-            <div className="bg-white p-2 rounded-xl border border-black/10">
-              <span className="text-neutral-400 block text-[10px]">RUNTIME SPEED</span>
-              <strong className="text-black">{runtimeMs} ms</strong>
-              <span className="text-[10px] text-[#16A34A] ml-1 font-bold">(Beats 92%)</span>
+          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-zinc-800/80 font-mono text-xs">
+            <div className="bg-black/40 p-2.5 rounded-xl border border-zinc-800">
+              <span className="text-zinc-500 block text-[10px] font-semibold">RUNTIME SPEED</span>
+              <strong className="text-white">{runtimeMs} ms</strong>
+              <span className="text-[10px] text-emerald-400 ml-1 font-semibold">(Beats 92%)</span>
             </div>
-            <div className="bg-white p-2 rounded-xl border border-black/10">
-              <span className="text-neutral-400 block text-[10px]">MEMORY PROFILE</span>
-              <strong className="text-black">{memoryMb} MB</strong>
-              <span className="text-[10px] text-[#16A34A] ml-1 font-bold">(Beats 87%)</span>
+            <div className="bg-black/40 p-2.5 rounded-xl border border-zinc-800">
+              <span className="text-zinc-500 block text-[10px] font-semibold">MEMORY PROFILE</span>
+              <strong className="text-white">{memoryMb} MB</strong>
+              <span className="text-[10px] text-emerald-400 ml-1 font-semibold">(Beats 87%)</span>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@ export function PracticeVictoryModal({
               playClick();
               onClose();
             }}
-            className="w-full sm:w-1/2 rounded-xl border-2 border-black bg-white py-3 font-display text-xs font-black uppercase text-black hover:bg-neutral-100 transition-colors cursor-pointer"
+            className="w-full sm:w-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 py-3 font-display text-xs font-semibold uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
           >
             REVIEW CODE
           </button>
@@ -199,7 +199,7 @@ export function PracticeVictoryModal({
               playClick();
               onNextProblem();
             }}
-            className="w-full sm:w-1/2 flex items-center justify-center gap-2 rounded-xl border-2 border-black bg-black py-3 font-display text-xs font-black uppercase text-[#E5FF45] brutal-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 transition-transform cursor-pointer"
+            className="w-full sm:w-1/2 flex items-center justify-center gap-2 rounded-full bg-white py-3 font-display text-xs font-semibold uppercase text-black hover:bg-zinc-200 shadow-md transition-colors cursor-pointer"
           >
             <span>NEXT CHALLENGE</span>
             <ArrowRight className="h-4 w-4" />

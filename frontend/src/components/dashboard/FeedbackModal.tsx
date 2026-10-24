@@ -53,44 +53,44 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="feedback-title"
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
       onClick={handleClose}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg rounded-2xl border-2 border-black bg-white p-6 sm:p-7 brutal-shadow-lg text-black selection:bg-[#E5FF45] selection:text-black"
+        className="relative w-full max-w-lg rounded-2xl border border-zinc-800/80 bg-[#0C0E14] p-6 sm:p-7 shadow-2xl shadow-black/80 text-white selection:bg-white selection:text-black"
       >
         <button
           type="button"
           onClick={handleClose}
           aria-label="Close feedback modal"
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-lg border-2 border-black bg-neutral-100 text-black hover:bg-[#E5FF45] transition-colors cursor-pointer"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-zinc-700/80 bg-zinc-800/60 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors cursor-pointer"
         >
           <X className="h-4 w-4" />
         </button>
 
-        <div className="inline-flex items-center gap-1.5 rounded-lg border border-black bg-[#E5FF45] px-2.5 py-1 font-mono text-[11px] font-black uppercase text-black mb-3">
-          <MessageSquare className="h-3.5 w-3.5" />
+        <div className="inline-flex items-center gap-1.5 rounded-full border border-zinc-700/80 bg-zinc-800/60 px-3 py-1 font-mono text-[11px] font-bold uppercase text-zinc-300 mb-3">
+          <MessageSquare className="h-3.5 w-3.5 text-[#00F0FF]" />
           <span>DEVELOPER TRANSMISSION</span>
         </div>
 
         <h2
           id="feedback-title"
-          className="font-display text-xl sm:text-2xl font-black uppercase tracking-tight text-black"
+          className="font-display text-xl sm:text-2xl font-bold uppercase tracking-tight text-white"
         >
           HELP & FEEDBACK
         </h2>
-        <p className="mt-1 text-xs text-neutral-600">
+        <p className="mt-1 text-xs text-zinc-400">
           Have an idea for CodeArena or spotted a bug? Send your feedback directly to the dev team.
         </p>
 
         {submitted ? (
-          <div className="mt-6 py-8 flex flex-col items-center justify-center text-center bg-neutral-50 rounded-xl border border-black/10">
-            <CheckCircle2 className="h-10 w-10 text-[#34A853] mb-2 animate-bounce" />
-            <h3 className="font-display text-base font-black uppercase text-black">
+          <div className="mt-6 py-8 flex flex-col items-center justify-center text-center bg-zinc-900/60 rounded-xl border border-zinc-800">
+            <CheckCircle2 className="h-10 w-10 text-emerald-400 mb-2 animate-bounce" />
+            <h3 className="font-display text-base font-bold uppercase text-white">
               TRANSMISSION RECEIVED!
             </h3>
-            <p className="mt-1 text-xs text-neutral-500">
+            <p className="mt-1 text-xs text-zinc-400">
               Thank you for contributing to the CodeArena dashboard preview.
             </p>
           </div>
@@ -98,7 +98,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
           <form onSubmit={handleSubmit} className="mt-5 space-y-4">
             {/* Category selection */}
             <div>
-              <label className="block font-mono text-[11px] font-bold uppercase text-neutral-600 mb-1.5">
+              <label className="block font-mono text-[11px] font-bold uppercase text-zinc-400 mb-1.5">
                 SELECT CATEGORY
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -116,10 +116,10 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       playClick();
                       setCategory(cat.id);
                     }}
-                    className={`rounded-xl border-2 border-black py-2 text-xs font-display font-black uppercase transition-all cursor-pointer ${
+                    className={`rounded-xl border py-2 text-xs font-display font-bold uppercase transition-all cursor-pointer ${
                       category === cat.id
-                        ? "bg-[#E5FF45] text-black brutal-shadow-sm"
-                        : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                        ? "bg-white text-black border-white shadow-sm"
+                        : "bg-zinc-900/80 border-zinc-800/80 text-zinc-400 hover:bg-zinc-800 hover:text-white"
                     }`}
                   >
                     {cat.label}
@@ -130,7 +130,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
 
             {/* Message input */}
             <div>
-              <label className="block font-mono text-[11px] font-bold uppercase text-neutral-600 mb-1.5">
+              <label className="block font-mono text-[11px] font-bold uppercase text-zinc-400 mb-1.5">
                 YOUR MESSAGE
               </label>
               <textarea
@@ -139,7 +139,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Describe your feedback, thoughts on the UI, or suggested features..."
                 required
-                className="w-full rounded-xl border-2 border-black bg-neutral-50 p-3 text-xs sm:text-sm font-sans placeholder:text-neutral-400 focus:outline-hidden focus:bg-white focus:ring-2 focus:ring-[#E5FF45]"
+                className="w-full rounded-xl border border-zinc-800 bg-[#080A0F] p-3.5 text-xs sm:text-sm font-sans text-zinc-100 placeholder:text-zinc-500 focus:outline-hidden focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600"
               />
             </div>
 
@@ -148,13 +148,13 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               <button
                 type="button"
                 onClick={handleClose}
-                className="px-4 py-2.5 rounded-xl border border-black/20 text-xs font-bold uppercase text-neutral-600 hover:bg-neutral-100 transition-colors cursor-pointer"
+                className="px-4 py-2.5 rounded-full border border-zinc-800 bg-zinc-900/60 text-xs font-bold uppercase text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
               >
                 CANCEL
               </button>
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-[#E5FF45] px-6 py-2.5 font-display text-xs sm:text-sm font-black uppercase tracking-wider text-black brutal-btn hover:bg-[#DAF428] transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-display text-xs sm:text-sm font-bold uppercase tracking-wider text-black hover:bg-zinc-200 transition-all cursor-pointer shadow-md"
               >
                 <span>TRANSMIT</span>
                 <Send className="h-3.5 w-3.5" />

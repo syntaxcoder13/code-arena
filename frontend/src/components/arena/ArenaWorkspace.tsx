@@ -180,10 +180,10 @@ export function ArenaWorkspace({
       {/* ======================================================== */}
       {/* LEFT COLUMN: Problem Statement / Telemetry / Rival Dossier (5 cols) */}
       {/* ======================================================== */}
-      <div className="lg:col-span-5 flex flex-col h-[750px] rounded-2xl border-2 border-black bg-white brutal-shadow-sm overflow-hidden">
+      <div className="lg:col-span-5 flex flex-col h-[750px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
         {/* Left Tabs Header */}
-        <div className="flex items-center justify-between border-b-2 border-black bg-neutral-100 p-1.5 shrink-0">
-          <div className="flex items-center gap-1 font-mono text-xs font-black uppercase">
+        <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 p-1.5 shrink-0">
+          <div className="flex items-center gap-1 font-mono text-xs font-semibold uppercase">
             <button
               type="button"
               onClick={() => {
@@ -191,10 +191,10 @@ export function ArenaWorkspace({
                 setLeftTab("problem");
               }}
               onMouseEnter={() => playHover()}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                 leftTab === "problem"
-                  ? "bg-black text-[#E5FF45] border border-black shadow-xs"
-                  : "text-neutral-600 hover:text-black hover:bg-neutral-200"
+                  ? "bg-white text-black shadow-sm font-bold"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-800"
               }`}
             >
               <BookOpen className="h-3.5 w-3.5" />
@@ -208,10 +208,10 @@ export function ArenaWorkspace({
                 setLeftTab("telemetry");
               }}
               onMouseEnter={() => playHover()}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                 leftTab === "telemetry"
-                  ? "bg-black text-[#E5FF45] border border-black shadow-xs"
-                  : "text-neutral-600 hover:text-black hover:bg-neutral-200"
+                  ? "bg-white text-black shadow-sm font-bold"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-800"
               }`}
             >
               <Terminal className="h-3.5 w-3.5" />
@@ -225,10 +225,10 @@ export function ArenaWorkspace({
                 setLeftTab("rival");
               }}
               onMouseEnter={() => playHover()}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                 leftTab === "rival"
-                  ? "bg-black text-[#E5FF45] border border-black shadow-xs"
-                  : "text-neutral-600 hover:text-black hover:bg-neutral-200"
+                  ? "bg-white text-black shadow-sm font-bold"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-800"
               }`}
             >
               <UserCheck className="h-3.5 w-3.5" />
@@ -236,9 +236,9 @@ export function ArenaWorkspace({
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 px-2 font-mono text-[10px] font-bold text-neutral-500">
+          <div className="flex items-center gap-1.5 px-2 font-mono text-[10px] text-zinc-400">
             <span>XP:</span>
-            <span className="text-black font-black">+{problem.xpReward}</span>
+            <span className="text-[#E5FF45] font-semibold">+{problem.xpReward}</span>
           </div>
         </div>
 
@@ -249,55 +249,55 @@ export function ArenaWorkspace({
             <div>
               <div className="flex items-center gap-2 mb-1.5">
                 <span
-                  className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-black uppercase border ${
+                  className={`px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase border ${
                     problem.difficulty === "EASY"
-                      ? "bg-[#DCFCE7] text-[#15803D] border-[#15803D]"
+                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                       : problem.difficulty === "MEDIUM"
-                      ? "bg-[#FEF3C7] text-[#B45309] border-[#B45309]"
-                      : "bg-[#FEE2E2] text-[#B91C1C] border-[#B91C1C]"
+                      ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                      : "bg-rose-500/10 text-rose-400 border-rose-500/20"
                   }`}
                 >
                   {problem.difficulty}
                 </span>
 
-                <span className="font-mono text-[10px] font-bold text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-md border border-black/10">
+                <span className="font-mono text-[10px] font-medium text-zinc-300 bg-zinc-800/80 px-2.5 py-0.5 rounded-full border border-zinc-700/50">
                   {problem.category}
                 </span>
               </div>
 
-              <h2 className="font-display text-xl font-black uppercase tracking-tight text-black">
+              <h2 className="font-display text-xl font-bold uppercase tracking-tight text-white">
                 {problem.title}
               </h2>
             </div>
 
             {/* Problem Statement */}
-            <div className="font-body text-xs text-neutral-700 leading-relaxed space-y-2 whitespace-pre-line border-y border-black/10 py-3">
+            <div className="font-body text-xs text-zinc-300 leading-relaxed space-y-2 whitespace-pre-line border-y border-zinc-800/80 py-3">
               {problem.description}
             </div>
 
             {/* Examples */}
             <div className="space-y-3">
-              <h3 className="font-mono text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+              <h3 className="font-display text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
                 <span>EXAMPLES & TEST DATA</span>
               </h3>
 
               {problem.examples.map((ex, idx) => (
                 <div
                   key={idx}
-                  className="rounded-xl border border-black/15 bg-neutral-50 p-3 space-y-2 text-xs font-mono"
+                  className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3 space-y-2 text-xs font-mono"
                 >
-                  <div className="flex items-center justify-between text-[11px] text-neutral-500 font-bold">
+                  <div className="flex items-center justify-between text-[11px] text-zinc-400 font-semibold">
                     <span>EXAMPLE 0{idx + 1}</span>
                     <button
                       type="button"
                       onClick={() => handleCopyExample(ex.input, idx)}
-                      className="flex items-center gap-1 text-neutral-400 hover:text-black cursor-pointer transition-colors"
+                      className="flex items-center gap-1 text-zinc-400 hover:text-white cursor-pointer transition-colors"
                       title="Copy example input"
                     >
                       {copiedExample === idx ? (
                         <>
-                          <Check className="h-3 w-3 text-[#16A34A]" />
-                          <span className="text-[#16A34A] text-[10px]">COPIED</span>
+                          <Check className="h-3 w-3 text-emerald-400" />
+                          <span className="text-emerald-400 text-[10px]">COPIED</span>
                         </>
                       ) : (
                         <>
@@ -308,21 +308,17 @@ export function ArenaWorkspace({
                     </button>
                   </div>
 
-                  <div className="space-y-1">
-                    <div>
-                      <span className="text-neutral-500">Input: </span>
-                      <code className="text-black bg-white px-1.5 py-0.5 rounded border border-black/10 font-bold">
-                        {ex.input}
-                      </code>
+                  <div className="space-y-1.5">
+                    <div className="bg-black/50 p-2 rounded-lg border border-zinc-800/80">
+                      <span className="text-zinc-500 block text-[9px] font-semibold">Input:</span>
+                      <code className="text-zinc-200 font-bold">{ex.input}</code>
                     </div>
-                    <div>
-                      <span className="text-neutral-500">Output: </span>
-                      <code className="text-[#15803D] bg-white px-1.5 py-0.5 rounded border border-black/10 font-bold">
-                        {ex.output}
-                      </code>
+                    <div className="bg-black/50 p-2 rounded-lg border border-zinc-800/80">
+                      <span className="text-zinc-500 block text-[9px] font-semibold">Output:</span>
+                      <code className="text-emerald-400 font-bold">{ex.output}</code>
                     </div>
                     {ex.explanation && (
-                      <p className="text-[11px] text-neutral-600 font-sans italic pt-1 border-t border-black/5">
+                      <p className="text-[11px] text-zinc-400 font-sans italic pt-1 border-t border-zinc-800/50">
                         {ex.explanation}
                       </p>
                     )}
@@ -332,11 +328,11 @@ export function ArenaWorkspace({
             </div>
 
             {/* Constraints */}
-            <div className="rounded-xl border border-black/15 bg-neutral-100 p-3 space-y-1.5">
-              <h4 className="font-mono text-[11px] font-black uppercase text-black">
+            <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3 space-y-1.5">
+              <h4 className="font-display text-[11px] font-bold uppercase text-white">
                 CONSTRAINTS
               </h4>
-              <ul className="list-disc list-inside font-mono text-[11px] text-neutral-600 space-y-1">
+              <ul className="list-disc list-inside font-mono text-[11px] text-zinc-300 space-y-1">
                 {problem.constraints.map((c, i) => (
                   <li key={i}>{c}</li>
                 ))}
@@ -351,19 +347,19 @@ export function ArenaWorkspace({
                   playPop();
                   setShowHint((prev) => !prev);
                 }}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl border border-black/20 bg-[#FFFBF0] text-xs font-mono font-bold text-neutral-800 hover:bg-[#FEF3C7] transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between p-2.5 rounded-xl border border-zinc-800 bg-zinc-900/60 text-xs font-mono font-semibold text-zinc-200 hover:bg-zinc-800/80 transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4 text-[#D97706]" />
+                  <Lightbulb className="h-4 w-4 text-amber-400" />
                   <span>{showHint ? "HIDE TACTICAL HINT" : "REQUEST TACTICAL HINT"}</span>
                 </div>
-                <span className="text-[10px] text-neutral-500">
+                <span className="text-[10px] text-zinc-500">
                   {showHint ? "ACTIVE" : "+0s PENALTY"}
                 </span>
               </button>
 
               {showHint && (
-                <div className="mt-2 p-3 rounded-xl border border-black/20 bg-white font-mono text-xs text-neutral-700 animate-in fade-in duration-150">
+                <div className="mt-2 p-3 rounded-xl border border-amber-500/20 bg-amber-500/10 font-mono text-xs text-amber-200 animate-in fade-in duration-150">
                   💡 {problem.hints[0] || "Consider optimal space-time trade-off using a hash table or two pointers."}
                 </div>
               )}
@@ -382,44 +378,42 @@ export function ArenaWorkspace({
         {leftTab === "rival" && (
           <div className="flex-1 overflow-y-auto p-5 custom-code-scroll space-y-4">
             <div className="flex items-center gap-3">
-              <div
-                className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 border-black ${rival.avatarBg} ${rival.avatarText} font-display text-lg font-black`}
-              >
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-800 text-white font-display text-lg font-bold">
                 {rival.initials}
               </div>
               <div>
-                <h3 className="font-display text-base font-black uppercase text-black">
+                <h3 className="font-display text-base font-bold uppercase text-white">
                   {rival.name}
                 </h3>
-                <span className="font-mono text-xs text-neutral-500">{rival.handle}</span>
+                <span className="font-mono text-xs text-zinc-400">{rival.handle}</span>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="px-2 py-0.5 rounded font-mono text-[10px] font-black uppercase bg-black text-[#E5FF45]">
+                  <span className="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase bg-zinc-800 text-[#E5FF45] border border-zinc-700">
                     {rival.rankTier}
                   </span>
-                  <span className="font-mono text-xs font-bold text-black">{rival.elo} ELO</span>
+                  <span className="font-mono text-xs font-bold text-white">{rival.elo} ELO</span>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-xl border border-black/15 bg-neutral-50 p-3 space-y-2 text-xs font-mono">
-              <div className="flex justify-between border-b border-black/10 pb-1.5">
-                <span className="text-neutral-500">SPECIALTY:</span>
-                <span className="font-bold text-black">{rival.specialty}</span>
+            <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-3 space-y-2 text-xs font-mono">
+              <div className="flex justify-between border-b border-zinc-800/80 pb-1.5">
+                <span className="text-zinc-500">SPECIALTY:</span>
+                <span className="font-bold text-white">{rival.specialty}</span>
               </div>
-              <div className="flex justify-between border-b border-black/10 pb-1.5">
-                <span className="text-neutral-500">WIN RATE:</span>
-                <span className="font-bold text-[#16A34A]">{rival.winRate}%</span>
+              <div className="flex justify-between border-b border-zinc-800/80 pb-1.5">
+                <span className="text-zinc-500">WIN RATE:</span>
+                <span className="font-bold text-emerald-400">{rival.winRate}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">SPEED TACTIC:</span>
-                <span className="font-bold text-[#2563EB]">
+                <span className="text-zinc-500">SPEED TACTIC:</span>
+                <span className="font-bold text-cyan-400">
                   {rival.speedMultiplier > 1 ? "Aggressive Sprinter" : "Calculated Defender"}
                 </span>
               </div>
             </div>
 
-            <div className="rounded-xl border-2 border-black bg-[#FEF3C7] p-3 font-mono text-xs text-black">
-              <span className="text-neutral-500 font-bold block mb-1">RIVAL TAUNT:</span>
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 font-mono text-xs text-amber-200">
+              <span className="text-amber-400/80 font-bold block mb-1">RIVAL TAUNT:</span>
               <p className="italic font-medium">&ldquo;{rival.taunt}&rdquo;</p>
             </div>
           </div>
@@ -429,9 +423,9 @@ export function ArenaWorkspace({
       {/* ======================================================== */}
       {/* RIGHT COLUMN: Monaco Editor & Interactive Test Matrix (7 cols) */}
       {/* ======================================================== */}
-      <div className="lg:col-span-7 flex flex-col h-[750px] rounded-2xl border-2 border-black bg-white brutal-shadow-sm overflow-hidden">
+      <div className="lg:col-span-7 flex flex-col h-[750px] rounded-2xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-xl shadow-xl overflow-hidden">
         {/* Editor Controls Bar */}
-        <div className="flex items-center justify-between border-b-2 border-black bg-neutral-100 p-2 sm:p-2.5 px-3 shrink-0">
+        <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 p-2 sm:p-2.5 px-3 shrink-0">
           <div className="flex items-center gap-2">
             <CustomDropdown
               prefixLabel="LANG"
@@ -445,18 +439,18 @@ export function ArenaWorkspace({
               type="button"
               onClick={handleReset}
               title="Reset code template"
-              className="flex items-center gap-1 font-mono text-[11px] font-bold text-neutral-600 hover:text-black bg-white border border-black/20 px-2.5 py-1.5 rounded-lg cursor-pointer transition-colors"
+              className="flex items-center gap-1 font-mono text-[11px] font-semibold text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-700/80 px-3 py-1 rounded-full cursor-pointer transition-colors"
             >
               <RotateCcw className="h-3 w-3" />
               <span className="hidden sm:inline">RESET</span>
             </button>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 font-mono text-[10px] text-neutral-500">
-            <span className="bg-neutral-200 px-1.5 py-0.5 rounded border border-black/10">
+          <div className="hidden sm:flex items-center gap-2 font-mono text-[10px] text-zinc-500">
+            <span className="bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800 text-zinc-400">
               Ctrl+Enter: Run
             </span>
-            <span className="bg-neutral-200 px-1.5 py-0.5 rounded border border-black/10">
+            <span className="bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800 text-zinc-400">
               Ctrl+Shift+Enter: Submit
             </span>
           </div>
@@ -485,20 +479,20 @@ export function ArenaWorkspace({
         </div>
 
         {/* Bottom Test Matrix & Duel Action Controls */}
-        <div className="border-t-2 border-black bg-white flex flex-col shrink-0 max-h-[300px]">
+        <div className="border-t border-zinc-800 bg-zinc-950/70 flex flex-col shrink-0 max-h-[300px]">
           {/* Subtabs for tests */}
-          <div className="flex items-center justify-between border-b border-black/10 bg-neutral-50 px-3 py-1.5">
-            <div className="flex items-center gap-1 font-mono text-xs font-bold">
+          <div className="flex items-center justify-between border-b border-zinc-800/80 bg-zinc-900/40 px-3 py-1.5">
+            <div className="flex items-center gap-1.5 font-mono text-xs font-semibold">
               <button
                 type="button"
                 onClick={() => {
                   playClick();
                   setBottomTab("tests");
                 }}
-                className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
+                className={`px-3 py-1 rounded-full transition-colors cursor-pointer ${
                   bottomTab === "tests"
-                    ? "bg-black text-[#E5FF45]"
-                    : "text-neutral-600 hover:bg-neutral-200"
+                    ? "bg-white text-black font-bold shadow-xs"
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-850"
                 }`}
               >
                 SAMPLE CASES ({problem.testCases.filter((tc) => !tc.isHidden).length})
@@ -510,10 +504,10 @@ export function ArenaWorkspace({
                   playClick();
                   setBottomTab("custom");
                 }}
-                className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
+                className={`px-3 py-1 rounded-full transition-colors cursor-pointer ${
                   bottomTab === "custom"
-                    ? "bg-black text-[#E5FF45]"
-                    : "text-neutral-600 hover:bg-neutral-200"
+                    ? "bg-white text-black font-bold shadow-xs"
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-850"
                 }`}
               >
                 CUSTOM INPUT
@@ -526,10 +520,10 @@ export function ArenaWorkspace({
                     playClick();
                     setBottomTab("output");
                   }}
-                  className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
+                  className={`px-3 py-1 rounded-full transition-colors cursor-pointer ${
                     bottomTab === "output"
-                      ? "bg-black text-[#E5FF45]"
-                      : "text-neutral-600 hover:bg-neutral-200"
+                      ? "bg-white text-black font-bold shadow-xs"
+                      : "text-zinc-400 hover:text-white hover:bg-zinc-850"
                   }`}
                 >
                   EXECUTION LOG
@@ -540,20 +534,20 @@ export function ArenaWorkspace({
             {testResult.status !== "IDLE" && (
               <div className="flex items-center gap-2 font-mono text-[11px]">
                 {testResult.status === "SUCCESS" ? (
-                  <span className="flex items-center gap-1 text-[#16A34A] font-bold">
+                  <span className="flex items-center gap-1 text-emerald-400 font-bold">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     <span>
                       {testResult.passedCount}/{testResult.totalCount} PASSED
                     </span>
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 text-[#DC2626] font-bold">
+                  <span className="flex items-center gap-1 text-rose-400 font-bold">
                     <XCircle className="h-3.5 w-3.5" />
                     <span>ERROR / REJECTED</span>
                   </span>
                 )}
-                <span className="text-neutral-300">|</span>
-                <span className="text-neutral-500">{testResult.runtimeMs}ms</span>
+                <span className="text-zinc-600">|</span>
+                <span className="text-zinc-400">{testResult.runtimeMs}ms</span>
               </div>
             )}
           </div>
@@ -577,15 +571,15 @@ export function ArenaWorkspace({
                             playPop();
                             setSelectedCaseIdx(idx);
                           }}
-                          className={`px-2.5 py-1 rounded-lg border text-[11px] font-bold transition-all cursor-pointer ${
+                          className={`px-3 py-1 rounded-full border text-[11px] font-semibold transition-all cursor-pointer ${
                             selectedCaseIdx === idx
-                              ? "border-black bg-neutral-200 text-black shadow-xs"
-                              : "border-black/10 bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                              ? "border-zinc-700 bg-zinc-800 text-white shadow-xs"
+                              : "border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white"
                           } ${
                             isPassed === true
-                              ? "text-[#15803D] border-[#15803D]/40"
+                              ? "text-emerald-400 border-emerald-500/40"
                               : isPassed === false
-                              ? "text-[#DC2626] border-[#DC2626]/40"
+                              ? "text-rose-400 border-rose-500/40"
                               : ""
                           }`}
                         >
@@ -599,14 +593,14 @@ export function ArenaWorkspace({
 
                 {/* Selected case preview */}
                 {problem.testCases[selectedCaseIdx] && (
-                  <div className="bg-neutral-50 p-2 rounded-lg border border-black/10 space-y-1 text-[11px]">
+                  <div className="bg-black/50 p-2.5 rounded-lg border border-zinc-800/80 space-y-1 text-[11px]">
                     <div>
-                      <span className="text-neutral-500 font-bold">Input: </span>
-                      <code className="text-black">{problem.testCases[selectedCaseIdx].input}</code>
+                      <span className="text-zinc-500 font-semibold">Input: </span>
+                      <code className="text-zinc-200">{problem.testCases[selectedCaseIdx].input}</code>
                     </div>
                     <div>
-                      <span className="text-neutral-500 font-bold">Expected: </span>
-                      <code className="text-[#15803D]">
+                      <span className="text-zinc-500 font-semibold">Expected: </span>
+                      <code className="text-emerald-400">
                         {problem.testCases[selectedCaseIdx].expectedOutput}
                       </code>
                     </div>
@@ -622,16 +616,16 @@ export function ArenaWorkspace({
                   onChange={(e) => setCustomInputText(e.target.value)}
                   placeholder="Enter custom test input parameters (e.g. nums = [2,7,11,15], target = 9)..."
                   rows={2}
-                  className="w-full rounded-lg border border-black/20 bg-neutral-50 p-2 font-mono text-xs text-black placeholder:text-neutral-400 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-black"
+                  className="w-full rounded-lg border border-zinc-700 bg-zinc-900/90 p-2 font-mono text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:border-white"
                 />
               </div>
             )}
 
             {bottomTab === "output" && (
-              <div className="bg-black text-[#E5FF45] p-2.5 rounded-lg border border-black text-xs leading-relaxed">
+              <div className="bg-black text-[#E5FF45] p-2.5 rounded-lg border border-zinc-800 text-xs leading-relaxed">
                 <div>&gt; {testResult.message}</div>
                 {testResult.runtimeMs > 0 && (
-                  <div className="text-neutral-400 mt-1">
+                  <div className="text-zinc-400 mt-1">
                     Latency: {testResult.runtimeMs}ms • Memory Allocated: {testResult.memoryMb} MB
                   </div>
                 )}
@@ -640,15 +634,15 @@ export function ArenaWorkspace({
           </div>
 
           {/* Action Footer: Run Sample vs Submit Duel */}
-          <div className="flex items-center justify-between border-t border-black/15 bg-neutral-100 p-2.5 sm:p-3">
+          <div className="flex items-center justify-between border-t border-zinc-800 bg-zinc-900/50 p-2.5 sm:p-3">
             <button
               type="button"
               disabled={isEvaluating || isSubmitting}
               onClick={handleRunTestsClick}
               onMouseEnter={() => playHover()}
-              className="flex items-center gap-1.5 rounded-xl border border-black/30 bg-white px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-black hover:bg-neutral-50 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-full border border-zinc-700 bg-zinc-900/80 px-4 py-2 font-display text-xs font-semibold uppercase tracking-wider text-zinc-200 hover:text-white hover:bg-zinc-800 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
             >
-              <Play className="h-3.5 w-3.5 fill-black" />
+              <Play className="h-3.5 w-3.5 fill-current" />
               <span>{isEvaluating ? "RUNNING..." : "RUN TESTS"}</span>
             </button>
 
@@ -657,7 +651,7 @@ export function ArenaWorkspace({
               disabled={isEvaluating || isSubmitting}
               onClick={handleSubmitClick}
               onMouseEnter={() => playHover()}
-              className="flex items-center gap-2 rounded-xl border-2 border-black bg-[#E5FF45] px-5 py-2 font-display text-xs sm:text-sm font-black uppercase tracking-wider text-black brutal-shadow-sm hover:bg-[#DAF428] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 rounded-full bg-white px-5 py-2 font-display text-xs sm:text-sm font-bold uppercase tracking-wider text-black hover:bg-zinc-200 shadow-md active:scale-95 transition-all cursor-pointer disabled:opacity-50"
             >
               <Swords className="h-4 w-4" />
               <span>{isSubmitting ? "SUBMITTING DUEL..." : "SUBMIT SOLUTION"}</span>

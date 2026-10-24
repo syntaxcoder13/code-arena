@@ -87,11 +87,11 @@ export function CustomDropdown({
         onMouseEnter={() => playHover()}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className="flex items-center justify-between gap-2.5 rounded-xl border-2 border-black bg-white px-3 py-2 font-mono text-xs font-bold text-black brutal-shadow-sm hover:bg-neutral-50 active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer select-none"
+        className="flex items-center justify-between gap-2.5 rounded-xl border border-zinc-800 bg-zinc-900/80 px-3 py-2 font-mono text-xs font-semibold text-zinc-200 hover:border-zinc-700 hover:bg-zinc-800 hover:text-white transition-all cursor-pointer select-none shadow-xs"
       >
         <div className="flex items-center gap-1.5 truncate">
           {prefixLabel && (
-            <span className="text-neutral-500 font-normal uppercase text-[10px]">
+            <span className="text-zinc-500 font-normal uppercase text-[10px]">
               {prefixLabel}:
             </span>
           )}
@@ -99,7 +99,7 @@ export function CustomDropdown({
           <span className="truncate">{selectedOption?.label}</span>
         </div>
         <ChevronDown
-          className={`h-3.5 w-3.5 text-black shrink-0 transition-transform duration-200 ${
+          className={`h-3.5 w-3.5 text-zinc-400 shrink-0 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -109,7 +109,7 @@ export function CustomDropdown({
       {isOpen && (
         <div
           role="listbox"
-          className={`absolute ${align === "right" ? "right-0" : "left-0"} z-50 mt-1.5 ${minWidth} rounded-xl border-2 border-black bg-white p-1.5 brutal-shadow animate-in fade-in zoom-in-95 duration-100 max-h-60 overflow-y-auto custom-code-scroll`}
+          className={`absolute ${align === "right" ? "right-0" : "left-0"} z-50 mt-1.5 ${minWidth} rounded-xl border border-zinc-800/90 bg-[#0C0E14]/95 backdrop-blur-xl p-1.5 shadow-xl shadow-black/80 animate-in fade-in zoom-in-95 duration-100 max-h-60 overflow-y-auto custom-code-scroll`}
         >
           {options.map((option) => {
             const isSelected = option.value === value;
@@ -120,17 +120,17 @@ export function CustomDropdown({
                 aria-selected={isSelected}
                 onClick={() => handleSelect(option.value)}
                 onMouseEnter={() => playHover()}
-                className={`flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-colors cursor-pointer select-none ${
+                className={`flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg font-mono text-xs font-semibold transition-colors cursor-pointer select-none ${
                   isSelected
-                    ? "bg-black text-[#E5FF45]"
-                    : "text-black hover:bg-[#E5FF45] hover:text-black"
+                    ? "bg-white text-black font-bold"
+                    : "text-zinc-300 hover:bg-zinc-800/80 hover:text-white"
                 }`}
               >
                 <div className="flex items-center gap-2 truncate">
                   {option.icon}
                   <span className="truncate">{option.label}</span>
                 </div>
-                {isSelected && <Check className="h-3.5 w-3.5 text-[#E5FF45] shrink-0" />}
+                {isSelected && <Check className="h-3.5 w-3.5 text-black shrink-0" />}
               </div>
             );
           })}

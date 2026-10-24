@@ -78,22 +78,22 @@ export function ProfileEditModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl border-2 border-black bg-white text-black brutal-shadow-xl overflow-hidden"
+        className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl border border-zinc-800 bg-[#0C0E14]/95 text-white shadow-2xl backdrop-blur-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b-2 border-black bg-[#FFFBF0] px-6 py-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl border-2 border-black bg-[#E5FF45] brutal-shadow-sm">
-              <Sparkles className="h-4 w-4 text-black" />
+        <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/60 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-800/80 shadow-inner">
+              <Sparkles className="h-4 w-4 text-[#E5FF45]" />
             </div>
             <div>
-              <h2 className="font-display text-base sm:text-lg font-black uppercase tracking-tight text-black">
-                CUSTOMIZE COMBAT PROFILE
+              <h2 className="font-display text-base sm:text-lg font-bold tracking-tight text-white">
+                Customize Combat Profile
               </h2>
-              <p className="font-mono text-[11px] text-neutral-500">
+              <p className="font-mono text-[11px] text-zinc-400">
                 Update your public identity, bio, battle theme, and weapons
               </p>
             </div>
@@ -105,7 +105,7 @@ export function ProfileEditModal({
               playClick();
               onClose();
             }}
-            className="flex h-8 w-8 items-center justify-center rounded-xl border-2 border-black bg-white text-black hover:bg-[#FF5030] hover:text-white transition-colors cursor-pointer"
+            className="flex h-8 w-8 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-800/60 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors cursor-pointer"
           >
             <X className="h-4 w-4" />
           </button>
@@ -115,9 +115,9 @@ export function ProfileEditModal({
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 custom-code-scroll">
           {/* Banner Theme Selection */}
           <div>
-            <label className="flex items-center gap-2 font-mono text-xs font-black uppercase text-neutral-800 mb-2.5">
-              <Palette className="h-3.5 w-3.5 text-[#2563EB]" />
-              <span>BATTLE BANNER THEME</span>
+            <label className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2.5">
+              <Palette className="h-3.5 w-3.5 text-cyan-400" />
+              <span>Battle Banner Theme</span>
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               {BANNER_THEMES.map((theme) => {
@@ -131,18 +131,18 @@ export function ProfileEditModal({
                       setFormData({ ...formData, bannerTheme: theme.id as any });
                     }}
                     onMouseEnter={() => playHover()}
-                    className={`relative rounded-xl border-2 p-2.5 text-left transition-all cursor-pointer ${
+                    className={`relative rounded-xl border p-2.5 text-left transition-all cursor-pointer ${
                       isSelected
-                        ? "border-black ring-2 ring-black brutal-shadow-sm"
-                        : "border-black/20 hover:border-black"
+                        ? "border-[#E5FF45] ring-1 ring-[#E5FF45] bg-zinc-800/90 shadow-md shadow-[#E5FF45]/10"
+                        : "border-zinc-800/80 bg-zinc-900/40 hover:border-zinc-700 hover:bg-zinc-900/80"
                     }`}
                   >
-                    <div className={`h-8 w-full rounded-lg ${theme.bgClass} mb-2 border border-black/20`} />
-                    <span className="block font-display text-xs font-black uppercase text-black">
+                    <div className={`h-8 w-full rounded-lg ${theme.bgClass} mb-2 border border-zinc-700/60`} />
+                    <span className="block font-display text-xs font-semibold text-zinc-200">
                       {theme.name}
                     </span>
                     {isSelected && (
-                      <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[#E5FF45] text-[10px] font-black">
+                      <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#E5FF45] text-black text-[10px] font-black">
                         ✓
                       </span>
                     )}
@@ -153,30 +153,30 @@ export function ProfileEditModal({
           </div>
 
           {/* Avatar & Display Name */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center p-4 rounded-2xl border-2 border-black bg-neutral-50">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center p-4 rounded-2xl border border-zinc-800 bg-zinc-900/40">
             <div className="flex flex-col items-center justify-center text-center">
               <div className="relative">
                 {formData.avatarUrl ? (
                   <img
                     src={formData.avatarUrl}
                     alt={formData.name}
-                    className="h-20 w-20 rounded-2xl object-cover border-2 border-black brutal-shadow-sm"
+                    className="h-20 w-20 rounded-2xl object-cover border border-zinc-700 shadow-md"
                   />
                 ) : (
-                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl border-2 border-black bg-black text-[#E5FF45] font-display text-2xl font-black brutal-shadow-sm">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-900 text-[#E5FF45] font-display text-2xl font-bold shadow-md">
                     {initials}
                   </div>
                 )}
-                <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-black bg-[#E5FF45]">
+                <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border border-black/40 bg-[#E5FF45]">
                   <Camera className="h-3 w-3 text-black" />
                 </div>
               </div>
-              <span className="mt-2 font-mono text-[10px] text-neutral-500">AVATAR PREVIEW</span>
+              <span className="mt-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">Avatar Preview</span>
             </div>
 
             <div className="sm:col-span-2 space-y-3">
               <div>
-                <label className="block font-mono text-[11px] font-bold uppercase text-neutral-700 mb-1">
+                <label className="block font-mono text-[11px] font-medium uppercase text-zinc-400 mb-1">
                   Avatar Image URL (Optional)
                 </label>
                 <input
@@ -184,12 +184,12 @@ export function ProfileEditModal({
                   placeholder="https://example.com/avatar.jpg"
                   value={formData.avatarUrl || ""}
                   onChange={(e) => setFormData({ ...formData, avatarUrl: e.target.value })}
-                  className="w-full rounded-xl border-2 border-black bg-white px-3 py-1.5 font-mono text-xs focus:ring-2 focus:ring-[#E5FF45] focus:outline-hidden"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-1.5 font-mono text-xs text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
                 />
               </div>
 
               <div>
-                <label className="block font-mono text-[11px] font-bold uppercase text-neutral-700 mb-1">
+                <label className="block font-mono text-[11px] font-medium uppercase text-zinc-400 mb-1">
                   Custom Title / Tagline
                 </label>
                 <input
@@ -197,7 +197,7 @@ export function ProfileEditModal({
                   placeholder="Apex Contender / Code Gladiator"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full rounded-xl border-2 border-black bg-white px-3 py-1.5 font-display text-xs font-bold focus:ring-2 focus:ring-[#E5FF45] focus:outline-hidden"
+                  className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-1.5 font-display text-xs text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
                 />
               </div>
             </div>
@@ -206,7 +206,7 @@ export function ProfileEditModal({
           {/* Form Fields Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono text-xs font-bold uppercase text-neutral-700 mb-1">
+              <label className="block font-mono text-xs font-medium uppercase text-zinc-400 mb-1">
                 Display Name
               </label>
               <input
@@ -214,12 +214,12 @@ export function ProfileEditModal({
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-display text-sm font-bold text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+                className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-display text-sm font-medium text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
               />
             </div>
 
             <div>
-              <label className="block font-mono text-xs font-bold uppercase text-neutral-700 mb-1">
+              <label className="block font-mono text-xs font-medium uppercase text-zinc-400 mb-1">
                 Username Handle
               </label>
               <input
@@ -227,31 +227,31 @@ export function ProfileEditModal({
                 required
                 value={formData.handle}
                 onChange={(e) => setFormData({ ...formData, handle: e.target.value })}
-                className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-mono text-sm font-bold text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+                className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-mono text-sm text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
               />
             </div>
 
             <div>
-              <label className="block font-mono text-xs font-bold uppercase text-neutral-700 mb-1">
+              <label className="block font-mono text-xs font-medium uppercase text-zinc-400 mb-1">
                 Primary Weapon (Language)
               </label>
               <select
                 value={formData.primaryLanguage}
                 onChange={(e) => setFormData({ ...formData, primaryLanguage: e.target.value })}
-                className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-mono text-sm font-bold text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+                className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-mono text-sm text-white focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
               >
-                <option value="TypeScript">TypeScript</option>
-                <option value="Python">Python</option>
-                <option value="Rust">Rust</option>
-                <option value="C++">C++</option>
-                <option value="Go">Go</option>
-                <option value="JavaScript">JavaScript</option>
-                <option value="Java">Java</option>
+                <option value="TypeScript" className="bg-zinc-900 text-white">TypeScript</option>
+                <option value="Python" className="bg-zinc-900 text-white">Python</option>
+                <option value="Rust" className="bg-zinc-900 text-white">Rust</option>
+                <option value="C++" className="bg-zinc-900 text-white">C++</option>
+                <option value="Go" className="bg-zinc-900 text-white">Go</option>
+                <option value="JavaScript" className="bg-zinc-900 text-white">JavaScript</option>
+                <option value="Java" className="bg-zinc-900 text-white">Java</option>
               </select>
             </div>
 
             <div>
-              <label className="block font-mono text-xs font-bold uppercase text-neutral-700 mb-1">
+              <label className="block font-mono text-xs font-medium uppercase text-zinc-400 mb-1">
                 Country & Flag
               </label>
               <div className="flex gap-2">
@@ -260,14 +260,14 @@ export function ProfileEditModal({
                   placeholder="🇮🇳"
                   value={formData.countryFlag}
                   onChange={(e) => setFormData({ ...formData, countryFlag: e.target.value })}
-                  className="w-14 rounded-xl border-2 border-black bg-neutral-50 px-2 py-2 text-center text-base focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+                  className="w-14 rounded-xl border border-zinc-800 bg-zinc-950/80 px-2 py-2 text-center text-base text-white focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
                 />
                 <input
                   type="text"
                   placeholder="India"
                   value={formData.country}
                   onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  className="flex-1 rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-display text-sm font-bold focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+                  className="flex-1 rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-display text-sm font-medium text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
                 />
               </div>
             </div>
@@ -275,7 +275,7 @@ export function ProfileEditModal({
 
           {/* Bio */}
           <div>
-            <label className="block font-mono text-xs font-bold uppercase text-neutral-700 mb-1">
+            <label className="block font-mono text-xs font-medium uppercase text-zinc-400 mb-1">
               Combat Bio & Motto
             </label>
             <textarea
@@ -283,38 +283,38 @@ export function ProfileEditModal({
               value={formData.bio}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
               placeholder="Tell other duelists what you code and how fast you solve."
-              className="w-full rounded-xl border-2 border-black bg-neutral-50 px-3.5 py-2 font-body text-sm text-black focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#E5FF45]"
+              className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 font-body text-sm text-white placeholder:text-zinc-600 focus:border-[#E5FF45] focus:outline-hidden focus:ring-1 focus:ring-[#E5FF45]/40"
             />
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-black/10">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-zinc-800/80">
             <button
               type="button"
               onClick={() => {
                 playClick();
                 onClose();
               }}
-              className="rounded-xl border-2 border-black bg-white px-5 py-2.5 font-display text-xs font-black uppercase text-neutral-700 hover:bg-neutral-100 transition-colors cursor-pointer"
+              className="rounded-full border border-zinc-700 bg-zinc-900/80 px-5 py-2 font-display text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
             >
-              CANCEL
+              Cancel
             </button>
             <button
               type="submit"
               onMouseEnter={() => playHover()}
-              className={`inline-flex items-center gap-2 rounded-xl border-2 border-black px-6 py-2.5 font-display text-xs font-black uppercase transition-all cursor-pointer brutal-shadow-sm ${
-                isSaved ? "bg-[#34A853] text-white" : "bg-[#E5FF45] text-black hover:bg-[#DAF428]"
+              className={`inline-flex items-center gap-2 rounded-full px-6 py-2 font-display text-xs font-bold transition-all cursor-pointer shadow-md ${
+                isSaved ? "bg-emerald-400 text-black" : "bg-white text-black hover:bg-zinc-200"
               }`}
             >
               {isSaved ? (
                 <>
                   <Check className="h-4 w-4 stroke-[3]" />
-                  <span>SAVED!</span>
+                  <span>Saved!</span>
                 </>
               ) : (
                 <>
                   <Save className="h-4 w-4" />
-                  <span>SAVE CHANGES</span>
+                  <span>Save Changes</span>
                 </>
               )}
             </button>

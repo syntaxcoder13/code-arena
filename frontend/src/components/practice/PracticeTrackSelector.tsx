@@ -39,8 +39,8 @@ export function PracticeTrackSelector({
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-[#2563EB]" />
-          <h2 className="font-display text-sm font-black uppercase tracking-wider text-black">
+          <Sparkles className="h-4 w-4 text-[#E5FF45]" />
+          <h2 className="font-display text-sm font-bold uppercase tracking-wider text-white">
             CURATED PRACTICE DRILLS & SPRINT TRACKS
           </h2>
         </div>
@@ -52,7 +52,7 @@ export function PracticeTrackSelector({
               playClick();
               onSelectTrack(null);
             }}
-            className="font-mono text-xs font-bold text-[#2563EB] hover:underline cursor-pointer"
+            className="font-mono text-xs font-semibold text-zinc-400 hover:text-white cursor-pointer transition-colors"
           >
             Clear Track Filter ✕
           </button>
@@ -78,27 +78,29 @@ export function PracticeTrackSelector({
                 onSelectTrack(isSelected ? null : track.id);
               }}
               onMouseEnter={() => playHover()}
-              className={`rounded-2xl border-2 border-black p-4 transition-all cursor-pointer flex flex-col justify-between ${
+              className={`rounded-2xl border p-4 transition-all cursor-pointer flex flex-col justify-between backdrop-blur-xl ${
                 isSelected
-                  ? "bg-black text-white brutal-shadow-lg scale-[1.02]"
-                  : "bg-white text-black brutal-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:bg-neutral-50"
+                  ? "border-white/50 bg-[#0C0E14] shadow-[0_0_25px_rgba(255,255,255,0.08)] scale-[1.02]"
+                  : "border-zinc-800/80 bg-[#0C0E14]/80 text-white hover:border-zinc-700 hover:bg-zinc-900/60"
               }`}
             >
               <div>
                 {/* Track Badge & Icon */}
                 <div className="flex items-center justify-between mb-2">
                   <span
-                    className={`font-mono text-[10px] font-black uppercase px-2 py-0.5 rounded-md border border-black ${
+                    className={`font-mono text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${
                       isSelected
-                        ? "bg-[#E5FF45] text-black"
-                        : `${track.accentColor} text-black`
+                        ? "bg-[#E5FF45] text-black border-[#E5FF45]"
+                        : "bg-zinc-800/80 text-zinc-300 border-zinc-700"
                     }`}
                   >
                     {track.badge}
                   </span>
                   <div
-                    className={`h-7 w-7 rounded-lg border-2 border-black flex items-center justify-center ${
-                      isSelected ? "bg-[#E5FF45] text-black" : "bg-neutral-100 text-black"
+                    className={`h-7 w-7 rounded-lg border flex items-center justify-center ${
+                      isSelected
+                        ? "border-[#E5FF45] bg-[#E5FF45]/10 text-[#E5FF45]"
+                        : "border-zinc-800 bg-zinc-900/80 text-zinc-400"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -106,36 +108,28 @@ export function PracticeTrackSelector({
                 </div>
 
                 {/* Title & Description */}
-                <h3
-                  className={`font-display text-sm font-black uppercase tracking-tight line-clamp-1 ${
-                    isSelected ? "text-white" : "text-black"
-                  }`}
-                >
+                <h3 className="font-display text-sm font-bold uppercase tracking-tight text-white line-clamp-1">
                   {track.title}
                 </h3>
-                <p
-                  className={`mt-1 font-body text-xs line-clamp-2 ${
-                    isSelected ? "text-neutral-300" : "text-neutral-600"
-                  }`}
-                >
+                <p className="mt-1 font-body text-xs text-zinc-400 line-clamp-2">
                   {track.description}
                 </p>
               </div>
 
               {/* Progress Footer */}
-              <div className="mt-4 pt-3 border-t border-black/10">
-                <div className="flex items-center justify-between font-mono text-[11px] font-bold">
-                  <span className={isSelected ? "text-neutral-300" : "text-neutral-500"}>
+              <div className="mt-4 pt-3 border-t border-zinc-800/80">
+                <div className="flex items-center justify-between font-mono text-[11px]">
+                  <span className="text-zinc-500">
                     PROGRESS: {solvedInTrack}/{track.problemIds.length}
                   </span>
-                  <span className={isSelected ? "text-[#E5FF45]" : "text-[#2563EB]"}>
+                  <span className={`font-semibold ${isSelected ? "text-[#E5FF45]" : "text-cyan-400"}`}>
                     {progressPercent}%
                   </span>
                 </div>
-                <div className="mt-1.5 w-full bg-neutral-200 rounded-full h-1.5 overflow-hidden">
+                <div className="mt-1.5 w-full bg-zinc-900 rounded-full h-1.5 overflow-hidden border border-zinc-800">
                   <div
                     className={`h-full transition-all duration-300 ${
-                      isSelected ? "bg-[#E5FF45]" : "bg-[#2563EB]"
+                      isSelected ? "bg-[#E5FF45]" : "bg-cyan-400"
                     }`}
                     style={{ width: `${progressPercent}%` }}
                   />

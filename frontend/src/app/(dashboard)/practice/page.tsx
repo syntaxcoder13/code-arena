@@ -268,14 +268,14 @@ function PracticeContent() {
           {/* Problem Catalog Grid */}
           <div className="practice-entrance-grid relative z-10">
             {filteredProblems.length === 0 ? (
-              <div className="rounded-2xl border-2 border-black bg-white p-10 text-center brutal-shadow-sm space-y-3">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border-2 border-black bg-neutral-100">
-                  <Inbox className="h-5 w-5 text-neutral-400" />
+              <div className="rounded-2xl border border-zinc-800/80 bg-[#0C0E14] p-10 text-center text-white space-y-3 shadow-xl">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900">
+                  <Inbox className="h-5 w-5 text-zinc-500" />
                 </div>
-                <h3 className="font-display text-base font-black uppercase text-black">
+                <h3 className="font-display text-base font-bold uppercase text-white">
                   No Problems Found
                 </h3>
-                <p className="font-body text-xs text-neutral-600 max-w-sm mx-auto">
+                <p className="font-body text-xs text-zinc-400 max-w-sm mx-auto">
                   Try clearing your search query or changing filters to view problems.
                 </p>
                 <button
@@ -287,7 +287,7 @@ function PracticeContent() {
                     setSelectedCategory("ALL");
                     setSelectedStatus("ALL");
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-black bg-[#E5FF45] font-display text-xs font-black uppercase text-black brutal-shadow-sm cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-zinc-200 font-display text-xs font-bold uppercase text-black cursor-pointer shadow-xs transition-colors"
                 >
                   Clear Filters
                 </button>

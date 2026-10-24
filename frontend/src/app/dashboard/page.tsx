@@ -91,14 +91,23 @@ function DashboardContent() {
   };
 
   return (
-    <div ref={containerRef} className="space-y-6 sm:space-y-7">
+    <div ref={containerRef} className="space-y-6 sm:space-y-8">
       {/* 0. Personalized Greeting Header */}
-      <div className="dashboard-entrance-greeting space-y-1">
-        <h1 className="font-body text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-black leading-tight">
-          {greeting}, {session?.name || "Developer"}
+      <div className="dashboard-entrance-greeting space-y-2">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-[#0C0E14]/80 backdrop-blur-md shadow-xs">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#E5FF45] animate-ping" />
+          <span className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-zinc-300 uppercase">
+            COMMAND CENTER
+          </span>
+        </div>
+        <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          {greeting},{" "}
+          <span className="bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+            {session?.name || "Developer"}
+          </span>
         </h1>
-        <p className="text-sm sm:text-base text-neutral-600 font-normal">
-          Ready to create something amazing? Your AI assistant is here to help.
+        <p className="text-xs sm:text-sm lg:text-base text-zinc-400 font-normal">
+          Ready to enter the arena? Challenge rivals, execute algorithm battles, and climb the ranks.
         </p>
       </div>
 

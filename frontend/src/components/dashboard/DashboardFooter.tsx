@@ -13,7 +13,7 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
   const { playClick, playHover, playClash } = useSoundEffects();
 
   return (
-    <footer className="mt-8 border-t-2 border-black/10 pt-6 pb-8 select-none">
+    <footer className="mt-8 border-t border-zinc-800/80 pt-6 pb-8 select-none text-zinc-400">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Left: Brand + Tagline */}
         <div className="flex items-center gap-3">
@@ -23,26 +23,28 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
             onMouseEnter={() => playHover()}
             className="flex items-center gap-2 group"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-black text-[#E5FF45]">
-              <Swords className="h-3.5 w-3.5" />
+            <div className="flex items-center justify-center text-white transition-transform group-hover:scale-105">
+              <span className="font-mono text-lg font-bold tracking-tighter text-zinc-200">
+                &lt;&nbsp;&gt;
+              </span>
             </div>
-            <span className="font-display text-sm font-black uppercase text-black tracking-tight">
+            <span className="font-display text-sm font-extrabold uppercase text-white tracking-wider">
               CODEARENA
             </span>
           </Link>
-          <span className="text-neutral-400 font-mono text-xs">|</span>
-          <span className="font-mono text-xs text-neutral-500 font-medium">
+          <span className="text-zinc-700 font-mono text-xs">|</span>
+          <span className="font-mono text-xs text-zinc-500 font-normal">
             Real developers. Real battles.
           </span>
         </div>
 
         {/* Center / Right: Links & Feedback Trigger */}
-        <div className="flex flex-wrap items-center justify-center gap-4 font-mono text-xs text-neutral-600">
+        <div className="flex flex-wrap items-center justify-center gap-4 font-mono text-xs text-zinc-400">
           <Link
             href="/"
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="hover:text-black uppercase transition-colors"
+            className="hover:text-white uppercase transition-colors"
           >
             HOME
           </Link>
@@ -50,7 +52,7 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
             href="/login"
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="hover:text-black uppercase transition-colors"
+            className="hover:text-white uppercase transition-colors"
           >
             LOGIN
           </Link>
@@ -58,7 +60,7 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
             href="/terms"
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="hover:text-black uppercase transition-colors"
+            className="hover:text-white uppercase transition-colors"
           >
             TERMS
           </Link>
@@ -66,7 +68,7 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
             href="/privacy"
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="hover:text-black uppercase transition-colors"
+            className="hover:text-white uppercase transition-colors"
           >
             PRIVACY
           </Link>
@@ -74,7 +76,7 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
             href="/security"
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="hover:text-black uppercase transition-colors"
+            className="hover:text-white uppercase transition-colors"
           >
             SECURITY
           </Link>
@@ -86,7 +88,7 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
               onOpenFeedback();
             }}
             onMouseEnter={() => playHover()}
-            className="flex items-center gap-1 font-bold text-black bg-[#E5FF45] border border-black/20 px-2 py-0.5 rounded-md hover:bg-[#DAF428] transition-colors cursor-pointer uppercase text-[11px]"
+            className="flex items-center gap-1.5 font-semibold text-black bg-white hover:bg-zinc-200 px-3 py-1 rounded-full shadow-sm transition-colors cursor-pointer uppercase text-[11px]"
           >
             <HelpCircle className="h-3 w-3" />
             <span>FEEDBACK</span>
@@ -94,9 +96,9 @@ export function DashboardFooter({ onOpenFeedback }: DashboardFooterProps) {
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-black/5 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-neutral-400 gap-1">
-        <span>© 2026 CodeArena Platform • Dashboard UI Phase</span>
-        <span>Status: DEMO RUNTIME // NO LIVE API REQUIRED</span>
+      <div className="mt-4 pt-3 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-zinc-500 gap-1">
+        <span>© 2026 CodeArena Platform • Competitive Developer Battles</span>
+        <span>STATUS: LIVE WORKSPACE // OPERATIONAL</span>
       </div>
     </footer>
   );
