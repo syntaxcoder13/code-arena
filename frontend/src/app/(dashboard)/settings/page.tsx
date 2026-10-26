@@ -1,5 +1,7 @@
 "use client";
 
+import { logout } from "@/lib/session-api";
+import { api, apiError } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -434,6 +436,8 @@ function SettingsContent() {
     }
   };
 
+  useEffect(() => { api.get("/api/codearena/settings").then(r => setPrefs(prev => ({ ...prev, ...r.data }))).catch(e => console.error(apiError(e))); }, []);
+
   // Load preferences from session and localStorage
   useEffect(() => {
     try {
@@ -465,7 +469,8 @@ function SettingsContent() {
     }
   }, [session]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    try { await api.put("/api/codearena/settings", { settings: prefs, name: prefs.name }); } catch (e) { window.alert(apiError(e)); return; }
     playSuccess();
 
     try {
@@ -528,9 +533,9 @@ function SettingsContent() {
     playSuccess();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     playClick();
-    clearSession();
+    try { await logout(); } catch (e) { window.alert(apiError(e)); return; }
     router.push("/login");
   };
 

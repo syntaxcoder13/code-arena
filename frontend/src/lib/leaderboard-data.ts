@@ -8,7 +8,8 @@ export interface LeaderboardPlayer {
   avatarUrl?: string;
   level: number;
   rating: number; // ELO
-  tier: "GRANDMASTER" | "MASTER" | "DIAMOND" | "PLATINUM" | "GOLD" | "SILVER";
+  tier: "GRANDMASTER" | "MASTER" | "DIAMOND" | "PLATINUM" | "GOLD" | "SILVER" | "BRONZE";
+  avgSolveSeconds?: number | null;
   tierDivision: string;
   wins: number;
   losses: number;
@@ -43,6 +44,7 @@ export const LEADERBOARD_TIERS: Record<
   LeaderboardPlayer["tier"],
   { name: string; color: string; border: string; bg: string; text: string }
 > = {
+  BRONZE: { name: "BRONZE", color: "#CD7F32", border: "border-orange-700", bg: "bg-orange-100", text: "text-orange-800" },
   GRANDMASTER: {
     name: "GRANDMASTER",
     color: "#E5FF45",

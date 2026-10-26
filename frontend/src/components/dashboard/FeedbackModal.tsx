@@ -1,5 +1,6 @@
 "use client";
 
+import { api, apiError } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { X, MessageSquare, Send, CheckCircle2 } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
@@ -30,9 +31,10 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
+    try { await api.post("/api/codearena/feedback", { category, message }); } catch (e) { window.alert(apiError(e)); return; }
     playSuccess();
     setSubmitted(true);
     setTimeout(() => {

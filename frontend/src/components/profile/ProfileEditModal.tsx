@@ -1,5 +1,6 @@
 "use client";
 
+import { api, apiError } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import {
   X,
@@ -44,8 +45,12 @@ export function ProfileEditModal({
 
   const initials = getInitials(formData.name);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const { data: settings } = await api.get('/api/codearena/settings');
+      await api.put('/api/codearena/settings', { settings: { ...settings, bannerTheme: formData.bannerTheme }, name: formData.name, bio: formData.bio });
+    } catch (e) { window.alert(apiError(e)); return; }
     playSuccess();
 
     // Persist to parent
@@ -59,7 +64,7 @@ export function ProfileEditModal({
       handle: formData.handle.startsWith("@") ? formData.handle : `@${formData.handle}`,
       email: formData.email,
       avatarUrl: formData.avatarUrl,
-      provider: "guest",
+      provider: "github",
     };
     saveSession(updatedSession);
 
@@ -113,44 +118,7 @@ export function ProfileEditModal({
 
         {/* Scrollable Form Content */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 custom-code-scroll">
-          {/* Banner Theme Selection */}
-          <div>
-            <label className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2.5">
-              <Palette className="h-3.5 w-3.5 text-cyan-400" />
-              <span>Battle Banner Theme</span>
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              {BANNER_THEMES.map((theme) => {
-                const isSelected = formData.bannerTheme === theme.id;
-                return (
-                  <button
-                    key={theme.id}
-                    type="button"
-                    onClick={() => {
-                      playClick();
-                      setFormData({ ...formData, bannerTheme: theme.id as any });
-                    }}
-                    onMouseEnter={() => playHover()}
-                    className={`relative rounded-xl border p-2.5 text-left transition-all cursor-pointer ${
-                      isSelected
-                        ? "border-[#E5FF45] ring-1 ring-[#E5FF45] bg-zinc-800/90 shadow-md shadow-[#E5FF45]/10"
-                        : "border-zinc-800/80 bg-zinc-900/40 hover:border-zinc-700 hover:bg-zinc-900/80"
-                    }`}
-                  >
-                    <div className={`h-8 w-full rounded-lg ${theme.bgClass} mb-2 border border-zinc-700/60`} />
-                    <span className="block font-display text-xs font-semibold text-zinc-200">
-                      {theme.name}
-                    </span>
-                    {isSelected && (
-                      <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#E5FF45] text-black text-[10px] font-black">
-                        ✓
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          <a href="/inventory" className="block rounded-xl border border-zinc-700 p-4 text-cyan-400 underline">Equip unlocked banners and titles in your inventory</a>
 
           {/* Avatar & Display Name */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center p-4 rounded-2xl border border-zinc-800 bg-zinc-900/40">

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEquipment } from "@/hooks/useEquipment";
 import React, { useState } from "react";
 import {
   Trophy,
@@ -42,6 +43,7 @@ export function ProfileHeader({
   onEdit,
   onChallenge,
 }: ProfileHeaderProps) {
+  const equipment = useEquipment();
   const { playClick, playHover, playSuccess } = useSoundEffects();
   const [copied, setCopied] = useState(false);
 
@@ -145,7 +147,7 @@ export function ProfileHeader({
           <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
             
             {/* Avatar Frame: ONLY the avatar pops out into the banner */}
-            <div className="relative shrink-0 -mt-16 sm:-mt-20 z-20">
+            <div className={`relative shrink-0 -mt-16 sm:-mt-20 z-20 rounded-3xl ${equipment.avatarFrame === "neon" ? "ring-4 ring-cyan-400 motion-safe:animate-pulse shadow-lg shadow-cyan-400/40" : equipment.avatarFrame === "champion" ? "ring-4 ring-amber-400 shadow-lg shadow-amber-400/40" : ""}`}>
               <div className="relative">
                 {profile.avatarUrl ? (
                   <img

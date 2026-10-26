@@ -1,4 +1,5 @@
 "use client";
+import { logout } from "@/lib/session-api";
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
@@ -19,7 +20,7 @@ import {
 } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { useUserSession } from "@/hooks/useUserSession";
-import { clearSession, getInitials } from "@/lib/auth";
+import { getInitials } from "@/lib/auth";
 
 interface DashboardSidebarProps {
   mobileOpen: boolean;
@@ -30,6 +31,7 @@ interface DashboardSidebarProps {
 const PRIMARY_NAV = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "Code Arena", href: "/arena", icon: Swords },
+  { name: "Team & Gauntlet", href: "/competitions", icon: Swords },
   { name: "Practice", href: "/practice", icon: Terminal },
   { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
   { name: "Achievements", href: "/achievements", icon: Award },
@@ -67,9 +69,9 @@ function SidebarUserFooter({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     playClick();
-    clearSession();
+    try { await logout(); } catch { return; }
     setIsOpen(false);
     onCloseMobile();
     router.push("/login");

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useEquipment } from "@/hooks/useEquipment";
+import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import {
   Play,
@@ -60,6 +61,8 @@ interface TestEvaluationResult {
 }
 
 interface ArenaWorkspaceProps {
+  draftKey?: string;
+  onSaveDraft?: (code: string) => Promise<void>;
   problem: PracticeProblem;
   rival: GladiatorRival;
   combatEvents: CombatEvent[];
@@ -71,6 +74,7 @@ interface ArenaWorkspaceProps {
 }
 
 export function ArenaWorkspace({
+  draftKey, onSaveDraft,
   problem,
   rival,
   combatEvents,
@@ -80,13 +84,14 @@ export function ArenaWorkspace({
   isEvaluating,
   isSubmitting,
 }: ArenaWorkspaceProps) {
+  const equipment = useEquipment();
   const { playClick, playHover, playPop } = useSoundEffects();
 
   // Navigation tab for left panel
   const [leftTab, setLeftTab] = useState<"problem" | "telemetry" | "rival">("problem");
 
   // Code editor state
-  const [language, setLanguage] = useState<SupportedLang>("typescript");
+  const [language, setLanguage] = useState<SupportedLang>((problem.language || "typescript") as SupportedLang);
   const [code, setCode] = useState<string>("");
   const [copiedExample, setCopiedExample] = useState<number | null>(null);
 
@@ -109,7 +114,7 @@ export function ArenaWorkspace({
 
   // Load starter code on problem or language change
   useEffect(() => {
-    const storageKey = `codearena_duel_code_${problem.id}_${language}`;
+    const storageKey = (draftKey || `codearena_duel_code_${problem.id}_${language}`);
     const saved = localStorage.getItem(storageKey);
     if (saved) {
       setCode(saved);
@@ -118,12 +123,16 @@ export function ArenaWorkspace({
     }
   }, [problem.id, language, problem.starterCodes]);
 
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (saveTimer.current) clearTimeout(saveTimer.current); }, []);
   const handleCodeChange = (newVal: string | undefined) => {
     const val = newVal || "";
     setCode(val);
     onKeystroke();
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    if (onSaveDraft) saveTimer.current = setTimeout(() => { onSaveDraft(val).catch(() => setTestResult(prev => ({ ...prev, status: 'ERROR', message: 'Draft could not sync. Your browser copy is still saved.' }))); }, 1000);
     try {
-      localStorage.setItem(`codearena_duel_code_${problem.id}_${language}`, val);
+      localStorage.setItem((draftKey || `codearena_duel_code_${problem.id}_${language}`), val);
     } catch {
       // quota safeguard
     }
@@ -134,7 +143,7 @@ export function ArenaWorkspace({
     const starter = problem.starterCodes[language] || "";
     setCode(starter);
     try {
-      localStorage.setItem(`codearena_duel_code_${problem.id}_${language}`, starter);
+      localStorage.setItem((draftKey || `codearena_duel_code_${problem.id}_${language}`), starter);
     } catch {
       // quota safeguard
     }
@@ -429,7 +438,7 @@ export function ArenaWorkspace({
           <div className="flex items-center gap-2">
             <CustomDropdown
               prefixLabel="LANG"
-              options={LANGUAGE_OPTIONS}
+              options={problem.language ? LANGUAGE_OPTIONS.filter(o => o.value === problem.language) : LANGUAGE_OPTIONS}
               value={language}
               onChange={(val) => setLanguage(val as SupportedLang)}
               minWidth="min-w-[140px]"
@@ -463,7 +472,7 @@ export function ArenaWorkspace({
             language={language === "cpp" ? "cpp" : language}
             value={code}
             onChange={handleCodeChange}
-            theme="vs-dark"
+            theme={equipment.editorTheme}
             options={{
               minimap: { enabled: false },
               fontSize: 13,

@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { api } from "@/lib/api";
+import { toPracticeProblem, type ServerProblem } from "@/lib/codearena";
+import type { DailyChallengeData } from "@/lib/dashboard-data";
+import React, { useState, useEffect } from "react";
 import { Flame, Clock, Award, Code2, ChevronDown, ChevronUp, Terminal } from "lucide-react";
-import { DEMO_DAILY_CHALLENGE } from "@/lib/dashboard-data";
+
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 interface DailyChallengeProps {
@@ -10,9 +13,16 @@ interface DailyChallengeProps {
 }
 
 export function DailyChallenge({ onViewChallenge }: DailyChallengeProps) {
+  const [DEMO_DAILY_CHALLENGE, setChallenge] = useState<DailyChallengeData | null>(null);
+  useEffect(() => { api.get<ServerProblem[]>('/api/codearena/problems').then(r => {
+    if (!r.data.length) return;
+    const p = toPracticeProblem(r.data[Math.floor(Date.now() / 86400000) % r.data.length]);
+    setChallenge({ id: p.id, title: p.title, difficulty: p.difficulty, category: p.category, description: p.description, detailedDescription: p.description, timeEstimate: p.timeEstimate, xpReward: p.xpReward, acceptanceRate: '—', sampleInput: p.examples[0]?.input || '', sampleOutput: p.examples[0]?.output || '', isSample: false });
+  }).catch(() => {}); }, []);
   const [quickPeekOpen, setQuickPeekOpen] = useState(false);
   const { playClick, playHover } = useSoundEffects();
 
+  if (!DEMO_DAILY_CHALLENGE) return null;
   return (
     <section className="rounded-2xl sm:rounded-3xl border border-zinc-800/80 bg-[#0C0E14]/90 backdrop-blur-md p-5 sm:p-7 shadow-xl text-white">
       {/* Top Header Tag */}
@@ -75,7 +85,7 @@ export function DailyChallenge({ onViewChallenge }: DailyChallengeProps) {
           {/* Code Hint Strip */}
           <div className="inline-flex items-center gap-2 font-mono text-[11px] text-zinc-400 bg-zinc-900/80 px-3 py-1 rounded-lg border border-zinc-800">
             <Code2 className="h-3.5 w-3.5 text-[#00F0FF]" />
-            <span>Optimal approach: Hash map one-pass lookups</span>
+            <span>Read the statement and consider edge cases</span>
           </div>
         </div>
 

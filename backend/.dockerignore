@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+test
+.git
+*.log
+
+.test-tmp
+audit-result.json

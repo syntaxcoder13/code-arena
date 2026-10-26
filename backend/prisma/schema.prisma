@@ -1,0 +1,738 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+  /// Lets a nested read be one SQL query with a JOIN instead of one query per
+  /// relation. The battle screens poll `battle -> participants -> user`, which
+  /// was three sequential round trips to the database on every poll.
+  previewFeatures = ["relationJoins"]
+}
+
+model User {
+  id                String    @id @default(uuid())
+  githubId          String    @unique
+  username          String    @unique
+  name              String    @default("")
+  avatarUrl         String    @default("")
+  bio               String    @default("")
+  company           String    @default("")
+  location          String    @default("")
+  blog              String    @default("")
+  twitterUsername   String    @default("")
+  publicRepos       Int       @default(0)
+  totalPrivateRepos Int       @default(0)
+  ownedPrivateRepos Int       @default(0)
+  /// GitHub's own counts. OpenSourceHub followers are the Follow rows below,
+  /// never these: keeping the names distinct is what stops the two being mixed.
+  githubFollowers   Int       @default(0) @map("followers")
+  githubFollowing   Int       @default(0) @map("following")
+  email             String    @default("")
+  accessToken       String    @default("")
+  technologies      String[]  @default([])
+  isOnboarded       Boolean   @default(false)
+  /// Set when battle access is taken away. A date rather than a flag, so it
+  /// ends by itself - a ban that has to be lifted by hand never is.
+  battleBanUntil    DateTime?
+  battleBanReason   String    @default("")
+  customAvatarUrl   String    @default("")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  preferences        UserPreferences?
+  savedProjects      SavedProject[]
+  savedIssues        SavedIssue[]
+  followersRelation  Follow[]            @relation("UserFollowedBy")
+  followingRelation  Follow[]            @relation("UserFollowing")
+  conversationsAsA   Conversation[]      @relation("ConversationUserA")
+  conversationsAsB   Conversation[]      @relation("ConversationUserB")
+  sentMessages       Message[]           @relation("MessageSender")
+  createdBattles     Battle[]            @relation("BattleCreator")
+  battleEntries      BattleParticipant[]
+  blocksMade         UserBlock[]         @relation("BlocksMade")
+  blocksAgainst      UserBlock[]         @relation("BlocksAgainst")
+  reportsFiled       Report[]            @relation("ReportsFiled")
+  reportsAgainst     Report[]            @relation("ReportsAgainst")
+  reportsResolved    Report[]            @relation("ReportsResolved")
+  flagsReviewed      BattleFlag[]        @relation("FlagsReviewed")
+  resultsInvalidated BattleParticipant[] @relation("ResultsInvalidated")
+  queueEntry         BattleQueueEntry?
+  digestDispatches DigestDispatch[]
+  arenaAccount ArenaAccount?
+  practiceAttempts PracticeAttempt[]
+  arenaFeedback ArenaFeedback[]
+  clanMembership ArenaClanMember?
+  tournamentEntries ArenaTournamentEntry[]
+
+  @@map("users")
+}
+
+model ArenaAccount {
+  userId String @id
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settings Json @default("{}")
+  bookmarks String[] @default([])
+  updatedAt DateTime @updatedAt
+  @@map("arena_accounts")
+}
+
+model PracticeAttempt {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problemId String
+  language String
+  passed Boolean
+  passedTests Int
+  totalTests Int
+  runtimeMs Int?
+  memoryKb Int?
+  analysis Json?
+  createdAt DateTime @default(now())
+  @@index([userId, createdAt])
+  @@map("practice_attempts")
+}
+
+model ArenaFeedback {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category String
+  message String
+  createdAt DateTime @default(now())
+  @@map("arena_feedback")
+}
+
+model ArenaClan {
+  id String @id @default(uuid())
+  name String @unique
+  tag String @unique
+  description String @default("")
+  createdAt DateTime @default(now())
+  members ArenaClanMember[]
+  @@map("arena_clans")
+}
+
+model ArenaClanMember {
+  userId String @id
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clanId String
+  clan ArenaClan @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  role String @default("MEMBER")
+  joinedAt DateTime @default(now())
+  @@index([clanId])
+  @@map("arena_clan_members")
+}
+
+model ArenaTournament {
+  id String @id @default(uuid())
+  name String
+  creatorId String
+  state String @default("OPEN")
+  format String @default("ELIMINATION")
+  roundLimit Int @default(3)
+  difficulty String
+  language String
+  durationSeconds Int
+  capacity Int
+  winnerId String?
+  createdAt DateTime @default(now())
+  startedAt DateTime?
+  entries ArenaTournamentEntry[]
+  matches ArenaTournamentMatch[]
+  @@index([state, createdAt])
+  @@map("arena_tournaments")
+}
+
+model ArenaTournamentEntry {
+  id String @id @default(uuid())
+  tournamentId String
+  tournament ArenaTournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  joinedAt DateTime @default(now())
+  @@unique([tournamentId, userId])
+  @@map("arena_tournament_entries")
+}
+
+model ArenaTournamentMatch {
+  id String @id @default(uuid())
+  tournamentId String
+  tournament ArenaTournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  round Int
+  position Int
+  playerAId String
+  playerBId String?
+  winnerId String?
+  resolution String?
+  battleId String? @unique
+  battle Battle? @relation(fields: [battleId], references: [id], onDelete: SetNull)
+  @@unique([tournamentId, round, position])
+  @@map("arena_tournament_matches")
+}
+
+model ArenaSeries {
+  id String @id @default(uuid())
+  kind String
+  ownerId String
+  state String @default("INVITED")
+  language String
+  difficulty String
+  durationSeconds Int
+  teamA String[]
+  teamB String[]
+  accepted String[]
+  clanAId String?
+  clanBId String?
+  currentBattleId String?
+  rounds Json @default("[]")
+  winsA Int @default(0)
+  winsB Int @default(0)
+  winnerTeam Int?
+  codeA String @default("")
+  codeB String @default("")
+  revisionA Int @default(0)
+  revisionB Int @default(0)
+  submittedA Boolean @default(false)
+  submittedB Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  battles Battle[]
+  @@index([state, createdAt])
+  @@map("arena_series")
+}
+
+model UserPreferences {
+  id                     String    @id @default(uuid())
+  userId                 String    @unique
+  user                   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  favoriteLanguages      String[]  @default([])
+  topics                 String[]  @default([])
+  experienceLevel        String    @default("beginner")
+  receiveRecommendations Boolean   @default(true)
+  issueRecommendations   Boolean   @default(true)
+  preferredDifficulty    String[]  @default(["beginner"])
+  contributionAreas      String[]  @default([])
+  emailDigest            Boolean   @default(false)
+  digestFrequency        String    @default("weekly")
+  lastDigestSentAt       DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@map("user_preferences")
+}
+
+model DigestDispatch {
+  key       String   @id
+  userId    String
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("sending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([userId])
+  @@map("digest_dispatches")
+}
+
+model SavedProject {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  owner     String
+  repo      String
+  notes     String   @default("")
+  tags      String[] @default([])
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, owner, repo])
+  @@index([userId, createdAt])
+  @@map("saved_projects")
+}
+
+model SavedIssue {
+  id             String    @id @default(uuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  issueId        String
+  owner          String
+  repo           String
+  issueNumber    Int
+  notes          String    @default("")
+  tags           String[]  @default([])
+  status         String    @default("todo")
+  isClaimed      Boolean   @default(false)
+  claimedAt      DateTime?
+  claimExpiresAt DateTime?
+  prUrl          String?   @default("")
+  seekingBuddy   Boolean   @default(false)
+  buddyNotes     String?   @default("")
+  metadata       Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([userId, issueId])
+  @@unique([userId, owner, repo, issueNumber])
+  @@index([owner, repo, issueNumber])
+  @@index([isClaimed, claimExpiresAt])
+  @@index([seekingBuddy])
+  @@map("saved_issues")
+}
+
+model Collection {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String   @default("")
+  month       Int
+  year        Int
+  theme       String   @default("")
+  projects    Json     @default("[]")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([year, month])
+  @@map("collections")
+}
+
+model Follow {
+  id          String   @id @default(uuid())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("UserFollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+  @@map("follows")
+}
+
+/// A private conversation between exactly two people.
+///
+/// The pair is stored in a fixed order (`userAId` < `userBId`) so that the
+/// unique constraint makes one conversation per pair, whoever opens it first.
+model Conversation {
+  id            String   @id @default(uuid())
+  userAId       String
+  userBId       String
+  /// Denormalised so the conversation list can sort without touching messages.
+  lastMessageAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  userA    User      @relation("ConversationUserA", fields: [userAId], references: [id], onDelete: Cascade)
+  userB    User      @relation("ConversationUserB", fields: [userBId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([userAId, userBId])
+  @@index([userAId, lastMessageAt])
+  @@index([userBId, lastMessageAt])
+  @@map("conversations")
+}
+
+model Message {
+  id             String    @id @default(uuid())
+  conversationId String
+  senderId       String
+  body           String    @default("")
+  codeLanguage   String    @default("")
+  codeSnippet    String    @default("")
+  replyToId      String?
+  clientMessageId String?
+  /// Set when the *other* participant has seen it; drives the unread badge.
+  readAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  replyTo      Message?     @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: SetNull)
+  replies      Message[]    @relation("MessageReplies")
+
+  @@index([conversationId, createdAt])
+  @@unique([conversationId, senderId, clientMessageId])
+  @@index([conversationId, createdAt, id])
+  @@map("messages")
+}
+
+/// Who may see and join a battle. The engine is identical either way - only the
+/// route from CREATED to ACTIVE differs.
+enum BattleVisibility {
+  PUBLIC
+  PRIVATE
+  /// One player against a stored submission. There is always one of these to
+  /// play, which is what keeps somebody alone at three in the morning from
+  /// finding nothing at all.
+  GHOST
+}
+
+/// A battle's position in its lifecycle.
+///
+/// CREATED -> OPEN (public) | INVITED (private) -> ACTIVE -> SUBMITTED ->
+/// JUDGING -> COMPLETE, with EXPIRED (never started in time) and ABANDONED
+/// (started but nothing was submitted) as the two dead ends.
+enum BattleState {
+  CREATED
+  OPEN
+  INVITED
+  ACTIVE
+  SUBMITTED
+  JUDGING
+  COMPLETE
+  EXPIRED
+  ABANDONED
+}
+
+enum ParticipantState {
+  INVITED
+  JOINED
+  SUBMITTED
+  LEFT
+  REJECTED
+}
+
+/// Where a problem came from. Hand-written problems bootstrap the bank;
+/// repo-derived ones are the long-term plan and must be reviewed before use.
+enum ProblemSource {
+  HANDWRITTEN
+  REPO_DERIVED
+  /// Authored rather than written by hand. Never reviewed automatically:
+  /// a generated problem with a wrong test case costs somebody a battle.
+  GENERATED
+}
+
+enum JudgementState {
+  PENDING
+  RUNNING
+  COMPLETE
+  FAILED
+}
+
+model Problem {
+  id            String        @id @default(uuid())
+  slug          String        @unique
+  title         String
+  /// Markdown shown to the player.
+  statement     String
+  starterCode   String        @default("")
+  language      String
+  difficulty    String        @default("medium")
+  category      String        @default("ARRAYS_HASHING")
+  /// Hidden from players: the service never selects this for a battle screen.
+  testCases     Json
+  timeLimitMs   Int           @default(2000)
+  memoryLimitMb Int           @default(256)
+  source        ProblemSource @default(HANDWRITTEN)
+  /// A generated problem with a wrong test case costs someone a battle, so
+  /// nothing reaches players until a human has approved it.
+  reviewed      Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  battles Battle[]
+
+  @@index([reviewed, language])
+  @@map("problems")
+}
+
+model Battle {
+  id               String           @id @default(uuid())
+  creatorId        String
+  spectatorToken String? @unique
+  seriesId String?
+  series ArenaSeries? @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  /// Null until the battle starts. The creator chooses a difficulty and a
+  /// language, never the problem itself - otherwise they would know it in
+  /// advance and everyone else would not.
+  problemId        String?
+  /// What the creator asked for; the pool the problem is drawn from.
+  difficulty       String
+  language         String
+  visibility       BattleVisibility
+  state            BattleState      @default(CREATED)
+  /// 2-20 players, chosen when the battle is created.
+  capacity         Int
+  /// Fixed when the battle is created. The creator starts the clock but cannot
+  /// stop it - otherwise they would submit and cut everyone else off.
+  durationSeconds  Int
+  /// A lobby that is never started is dead after this moment (4 hours).
+  lobbyExpiresAt   DateTime
+  /// One shared clock for every participant, anchored when the creator starts.
+  /// Stored here rather than in Redis so a cache restart cannot lose a running
+  /// battle.
+  startedAt        DateTime?
+  endsAt           DateTime?
+  completedAt      DateTime?
+  /// Frozen at completion: a rank only means something next to the field size.
+  finalPlayerCount Int?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  creator      User                @relation("BattleCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  problem      Problem?            @relation(fields: [problemId], references: [id])
+  participants BattleParticipant[]
+  flags        BattleFlag[]
+  queueEntries BattleQueueEntry[]
+  tournamentMatch ArenaTournamentMatch?
+
+  @@index([state, visibility, createdAt])
+  @@index([creatorId])
+  @@index([state, lobbyExpiresAt])
+  @@index([state, endsAt])
+  @@index([difficulty, language])
+  @@map("battles")
+}
+
+/// Somebody waiting a few seconds for a live opponent before taking a ghost.
+///
+/// Ghost mode answers "there is nobody to play" by handing over a recording
+/// immediately - which also means two people who both want a battle, seconds
+/// apart, never meet. This table is that short window. An entry nobody
+/// matches falls back to the ghost it would have had anyway, so the worst
+/// case is the old behaviour a few seconds later.
+model BattleQueueEntry {
+  id              String   @id @default(uuid())
+  /// One entry per person: a second click must not let somebody be matched
+  /// against themselves from both sides of the queue.
+  userId          String   @unique
+  difficulty      String
+  language        String
+  durationSeconds Int
+  /// When this entry gives up and takes a ghost. Stored rather than derived
+  /// from createdAt so changing the wait does not retime everybody already in
+  /// the queue.
+  expiresAt       DateTime
+  /// Set when paired, and also the claim itself: a matcher wins an opponent
+  /// by being the one whose conditional update actually touches the row, so
+  /// two simultaneous matchers cannot both take the same person.
+  matchedBattleId String?
+  createdAt       DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  battle Battle? @relation(fields: [matchedBattleId], references: [id], onDelete: SetNull)
+
+  @@index([difficulty, language, durationSeconds, matchedBattleId, createdAt], map: "battle_queue_entries_pool_idx")
+  @@index([expiresAt])
+  @@map("battle_queue_entries")
+}
+
+model BattleParticipant {
+  id                String           @id @default(uuid())
+  battleId          String
+  userId            String
+  state             ParticipantState @default(JOINED)
+  /// The first join, never rewritten: leaving and rejoining must not hand
+  /// someone a fresh clock.
+  joinedAt          DateTime?
+  /// A stood-up copy of somebody's past submission, not a person playing.
+  /// The user it belongs to never sees this battle and is never told about
+  /// it: their code is the opponent, they are not.
+  isGhost           Boolean          @default(false)
+  leftAt            DateTime?
+  /// Final placing, written once the battle is judged. Cleared if the result
+  /// is later invalidated, so the ladder below closes up behind it.
+  rank              Int?
+  /// An invalidated result keeps its row and loses its placing: deleting it
+  /// would hide that anything happened, which is the opposite of the point.
+  invalidatedAt     DateTime?
+  invalidatedReason String           @default("")
+  invalidatedById   String?
+  /// What put this placing above the next one - the gate, the runtime, the
+  /// memory or the submit time. Stored rather than recomputed so the results
+  /// screen says the same thing a year later as it did on the day.
+  decidedBy         String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  battle        Battle       @relation(fields: [battleId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submission    Submission?
+  invalidatedBy User?        @relation("ResultsInvalidated", fields: [invalidatedById], references: [id], onDelete: SetNull)
+  flagsAsA      BattleFlag[] @relation("FlagParticipantA")
+  flagsAsB      BattleFlag[] @relation("FlagParticipantB")
+
+  @@unique([battleId, userId])
+  @@index([userId, createdAt])
+  @@map("battle_participants")
+}
+
+model Submission {
+  id            String    @id @default(uuid())
+  participantId String    @unique
+  code          String    @default("")
+  language      String
+  /// Null while this is still an autosaved draft; set once it is handed in.
+  submittedAt   DateTime?
+  /// How the code arrived: timing and sizes only, never content, from inside
+  /// the editor or outside it. Signals for a person to read, not a verdict.
+  telemetry     Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  participant BattleParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  judgement   Judgement?
+
+  @@map("submissions")
+}
+
+/// The verdict on one submission: measured results first, model opinion second.
+model Judgement {
+  id           String         @id @default(uuid())
+  submissionId String         @unique
+  state        JudgementState @default(PENDING)
+  /// Correctness is a gate, not a weight: failing a test means you cannot win,
+  /// however well the rest of it reads.
+  passedTests  Int            @default(0)
+  totalTests   Int            @default(0)
+  passedGate   Boolean        @default(false)
+  /// Measured in the sandbox, not estimated by the model.
+  runtimeMs    Int?
+  memoryKb     Int?
+  /// One entry per test case: its index, whether it passed, the sandbox
+  /// status and the measurements. Never the input or the expected output -
+  /// the hidden cases stay hidden even to the person who failed them.
+  cases        Json?
+  /// Per-criterion scores from the model, range-checked before being stored.
+  scores       Json?
+  totalScore   Float?
+  /// Kept so that "why did I lose?" has an answer.
+  reasoning    String?
+  model        String?
+  error        String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@map("judgements")
+}
+
+/// A block is hard and takes effect both ways; a mute is soft and only
+/// quietens their side for the person who set it.
+enum BlockKind {
+  BLOCK
+  MUTE
+}
+
+model UserBlock {
+  id        String    @id @default(uuid())
+  blockerId String
+  blockedId String
+  kind      BlockKind @default(BLOCK)
+  createdAt DateTime  @default(now())
+
+  blocker User @relation("BlocksMade", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked User @relation("BlocksAgainst", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  @@unique([blockerId, blockedId])
+  @@index([blockerId])
+  /// Every check asks "did they block me?" as often as "did I block them?".
+  @@index([blockedId])
+  @@map("user_blocks")
+}
+
+enum ReportSubject {
+  USER
+  MESSAGE
+  SUBMISSION
+}
+
+enum ReportReason {
+  SPAM
+  HARASSMENT
+  HATE
+  SEXUAL
+  CHEATING
+  IMPERSONATION
+  OTHER
+}
+
+enum ReportState {
+  OPEN
+  ACTIONED
+  DISMISSED
+}
+
+/// A report always names a person, and may also point at the one message or
+/// submission that prompted it.
+model Report {
+  id             String        @id @default(uuid())
+  reporterId     String
+  subjectUserId  String
+  subjectType    ReportSubject @default(USER)
+  /// The message or submission, when there is one. Deliberately not a foreign
+  /// key: a report must outlive the thing it is about, or deleting the
+  /// evidence would be the fastest way to clear the queue.
+  subjectId      String        @default("")
+  reason         ReportReason  @default(OTHER)
+  detail         String        @default("")
+  /// Copied at the time of reporting, for the same reason.
+  evidence       String        @default("")
+  state          ReportState   @default(OPEN)
+  resolutionNote String        @default("")
+  resolvedById   String?
+  resolvedAt     DateTime?
+  createdAt      DateTime      @default(now())
+
+  reporter    User  @relation("ReportsFiled", fields: [reporterId], references: [id], onDelete: Cascade)
+  subjectUser User  @relation("ReportsAgainst", fields: [subjectUserId], references: [id], onDelete: Cascade)
+  resolvedBy  User? @relation("ReportsResolved", fields: [resolvedById], references: [id], onDelete: SetNull)
+
+  @@index([state, createdAt])
+  @@index([subjectUserId])
+  @@map("reports")
+}
+
+enum FlagKind {
+  SIMILARITY
+}
+
+enum FlagState {
+  OPEN
+  CONFIRMED
+  CLEARED
+}
+
+/// Two submissions in one battle that look too alike to have been written
+/// separately.
+///
+/// One row per pair rather than per person: similarity is a relationship, and
+/// a row naming one side would assert who copied whom, which the measurement
+/// cannot tell.
+model BattleFlag {
+  id             String    @id @default(uuid())
+  battleId       String
+  kind           FlagKind  @default(SIMILARITY)
+  state          FlagState @default(OPEN)
+  /// In a stable order, so one pair cannot be flagged twice under two spellings.
+  participantAId String
+  participantBId String
+  /// 0..1, stored so a reviewer sees what was measured and not only that it fired.
+  score          Float     @default(0)
+  detail         String    @default("")
+  reviewNote     String    @default("")
+  reviewedById   String?
+  reviewedAt     DateTime?
+  createdAt      DateTime  @default(now())
+
+  battle       Battle            @relation(fields: [battleId], references: [id], onDelete: Cascade)
+  participantA BattleParticipant @relation("FlagParticipantA", fields: [participantAId], references: [id], onDelete: Cascade)
+  participantB BattleParticipant @relation("FlagParticipantB", fields: [participantBId], references: [id], onDelete: Cascade)
+  reviewedBy   User?             @relation("FlagsReviewed", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@unique([participantAId, participantBId])
+  @@index([state, createdAt])
+  @@index([battleId])
+  @@map("battle_flags")
+}
+
+/// Ledger retained from the historical CodeBattle SQL runner.
+model AppliedSqlMigration {
+  name String @id
+  appliedAt DateTime @default(now()) @map("applied_at") @db.Timestamptz(6)
+  @@map("_applied_sql_migrations")
+}

@@ -1,59 +1,18 @@
 "use client";
-
-import { useState, useEffect } from "react";
-import { getStoredSession, UserSession } from "@/lib/auth";
-
+import { useEffect, useState } from 'react';
+import { type UserSession } from '@/lib/auth';
+import { refreshSession } from '@/lib/session-api';
+import { apiError } from '@/lib/api';
 export function useUserSession() {
   const [session, setSession] = useState<UserSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [error, setError] = useState('');
   useEffect(() => {
-    const syncSession = () => {
-      const stored = getStoredSession();
-      if (stored) {
-        setSession(stored);
-        setIsLoading(false);
-        return;
-      }
-
-      // Check query params if any
-      if (typeof window !== "undefined") {
-        const searchParams = new URLSearchParams(window.location.search);
-        const queryName = searchParams.get("name");
-        if (queryName) {
-          const querySession: UserSession = {
-            id: `usr_${Date.now()}`,
-            name: queryName,
-            username: queryName.replace(/\s+/g, "_"),
-            handle: `@${queryName.toLowerCase().replace(/\s+/g, "")}`,
-            provider: "guest",
-          };
-          setSession(querySession);
-        }
-      }
-      setIsLoading(false);
-    };
-
-    syncSession();
-
-    // Listen for instant session changes from settings or login
-    const handleSessionChange = (e: Event) => {
-      const customEvent = e as CustomEvent<UserSession | null>;
-      if (customEvent.detail !== undefined) {
-        setSession(customEvent.detail);
-      } else {
-        syncSession();
-      }
-    };
-
-    window.addEventListener("codearena_session_updated", handleSessionChange);
-    window.addEventListener("storage", syncSession);
-
-    return () => {
-      window.removeEventListener("codearena_session_updated", handleSessionChange);
-      window.removeEventListener("storage", syncSession);
-    };
+    let active = true;
+    refreshSession().then(s => { if (active) setSession(s); }).catch(e => { if (active) setError(apiError(e)); }).finally(() => { if (active) setIsLoading(false); });
+    const changed = (e: Event) => setSession((e as CustomEvent<UserSession | null>).detail);
+    window.addEventListener('codearena_session_updated', changed);
+    return () => { active = false; window.removeEventListener('codearena_session_updated', changed); };
   }, []);
-
-  return { session, isLoading };
+  return { session, isLoading, error };
 }

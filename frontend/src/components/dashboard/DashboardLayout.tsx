@@ -1,5 +1,7 @@
 "use client";
 
+import { SessionGate } from "./SessionGate";
+import { useRouter } from "next/navigation";
 import React, { useState, createContext, useContext } from "react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { UnavailableModal } from "./UnavailableModal";
@@ -31,6 +33,7 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [dailyModalOpen, setDailyModalOpen] = useState(false);
@@ -67,8 +70,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const contextValue: DashboardUIContextType = {
     openUnavailable: handleOpenUnavailable,
     openFeedback: () => setFeedbackModalOpen(true),
-    openDailyChallenge: () => setDailyModalOpen(true),
-    openMatchmaking: () => setMatchmakingModalOpen(true),
+    openDailyChallenge: () => router.push("/practice?daily=true"),
+    openMatchmaking: () => router.push("/arena"),
     openMobileMenu: () => setMobileMenuOpen(true),
   };
 
@@ -135,7 +138,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* Independent Scrollable Area: ONLY this region scrolls */}
           <div className="flex-1 overflow-y-auto overflow-x-hidden custom-code-scroll">
             <main className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-[1440px] w-full mx-auto">
-              {children}
+              <SessionGate>{children}</SessionGate>
             </main>
           </div>
         </div>

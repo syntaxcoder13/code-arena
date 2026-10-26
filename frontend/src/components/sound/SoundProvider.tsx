@@ -1,5 +1,6 @@
 "use client";
 
+import { useEquipment } from "@/hooks/useEquipment";
 import React, { createContext, useContext, useState, useCallback } from "react";
 import useSound from "use-sound";
 
@@ -34,7 +35,7 @@ interface SoundContextType {
 const SoundContext = createContext<SoundContextType | null>(null);
 
 // Web Audio synthesizer helper for crisp arcade game sound effects
-function playSynthesizedSound(type: SoundType, volume: number) {
+function playSynthesizedSound(type: SoundType, volume: number, pack = 'arcade') {
   if (typeof window === "undefined") return;
   try {
     const AudioCtx =
@@ -42,6 +43,9 @@ function playSynthesizedSound(type: SoundType, volume: number) {
       (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     if (!AudioCtx) return;
     const ctx = new AudioCtx();
+    if (pack === 'soft') volume *= 0.55;
+    const pitch = pack === 'retro' ? -400 : pack === 'soft' ? 200 : 0;
+    window.setTimeout(() => { void ctx.close().catch(() => {}); }, 2000);
     const gainNode = ctx.createGain();
     gainNode.connect(ctx.destination);
     gainNode.gain.setValueAtTime(volume * 0.3, ctx.currentTime);
@@ -54,6 +58,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
         const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
         notes.forEach((freq, idx) => {
           const osc = ctx.createOscillator();
+        osc.detune.value = pitch;
           const noteGain = ctx.createGain();
           osc.type = "triangle";
           osc.frequency.setValueAtTime(freq, now + idx * 0.08);
@@ -70,6 +75,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
       case "clash": {
         // Sword slash / battle impact noise + pitch drop
         const osc = ctx.createOscillator();
+        osc.detune.value = pitch;
         osc.type = "sawtooth";
         osc.frequency.setValueAtTime(440, now);
         osc.frequency.exponentialRampToValueAtTime(110, now + 0.18);
@@ -90,6 +96,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
         ];
         fanfare.forEach(({ f, d, t }) => {
           const osc = ctx.createOscillator();
+        osc.detune.value = pitch;
           const noteGain = ctx.createGain();
           osc.type = "sine";
           osc.frequency.setValueAtTime(f, now + t);
@@ -105,6 +112,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
       case "defeat": {
         // Low descending defeat tone
         const osc = ctx.createOscillator();
+        osc.detune.value = pitch;
         osc.type = "sawtooth";
         osc.frequency.setValueAtTime(300, now);
         osc.frequency.exponentialRampToValueAtTime(80, now + 0.4);
@@ -118,6 +126,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
       case "countdown": {
         // Short beep
         const osc = ctx.createOscillator();
+        osc.detune.value = pitch;
         osc.type = "sine";
         osc.frequency.setValueAtTime(880, now);
         gainNode.gain.setValueAtTime(volume * 0.3, now);
@@ -130,6 +139,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
       case "type": {
         // Subtle mechanical keyboard clack
         const osc = ctx.createOscillator();
+        osc.detune.value = pitch;
         osc.type = "sine";
         osc.frequency.setValueAtTime(600 + Math.random() * 200, now);
         gainNode.gain.setValueAtTime(volume * 0.08, now);
@@ -148,6 +158,7 @@ function playSynthesizedSound(type: SoundType, volume: number) {
 }
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
+  const equipment = useEquipment();
   const [isMuted, setIsMuted] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
       const storedMute = localStorage.getItem("codearena_sound_muted");
@@ -193,60 +204,63 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
   const playClick = useCallback(() => {
     if (isMuted) return;
+    if (equipment.soundPack !== "arcade") { playSynthesizedSound("type", volume, equipment.soundPack); return; }
     try {
       playClickAudio();
     } catch {
-      playSynthesizedSound("type", volume);
+      playSynthesizedSound("type", volume, equipment.soundPack);
     }
-  }, [isMuted, playClickAudio, volume]);
+  }, [isMuted, playClickAudio, volume, equipment.soundPack]);
 
   const playHover = useCallback(() => {
     if (isMuted) return;
+    if (equipment.soundPack !== "arcade") { playSynthesizedSound("type", volume * 0.3, equipment.soundPack); return; }
     try {
       playHoverAudio();
     } catch {
       // ignore
     }
-  }, [isMuted, playHoverAudio]);
+  }, [isMuted, playHoverAudio, volume, equipment.soundPack]);
 
   const playPop = useCallback(() => {
     if (isMuted) return;
+    if (equipment.soundPack !== "arcade") { playSynthesizedSound("countdown", volume, equipment.soundPack); return; }
     try {
       playPopAudio();
     } catch {
-      playSynthesizedSound("countdown", volume);
+      playSynthesizedSound("countdown", volume, equipment.soundPack);
     }
-  }, [isMuted, playPopAudio, volume]);
+  }, [isMuted, playPopAudio, volume, equipment.soundPack]);
 
   const playSuccess = useCallback(() => {
     if (isMuted) return;
-    playSynthesizedSound("success", volume);
-  }, [isMuted, volume]);
+    playSynthesizedSound("success", volume, equipment.soundPack);
+  }, [isMuted, volume, equipment.soundPack]);
 
   const playClash = useCallback(() => {
     if (isMuted) return;
-    playSynthesizedSound("clash", volume);
-  }, [isMuted, volume]);
+    playSynthesizedSound("clash", volume, equipment.soundPack);
+  }, [isMuted, volume, equipment.soundPack]);
 
   const playVictory = useCallback(() => {
     if (isMuted) return;
-    playSynthesizedSound("victory", volume);
-  }, [isMuted, volume]);
+    playSynthesizedSound("victory", volume, equipment.soundPack);
+  }, [isMuted, volume, equipment.soundPack]);
 
   const playDefeat = useCallback(() => {
     if (isMuted) return;
-    playSynthesizedSound("defeat", volume);
-  }, [isMuted, volume]);
+    playSynthesizedSound("defeat", volume, equipment.soundPack);
+  }, [isMuted, volume, equipment.soundPack]);
 
   const playCountdown = useCallback(() => {
     if (isMuted) return;
-    playSynthesizedSound("countdown", volume);
-  }, [isMuted, volume]);
+    playSynthesizedSound("countdown", volume, equipment.soundPack);
+  }, [isMuted, volume, equipment.soundPack]);
 
   const playType = useCallback(() => {
     if (isMuted) return;
-    playSynthesizedSound("type", volume);
-  }, [isMuted, volume]);
+    playSynthesizedSound("type", volume, equipment.soundPack);
+  }, [isMuted, volume, equipment.soundPack]);
 
   const playSound = useCallback(
     (type: SoundType) => {
@@ -290,11 +304,11 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem("codearena_sound_muted", next.toString());
       if (!next) {
         // play small chime when unmuted
-        playSynthesizedSound("countdown", volume);
+        playSynthesizedSound("countdown", volume, equipment.soundPack);
       }
       return next;
     });
-  }, [volume]);
+  }, [volume, equipment.soundPack]);
 
   return (
     <SoundContext.Provider

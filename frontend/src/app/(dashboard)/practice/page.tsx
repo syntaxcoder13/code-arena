@@ -1,5 +1,7 @@
 "use client";
 
+import { api, apiError } from "@/lib/api";
+import { toPracticeProblem, type ServerProblem } from "@/lib/codearena";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { gsap } from "gsap";
 import { Inbox } from "lucide-react";
@@ -14,7 +16,6 @@ import { PracticeWorkspace } from "@/components/practice/PracticeWorkspace";
 import { PracticeVictoryModal } from "@/components/practice/PracticeVictoryModal";
 import { PracticeInspectModal } from "@/components/practice/PracticeInspectModal";
 import {
-  PRACTICE_PROBLEMS,
   PracticeProblem,
   ProblemCategory,
   ProblemDifficulty,
@@ -24,13 +25,15 @@ import {
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 function PracticeContent() {
+  const [PRACTICE_PROBLEMS, setProblems] = useState<PracticeProblem[]>([]);
+  const [loadError, setLoadError] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const { playClick, playSuccess } = useSoundEffects();
 
   // Practice state
   const [practiceState, setPracticeState] = useState<UserPracticeState>(INITIAL_PRACTICE_STATE);
   const [activeView, setActiveView] = useState<"catalog" | "workspace">("catalog");
-  const [activeProblem, setActiveProblem] = useState<PracticeProblem>(PRACTICE_PROBLEMS[0]);
+  const [activeProblem, setActiveProblem] = useState<PracticeProblem | null>(null);
 
   // Filters state
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,33 +57,22 @@ function PracticeContent() {
     memoryMb: 41.2,
   });
 
-  // Load saved practice state from localStorage
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("codearena_practice_state");
-      if (saved) {
-        setPracticeState(JSON.parse(saved));
-      }
-    } catch {
-      // Fallback
-    }
+    Promise.all([api.get<ServerProblem[]>('/api/codearena/problems'), api.get('/api/codearena/practice')])
+      .then(([catalog, state]) => {
+        const problems = catalog.data.map(toPracticeProblem);
+        setProblems(problems); setPracticeState(state.data);
+        if (new URLSearchParams(location.search).has('daily') && problems.length) {
+          const daily = problems[Math.floor(Date.now() / 86400000) % problems.length];
+          setActiveProblem(daily); setActiveView('workspace');
+        }
+      })
+      .catch(e => setLoadError(apiError(e)));
   }, []);
-
-  const updatePracticeState = (updater: (prev: UserPracticeState) => UserPracticeState) => {
-    setPracticeState((prev) => {
-      const next = updater(prev);
-      try {
-        localStorage.setItem("codearena_practice_state", JSON.stringify(next));
-      } catch {
-        // Ignore quota
-      }
-      return next;
-    });
-  };
 
   // Entrance animations with GSAP
   useEffect(() => {
-    if (typeof window === "undefined" || activeView === "workspace") return;
+    if (typeof window === "undefined" || activeView === "workspace" && activeProblem) return;
 
     const ctx = gsap.context(() => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -111,16 +103,13 @@ function PracticeContent() {
   }, [activeView]);
 
   // Toggle Bookmark
-  const handleToggleBookmark = (problemId: string) => {
-    updatePracticeState((prev) => {
-      const isBookmarked = prev.bookmarkedProblemIds.includes(problemId);
-      return {
-        ...prev,
-        bookmarkedProblemIds: isBookmarked
-          ? prev.bookmarkedProblemIds.filter((id) => id !== problemId)
-          : [...prev.bookmarkedProblemIds, problemId],
-      };
-    });
+  const handleToggleBookmark = async (problemId: string) => {
+    try {
+      const response = practiceState.bookmarkedProblemIds.includes(problemId)
+        ? await api.delete(`/api/codearena/bookmarks/${problemId}`)
+        : await api.put(`/api/codearena/bookmarks/${problemId}`);
+      setPracticeState(response.data);
+    } catch (e) { setLoadError(apiError(e)); }
   };
 
   // Open Workspace for a problem
@@ -135,20 +124,7 @@ function PracticeContent() {
     runtimeMs: number,
     memoryMb: number
   ) => {
-    updatePracticeState((prev) => {
-      const isAlreadySolved = prev.solvedProblemIds.includes(problem.id);
-      return {
-        ...prev,
-        solvedProblemIds: isAlreadySolved
-          ? prev.solvedProblemIds
-          : [...prev.solvedProblemIds, problem.id],
-        totalPracticeXp: isAlreadySolved
-          ? prev.totalPracticeXp
-          : prev.totalPracticeXp + problem.xpReward,
-        practiceStreak: prev.practiceStreak + 1,
-        lastSolvedAt: new Date().toISOString(),
-      };
-    });
+    api.get('/api/codearena/practice').then(r => setPracticeState(r.data)).catch(e => setLoadError(apiError(e)));
 
     setVictoryModalData({
       problem,
@@ -161,7 +137,7 @@ function PracticeContent() {
   // Handle Next Problem from Victory Modal
   const handleNextProblem = () => {
     setVictoryModalData((prev) => ({ ...prev, isOpen: false }));
-    const currentIndex = PRACTICE_PROBLEMS.findIndex((p) => p.id === activeProblem.id);
+    const currentIndex = PRACTICE_PROBLEMS.findIndex((p) => p.id === activeProblem?.id);
     const nextProblem = PRACTICE_PROBLEMS[(currentIndex + 1) % PRACTICE_PROBLEMS.length];
     setActiveProblem(nextProblem);
   };
@@ -220,6 +196,9 @@ function PracticeContent() {
     practiceState.bookmarkedProblemIds,
   ]);
 
+  if (loadError) return <div role="alert" className="p-6 text-red-400">{loadError}</div>;
+  if (!PRACTICE_PROBLEMS.length) return <div className="p-6">Loading practice catalog. Seed the problem bank if it is empty.</div>;
+
   return (
     <div ref={containerRef} className="space-y-6 max-w-[1400px] mx-auto pb-16">
       {/* 1. Header */}
@@ -232,14 +211,15 @@ function PracticeContent() {
           onRandomWarmup={handleRandomWarmup}
           activeView={activeView}
           onBackToCatalog={() => setActiveView("catalog")}
-          activeProblemTitle={activeProblem.title}
+          activeProblemTitle={activeProblem?.title}
         />
       </div>
 
       {/* 2. Workspace View vs Catalog View */}
-      {activeView === "workspace" ? (
+      {activeView === "workspace" && activeProblem ? (
         <div className="animate-in fade-in duration-150">
           <PracticeWorkspace
+            key={activeProblem.id}
             problem={activeProblem}
             onBackToCatalog={() => setActiveView("catalog")}
             isSolved={practiceState.solvedProblemIds.includes(activeProblem.id)}
