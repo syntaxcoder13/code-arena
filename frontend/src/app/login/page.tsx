@@ -8,38 +8,20 @@ import { GithubAuthButton } from "@/components/auth/GithubAuthButton";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { AuthHeader } from "@/components/auth/AuthHeader";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
-import { saveSession } from "@/lib/auth";
+import { startGithubLogin } from "@/lib/session-api";
+import { apiError } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { playSuccess } = useSoundEffects();
 
-  const handleGithubSignIn = () => {
+  const [error, setError] = useState("");
+  const handleGithubSignIn = async () => {
     if (isLoading) return;
-
     setIsLoading(true);
-    playSuccess();
-
-    let userName = "GitHub Developer";
-    if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      const queryName = searchParams.get("name");
-      if (queryName) userName = queryName;
-    }
-
-    saveSession({
-      id: `usr_github_${Date.now()}`,
-      name: userName,
-      username: userName.replace(/\s+/g, "_"),
-      handle: `@${userName.toLowerCase().replace(/[^a-z0-9_]/g, "")}`,
-      provider: "github",
-    });
-
-    // Direct smooth transition to dashboard
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 600);
+    try { await startGithubLogin(); }
+    catch (e) { setError(apiError(e)); setIsLoading(false); }
   };
 
   return (
@@ -76,6 +58,7 @@ export default function LoginPage() {
             </p>
           </div>
 
+          {error && <p role="alert" className="mt-4 text-red-400">{error}</p>}
           {/* Authentication Action Button (GitHub Only) */}
           <div className="mt-5 sm:mt-6">
             <GithubAuthButton

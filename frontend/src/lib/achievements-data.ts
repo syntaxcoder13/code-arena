@@ -297,8 +297,8 @@ export const ALL_ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: "mastery_zero_alloc",
-    title: "ZERO-ALLOC PURIST",
-    description: "Achieve maximum $O(1)$ space complexity on 15 problems requiring auxiliary state.",
+    title: "MEMORY MINIMALIST",
+    description: "Pass 15 distinct reviewed problems within a measured 16 MB memory budget. This badge does not claim an asymptotic space proof.",
     category: "MASTERY",
     rarity: "RARE",
     iconName: "Cpu",
@@ -307,7 +307,7 @@ export const ALL_ACHIEVEMENTS: Achievement[] = [
     unlockedAt: "Apr 2025",
     progress: 15,
     maxProgress: 15,
-    requirement: "Pass 15 problems with O(1) space complexity",
+    requirement: "Pass 15 distinct problems using at most 16 MB measured memory",
   },
 
   // --- POLYGLOT & WEAPONS ---

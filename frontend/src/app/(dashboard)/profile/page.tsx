@@ -1,5 +1,8 @@
 "use client";
 
+import { useArenaSummary } from "@/hooks/useArenaSummary";
+import { LivePlayerPanels } from "@/components/dashboard/LivePlayerPanels";
+import { api, apiError } from "@/lib/api";
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import {
@@ -32,40 +35,13 @@ function ProfileContent() {
   const [profile, setProfile] = useState<PlayerProfileData>(INITIAL_PLAYER_PROFILE);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // Sync profile with session and local storage
+  const { summary, error } = useArenaSummary();
   useEffect(() => {
-    // 1. Try to load saved profile customizations
-    try {
-      const savedProfile = localStorage.getItem("codearena_profile_customizations");
-      if (savedProfile) {
-        const parsed = JSON.parse(savedProfile);
-        setProfile((prev) => ({
-          ...prev,
-          ...parsed,
-          name: session?.name || parsed.name || prev.name,
-          username: session?.username || parsed.username || prev.username,
-          handle: session?.handle || parsed.handle || prev.handle,
-          email: session?.email || parsed.email || prev.email,
-          avatarUrl: session?.avatarUrl || parsed.avatarUrl || prev.avatarUrl,
-        }));
-        return;
-      }
-    } catch {
-      // fallback
-    }
-
-    // 2. Fallback to session
-    if (session) {
-      setProfile((prev) => ({
-        ...prev,
-        name: session.name || prev.name,
-        username: session.username || prev.username,
-        handle: session.handle || prev.handle,
-        email: session.email || prev.email,
-        avatarUrl: session.avatarUrl || prev.avatarUrl,
-      }));
-    }
-  }, [session]);
+    if (!summary) return;
+    const s = summary;
+    setProfile(prev => ({ ...prev, id: s.user.id, name: s.user.name, username: s.user.username, handle: `@${s.user.username}`, email: session?.email || '', bio: s.user.bio, avatarUrl: s.user.avatarUrl, memberSince: new Date(s.user.createdAt).toLocaleDateString(), title: 'Arena Duelist', clanName: s.user.clanMembership?.clan.name || '', clanTag: s.user.clanMembership?.clan.tag || '', country: '', countryFlag: '', level: s.level, currentXp: s.profile.totalXp, nextLevelXp: s.level * s.level * 100, rating: s.profile.elo, rankTier: s.profile.tier, rankDivision: s.profile.division, globalRank: 0, topPercentile: '', wins: s.profile.wins, losses: s.profile.losses, draws: 0, totalMatches: s.profile.wins + s.profile.losses, winRate: s.profile.wins + s.profile.losses ? `${Math.round(s.profile.wins / (s.profile.wins + s.profile.losses) * 100)}%` : '0%', currentStreak: s.profile.winStreak, bestStreak: s.profile.bestStreak, avgSolveTime: '—', totalCodeLines: 0, problemsSolved: s.problemsSolved }));
+    api.get('/api/codearena/settings').then(r => { setProfile(prev => ({ ...prev, ...(r.data.bannerTheme ? { bannerTheme: r.data.bannerTheme } : {}), ...(r.data.title ? { title: r.data.title } : {}) })); }).catch(() => {});
+  }, [summary, session?.email]);
 
   // Entrance animations with GSAP
   useEffect(() => {
@@ -114,6 +90,8 @@ function ProfileContent() {
     { id: "badges", label: "HONORS & TROPHIES", icon: Trophy },
   ];
 
+  if (error) return <p role="alert" className="text-red-300">{error}</p>;
+  if (!summary) return <p>Loading profile…</p>;
   return (
     <div ref={containerRef} className="space-y-6 sm:space-y-8 max-w-[1380px] mx-auto pb-16">
       {/* 1. Profile Hero & Identity Card */}
@@ -155,9 +133,9 @@ function ProfileContent() {
 
       {/* 3. Tab Contents */}
       <div className="profile-entrance-content">
-        {activeTab === "overview" && <ProfileOverviewTab profile={profile} />}
-        {activeTab === "matches" && <ProfileMatchesTab />}
-        {activeTab === "badges" && <ProfileBadgesTab />}
+        {activeTab === "overview" && <LivePlayerPanels />}
+        {activeTab === "matches" && <LivePlayerPanels />}
+        {activeTab === "badges" && <a href="/achievements" className="text-[#E5FF45] underline">View your earned achievements</a>}
       </div>
 
       {/* 4. Edit Profile Modal */}

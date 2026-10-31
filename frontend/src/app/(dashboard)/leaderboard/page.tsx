@@ -1,5 +1,6 @@
 "use client";
 
+import { api, apiError } from "@/lib/api";
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import {
@@ -21,7 +22,6 @@ import { LeaderboardTable } from "@/components/leaderboard/LeaderboardTable";
 import { ClanLeaderboardTable } from "@/components/leaderboard/ClanLeaderboardTable";
 import { PlayerInspectModal } from "@/components/leaderboard/PlayerInspectModal";
 import {
-  GLOBAL_LEADERBOARD_PLAYERS,
   CURRENT_USER_LEADERBOARD_STATUS,
   LeaderboardPlayer,
 } from "@/lib/leaderboard-data";
@@ -31,6 +31,8 @@ import { useSoundEffects } from "@/hooks/useSoundEffects";
 type LeaderboardTab = "global" | "speed" | "streaks" | "clans";
 
 function LeaderboardContent() {
+  const [GLOBAL_LEADERBOARD_PLAYERS, setPlayers] = useState<LeaderboardPlayer[]>([]);
+  const [error, setError] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const { session } = useUserSession();
   const { openMatchmaking } = useDashboardUI();
@@ -38,15 +40,11 @@ function LeaderboardContent() {
 
   const [activeTab, setActiveTab] = useState<LeaderboardTab>("global");
   const [timeframe, setTimeframe] = useState<"season" | "all" | "weekly">("season");
+  useEffect(() => { api.get('/api/codearena/leaderboard', { params: { timeframe } }).then(r => setPlayers(r.data)).catch(e => setError(apiError(e))); }, [timeframe]);
   const [inspectedPlayer, setInspectedPlayer] = useState<LeaderboardPlayer | null>(null);
 
   // Derive current user status from active session if available
-  const currentUserStatus: LeaderboardPlayer = {
-    ...CURRENT_USER_LEADERBOARD_STATUS,
-    name: session?.name || CURRENT_USER_LEADERBOARD_STATUS.name,
-    username: session?.username || CURRENT_USER_LEADERBOARD_STATUS.username,
-    handle: session?.handle || CURRENT_USER_LEADERBOARD_STATUS.handle,
-  };
+  const currentUserStatus: LeaderboardPlayer = GLOBAL_LEADERBOARD_PLAYERS.find(p => p.id === session?.id) || { ...CURRENT_USER_LEADERBOARD_STATUS, id: session?.id || '', name: session?.name || '', username: session?.username || '', handle: session?.handle || '', rank: 0, previousRank: 0, rating: 1200, level: 1, wins: 0, losses: 0, winRate: '0%', currentStreak: 0, bestStreak: 0 };
 
   // Entrance animations with GSAP
   useEffect(() => {
@@ -99,7 +97,7 @@ function LeaderboardContent() {
   let displayPlayers = [...GLOBAL_LEADERBOARD_PLAYERS];
   if (activeTab === "speed") {
     // Sort by solve speed ascending (faster first)
-    displayPlayers.sort((a, b) => a.avgSolveTime.localeCompare(b.avgSolveTime));
+    displayPlayers.sort((a, b) => (a.avgSolveSeconds ?? Infinity) - (b.avgSolveSeconds ?? Infinity));
     displayPlayers = displayPlayers.map((p, idx) => ({ ...p, rank: idx + 1 }));
   } else if (activeTab === "streaks") {
     // Sort by current streak descending
@@ -109,6 +107,7 @@ function LeaderboardContent() {
 
   const top3Podium = displayPlayers.slice(0, 3);
 
+  if (error) return <p role="alert" className="text-red-300">{error}</p>;
   return (
     <div ref={containerRef} className="space-y-6 sm:space-y-8 max-w-[1380px] mx-auto pb-16">
       {/* 1. Header Section */}

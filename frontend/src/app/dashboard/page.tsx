@@ -1,5 +1,6 @@
 "use client";
 
+import { LivePlayerPanels } from "@/components/dashboard/LivePlayerPanels";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { DashboardLayout, useDashboardUI } from "@/components/dashboard/DashboardLayout";
@@ -132,16 +133,16 @@ function DashboardContent() {
       {/* 4. Bottom Grid: Recent Battles (7 cols) + Leaderboard (5 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div className="lg:col-span-7">
-          <RecentMatches onExploreArena={handleQuickMatch} />
+
         </div>
         <div className="lg:col-span-5">
-          <LeaderboardPreview />
+
         </div>
       </div>
 
       {/* 5. Progression & Locked Achievements Preview */}
       <div>
-        <ProgressionPanel />
+
       </div>
 
       {/* 6. Community & Social Rivals Preview */}

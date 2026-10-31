@@ -1,108 +1,18 @@
 "use client";
-
-import React from "react";
-import Link from "next/link";
-import { BarChart3, LineChart, Sparkles, ArrowRight, ShieldCheck, Zap } from "lucide-react";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-
-export default function AnalyticsPage() {
-  return (
-    <DashboardLayout>
-      <div className="space-y-8 max-w-5xl mx-auto pb-16">
-        {/* Header */}
-        <div className="border-b border-zinc-800 pb-5">
-          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-zinc-400 uppercase tracking-wider">
-            <BarChart3 className="h-3.5 w-3.5 text-cyan-400" />
-            <span>TELEMETRY</span>
-            <span className="text-zinc-600">{"//"}</span>
-            <span className="text-[#E5FF45] font-semibold">COMBAT ANALYTICS</span>
-          </div>
-          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-1">
-            Combat Intelligence & Analytics
-          </h1>
-          <p className="mt-1 text-xs sm:text-sm text-zinc-400">
-            Deep algorithmic performance metrics, execution speed percentiles, and match telemetry.
-          </p>
-        </div>
-
-        {/* Coming Soon Hero Glass Box */}
-        <div className="rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-8 sm:p-12 backdrop-blur-xl shadow-2xl text-center relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[120px] opacity-20"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(229, 255, 69, 0.1) 60%, transparent 80%)",
-            }}
-          />
-
-          <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center">
-            <div className="h-16 w-16 rounded-2xl border border-cyan-500/40 bg-cyan-500/10 flex items-center justify-center mb-5 shadow-lg shadow-cyan-500/10">
-              <LineChart className="h-8 w-8 text-cyan-400" />
-            </div>
-
-            <span className="font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-[#E5FF45]/30 bg-[#E5FF45]/10 text-[#E5FF45] mb-3">
-              TELEMETRY ENGINE V2 • IN DEPLOYMENT
-            </span>
-
-            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Advanced Performance Analytics
-            </h2>
-
-            <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-              Our engineering team is finalizing the real-time telemetry pipeline. Soon you will track your code memory footprint, keystroke speed, algorithmic efficiency percentiles, and win rates by problem category.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/arena"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-display text-xs font-bold uppercase tracking-wider text-black hover:bg-zinc-200 transition-all shadow-md"
-              >
-                <span>Enter Battle Arena</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/80 px-6 py-2.5 font-display text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all"
-              >
-                <span>Return to Dashboard</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Feature Teasers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 backdrop-blur-sm">
-            <div className="h-8 w-8 rounded-xl border border-zinc-700 bg-zinc-800/80 flex items-center justify-center mb-3">
-              <Zap className="h-4 w-4 text-[#E5FF45]" />
-            </div>
-            <h3 className="font-display text-sm font-bold text-white">Execution Speed Distribution</h3>
-            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-              Benchmark your time complexity against the top 1% of duelist submissions.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 backdrop-blur-sm">
-            <div className="h-8 w-8 rounded-xl border border-zinc-700 bg-zinc-800/80 flex items-center justify-center mb-3">
-              <BarChart3 className="h-4 w-4 text-cyan-400" />
-            </div>
-            <h3 className="font-display text-sm font-bold text-white">Category Mastery Radar</h3>
-            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-              Real-time radar charts across Dynamic Programming, Graph Theory, and Bit Manipulation.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 backdrop-blur-sm">
-            <div className="h-8 w-8 rounded-xl border border-zinc-700 bg-zinc-800/80 flex items-center justify-center mb-3">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            </div>
-            <h3 className="font-display text-sm font-bold text-white">Rival Head-to-Head</h3>
-            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-              Comprehensive telemetry breakdowns when matched against your most frequent opponents.
-            </p>
-          </div>
-        </div>
-      </div>
-    </DashboardLayout>
-  );
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { FeatureHeading, FeatureStatus, useFeature, card } from '@/components/features/FeatureUI';
+type Group = { name: string; attempts: number; accepted: number; avgRuntimeMs: number | null };
+type Analytics = { attempts: number; accepted: number; acceptanceRate: number; memoryPeakKb: number; languages: Group[]; difficulties: Group[]; activity: Group[]; recent: { date: string; language: string; difficulty: string; passed: boolean; runtimeMs: number | null; memoryKb: number | null }[] };
+function Breakdown({ title, rows }: { title: string; rows: Group[] }) { return <section className={card}><h2 className="text-xl font-bold">{title}</h2>{rows.length ? rows.map(r => <div className="space-y-2" key={r.name}><div className="flex justify-between gap-3 text-sm"><span className="capitalize">{r.name}</span><span className="text-zinc-400">{r.accepted}/{r.attempts} accepted · {r.avgRuntimeMs ?? '—'}ms avg</span></div><div className="h-2 bg-zinc-800 rounded-full overflow-hidden"><div className="h-full bg-[#E5FF45]" style={{ width: `${r.attempts ? r.accepted / r.attempts * 100 : 0}%` }} /></div></div>) : <p className="text-zinc-400">Submit a solution to start collecting data.</p>}</section>; }
+function Analytics() {
+  const { data, error } = useFeature<Analytics>('/api/codearena/analytics');
+  const maximum = Math.max(1, ...data?.activity.map(d => d.attempts) || []);
+  return <div className="max-w-6xl mx-auto space-y-6 pb-12"><FeatureHeading title="Combat Analytics" description="Measured performance from your practice submissions and completed arenas. Runtime and memory come from Judge0." /><FeatureStatus error={error} loading={!data} />
+    {data && <><div className="grid grid-cols-2 lg:grid-cols-4 gap-4">{[['Submissions / arenas', data.attempts], ['Accepted', data.accepted], ['Acceptance rate', `${data.acceptanceRate}%`], ['Peak memory', `${(data.memoryPeakKb / 1024).toFixed(1)} MB`]].map(([label, value]) => <div className={card} key={label}><p className="text-xs text-zinc-400">{label}</p><p className="text-2xl text-[#E5FF45] font-bold">{value}</p></div>)}</div>
+      <div className="grid lg:grid-cols-2 gap-4"><Breakdown title="Language performance" rows={data.languages} /><Breakdown title="Difficulty mastery" rows={data.difficulties} /></div>
+      <section className={card}><h2 className="text-xl font-bold">Activity</h2><p className="text-xs text-zinc-400">Latest 90 active days · dates in UTC · hover a bar for counts</p><div className="h-40 flex items-end gap-1 overflow-x-auto" role="img" aria-label="Submission activity by day">{data.activity.map(day => <div key={day.name} title={`${day.name}: ${day.attempts} attempts, ${day.accepted} accepted`} className="min-w-3 flex-1 rounded-t bg-cyan-400" style={{ height: `${day.attempts / maximum * 100}%` }} />)}</div>{!data.activity.length && <p className="text-zinc-400">No activity yet.</p>}</section>
+      <section className={card}><h2 className="text-xl font-bold">Recent results</h2><div className="overflow-x-auto"><table className="w-full text-sm text-left"><thead className="text-zinc-400"><tr>{['Date (UTC)', 'Language', 'Difficulty', 'Result', 'Runtime', 'Memory'].map(h => <th className="p-2" key={h}>{h}</th>)}</tr></thead><tbody>{data.recent.map((r,i) => <tr className="border-t border-zinc-800" key={i}><td className="p-2">{r.date}</td><td className="p-2">{r.language}</td><td className="p-2">{r.difficulty}</td><td className={`p-2 ${r.passed ? 'text-emerald-400' : 'text-red-400'}`}>{r.passed ? 'Accepted' : 'Not accepted'}</td><td className="p-2">{r.runtimeMs ?? '—'}ms</td><td className="p-2">{r.memoryKb === null ? '—' : `${(r.memoryKb / 1024).toFixed(1)}MB`}</td></tr>)}</tbody></table></div></section>
+    </>}
+  </div>;
 }
+export default function AnalyticsPage() { return <DashboardLayout><Analytics /></DashboardLayout>; }

@@ -20,6 +20,7 @@ export interface TestCase {
 }
 
 export interface PracticeProblem {
+  language?: string;
   id: string;
   slug: string;
   title: string;

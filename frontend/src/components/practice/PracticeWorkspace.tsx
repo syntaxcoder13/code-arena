@@ -1,5 +1,7 @@
 "use client";
 
+import { api, apiError } from "@/lib/api";
+import { useEquipment } from "@/hooks/useEquipment";
 import React, { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import {
@@ -57,10 +59,11 @@ export function PracticeWorkspace({
   onToggleBookmark,
   onSolutionSuccess,
 }: PracticeWorkspaceProps) {
+  const equipment = useEquipment();
   const { playClick, playHover, playPop, playSuccess, playClash } = useSoundEffects();
 
   // State
-  const [language, setLanguage] = useState<SupportedLanguage>("typescript");
+  const [language, setLanguage] = useState<SupportedLanguage>((problem.language || "typescript") as SupportedLanguage);
   const [code, setCode] = useState<string>("");
   const [activeHintIndex, setActiveHintIndex] = useState<number | null>(null);
   const [copiedExampleIndex, setCopiedExampleIndex] = useState<number | null>(null);
@@ -71,6 +74,7 @@ export function PracticeWorkspace({
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [testResults, setTestResults] = useState<{
+    analysis?: { kind: string; time: string; space: string; note: string };
     status: "IDLE" | "SUCCESS" | "FAILED" | "ERROR";
     message: string;
     runtimeMs: number;
@@ -132,79 +136,17 @@ export function PracticeWorkspace({
     setTimeout(() => setCopiedExampleIndex(null), 2000);
   };
 
-  // Run Test Cases Simulation & Safe Evaluation
-  const runEvaluation = useCallback(
-    (isSubmission: boolean) => {
-      if (isSubmission) {
-        setIsSubmitting(true);
-      } else {
-        setIsRunning(true);
-      }
-      playClick();
-
-      setTimeout(() => {
-        const runtime = Math.floor(Math.random() * 20) + 8;
-        const memory = +(Math.random() * 4 + 38).toFixed(1);
-
-        const trimmed = code.trim();
-        const hasReturn = trimmed.includes("return");
-
-        if (!hasReturn) {
-          setTestResults({
-            status: "ERROR",
-            message: "Execution Failed: Function must return a value.",
-            runtimeMs: runtime,
-            memoryMb: memory,
-            details: [
-              {
-                caseId: "err_1",
-                passed: false,
-                input: problem.testCases[0]?.input || "",
-                expected: problem.testCases[0]?.expectedOutput || "",
-                actual: "undefined",
-              },
-            ],
-          });
-          playClash();
-          setIsRunning(false);
-          setIsSubmitting(false);
-          return;
-        }
-
-        const casesToTest = isSubmission
-          ? problem.testCases
-          : problem.testCases.filter((tc) => !tc.isHidden);
-
-        const details = casesToTest.map((tc) => ({
-          caseId: tc.id,
-          passed: true,
-          input: tc.input,
-          expected: tc.expectedOutput,
-          actual: tc.expectedOutput,
-        }));
-
-        setTestResults({
-          status: "SUCCESS",
-          message: isSubmission
-            ? "All Test Cases Passed! Ready for Victory."
-            : `Passed ${details.length}/${details.length} Sample Cases.`,
-          runtimeMs: runtime,
-          memoryMb: memory,
-          details,
-        });
-
-        if (isSubmission) {
-          onSolutionSuccess(problem, runtime, memory);
-        } else {
-          playSuccess();
-        }
-
-        setIsRunning(false);
-        setIsSubmitting(false);
-      }, 600);
-    },
-    [code, problem, onSolutionSuccess, playClick, playSuccess, playClash]
-  );
+  const runEvaluation = useCallback(async (isSubmission: boolean) => {
+    if (isRunning || isSubmitting) return;
+    isSubmission ? setIsSubmitting(true) : setIsRunning(true);
+    try {
+      const { data } = await api.post(`/api/codearena/problems/${problem.id}/evaluate`, { code, language, submit: isSubmission, ...(!isSubmission && customInput ? { input: customInput } : {}) });
+      setTestResults(data);
+      if (data.status === 'SUCCESS' && isSubmission) onSolutionSuccess(problem, data.runtimeMs, data.memoryMb);
+    } catch (e) {
+      setTestResults({ status: 'ERROR', message: apiError(e), runtimeMs: 0, memoryMb: 0, details: [] });
+    } finally { setIsRunning(false); setIsSubmitting(false); }
+  }, [code, language, customInput, problem, onSolutionSuccess, isRunning, isSubmitting]);
 
   // Keyboard shortcut listener: Ctrl+Enter to Run, Ctrl+Shift+Enter to Submit
   useEffect(() => {
@@ -413,7 +355,7 @@ export function PracticeWorkspace({
           <MonacoEditor
             height="100%"
             language={language === "cpp" ? "cpp" : language === "go" ? "go" : language}
-            theme="vs-dark"
+            theme={equipment.editorTheme}
             value={code}
             onChange={handleCodeChange}
             options={{
@@ -548,7 +490,7 @@ export function PracticeWorkspace({
                   ) : (
                     <XCircle className="h-4 w-4" />
                   )}
-                  <span>{testResults.message}</span>
+                  <span>{testResults.message}</span>{testResults.analysis && <div className="mt-3 text-xs text-zinc-400"><strong>Complexity hint ({testResults.analysis.kind}):</strong> {testResults.analysis.time}<br />{testResults.analysis.space}<p>{testResults.analysis.note}</p></div>}
                 </div>
                 <div className="font-mono text-[10px] text-zinc-500 font-normal">
                   {testResults.runtimeMs}ms • {testResults.memoryMb}MB

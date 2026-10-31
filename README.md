@@ -1,3 +1,5 @@
+> Local setup, implemented features, and remaining placeholders: [CODEARENA_SETUP.md](CODEARENA_SETUP.md). The architectural descriptions below include planned features.
+
 # ⚔️ CODE ARENA — Real-Time Multiplayer Competitive Coding Platform
 
 <div align="center">

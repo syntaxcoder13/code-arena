@@ -1,108 +1,44 @@
 "use client";
-
-import React from "react";
-import Link from "next/link";
-import { Trophy, Swords, Calendar, ArrowRight, Flame, Users } from "lucide-react";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-
-export default function TournamentsPage() {
-  return (
-    <DashboardLayout>
-      <div className="space-y-8 max-w-5xl mx-auto pb-16">
-        {/* Header */}
-        <div className="border-b border-zinc-800 pb-5">
-          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-zinc-400 uppercase tracking-wider">
-            <Trophy className="h-3.5 w-3.5 text-amber-400" />
-            <span>COMPETITION</span>
-            <span className="text-zinc-600">{"//"}</span>
-            <span className="text-[#E5FF45] font-semibold">GLOBAL TOURNAMENTS</span>
-          </div>
-          <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mt-1">
-            Global Tournaments & Showdowns
-          </h1>
-          <p className="mt-1 text-xs sm:text-sm text-zinc-400">
-            Single elimination brackets, Swiss rounds, and weekend code marathons with cash & rank prizes.
-          </p>
-        </div>
-
-        {/* Coming Soon Hero Glass Box */}
-        <div className="rounded-3xl border border-zinc-800 bg-[#0C0E14]/90 p-8 sm:p-12 backdrop-blur-xl shadow-2xl text-center relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[120px] opacity-20"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(251, 188, 5, 0.25) 0%, rgba(229, 255, 69, 0.1) 60%, transparent 80%)",
-            }}
-          />
-
-          <div className="relative z-10 max-w-xl mx-auto flex flex-col items-center">
-            <div className="h-16 w-16 rounded-2xl border border-amber-500/40 bg-amber-500/10 flex items-center justify-center mb-5 shadow-lg shadow-amber-500/10">
-              <Trophy className="h-8 w-8 text-amber-400" />
-            </div>
-
-            <span className="font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-[#E5FF45]/30 bg-[#E5FF45]/10 text-[#E5FF45] mb-3">
-              SEASON 1 CHAMPIONSHIP • PREPARING
-            </span>
-
-            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Weekend Open Cups & Grand Prix
-            </h2>
-
-            <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-              Live broadcasted tournaments featuring dynamic difficulty brackets. Compete against top competitive programmers globally under strict anti-cheat and speed constraints.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/arena"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-display text-xs font-bold uppercase tracking-wider text-black hover:bg-zinc-200 transition-all shadow-md"
-              >
-                <span>Warm Up in Arena</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/80 px-6 py-2.5 font-display text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all"
-              >
-                <span>Return to Dashboard</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Feature Teasers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 backdrop-blur-sm">
-            <div className="h-8 w-8 rounded-xl border border-zinc-700 bg-zinc-800/80 flex items-center justify-center mb-3">
-              <Calendar className="h-4 w-4 text-cyan-400" />
-            </div>
-            <h3 className="font-display text-sm font-bold text-white">Weekly Blitz Cups</h3>
-            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-              Every Saturday at 18:00 UTC. 64-player knockout brackets with 10-minute speed limits.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 backdrop-blur-sm">
-            <div className="h-8 w-8 rounded-xl border border-zinc-700 bg-zinc-800/80 flex items-center justify-center mb-3">
-              <Flame className="h-4 w-4 text-[#E5FF45]" />
-            </div>
-            <h3 className="font-display text-sm font-bold text-white">Live Spectator Arena</h3>
-            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-              Watch top finalists write code in real-time with latency graphs and live error telemetry.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 backdrop-blur-sm">
-            <div className="h-8 w-8 rounded-xl border border-zinc-700 bg-zinc-800/80 flex items-center justify-center mb-3">
-              <Users className="h-4 w-4 text-purple-400" />
-            </div>
-            <h3 className="font-display text-sm font-bold text-white">Collegiate Leagues</h3>
-            <p className="mt-1 text-xs text-zinc-400 leading-relaxed">
-              Represent your university or bootcamp against rival campuses in tiered conference brackets.
-            </p>
-          </div>
-        </div>
-      </div>
-    </DashboardLayout>
-  );
+import { useState } from 'react';
+import Link from 'next/link';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { useUserSession } from '@/hooks/useUserSession';
+import { FeatureHeading, FeatureStatus, useFeature, field, action, secondary, card } from '@/components/features/FeatureUI';
+type Entry = { userId: string; user: { username: string; name: string } };
+type Match = { id: string; round: number; position: number; playerAId: string; playerBId: string | null; winnerId: string | null; battleId: string | null; resolution: string | null };
+type Tournament = { format: string; roundLimit: number; standings: { userId: string; points: number; buchholz: number }[]; id: string; name: string; creatorId: string; state: string; winnerId: string | null; language: string; difficulty: string; durationSeconds: number; capacity: number; entries: Entry[]; matches: Match[] };
+function Tournaments() {
+  const { session } = useUserSession();
+  const { data, error, busy, mutate } = useFeature<Tournament[]>('/api/codearena/tournaments', 4000);
+  const [form, setForm] = useState({ name: '', language: 'javascript', difficulty: 'easy', durationSeconds: 300, capacity: 8, format: 'ELIMINATION', roundLimit: 3 });
+  const [selected, setSelected] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const tournament = data?.find(t => t.id === selected);
+  return <div className="max-w-7xl mx-auto space-y-6 pb-12"><FeatureHeading title="Arena Tournaments" description="Knockout or Swiss competition for up to 16 players. Every match is a real Judge0 arena; bracket progression is automatic." /><FeatureStatus error={error} loading={!data} />
+    <button className={secondary} onClick={() => setShowForm(v => !v)}>{showForm ? 'Close form' : 'Organize a tournament'}</button>
+    {showForm && <form className={card} onSubmit={async e => { e.preventDefault(); if (await mutate('/api/codearena/tournaments', form)) { setShowForm(false); setForm(prev => ({ ...prev, name: '' })); } }}>
+      <h2 className="text-xl font-bold">Create tournament</h2><label className="text-xs text-zinc-400">Format<select className={field} value={form.format} onChange={e => setForm({ ...form, format: e.target.value })}><option value="ELIMINATION">Knockout</option><option value="SWISS">Swiss (everyone plays every round)</option></select></label>{form.format === 'SWISS' && <label className="text-xs text-zinc-400">Swiss rounds<select className={field} value={form.roundLimit} onChange={e => setForm({ ...form, roundLimit: Number(e.target.value) })}>{[3,4,5].map(n => <option key={n} value={n}>{n} rounds</option>)}</select></label>}<input aria-label="Tournament name" className={field} required minLength={3} maxLength={60} placeholder="Tournament name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <label className="text-xs text-zinc-400">Language<select className={field} value={form.language} onChange={e => setForm({ ...form, language: e.target.value })}>{['javascript', 'typescript', 'python', 'cpp', 'go'].map(v => <option key={v}>{v}</option>)}</select></label>
+        <label className="text-xs text-zinc-400">Difficulty<select className={field} value={form.difficulty} onChange={e => setForm({ ...form, difficulty: e.target.value })}>{['easy', 'medium', 'hard'].map(v => <option key={v}>{v}</option>)}</select></label>
+        <label className="text-xs text-zinc-400">Match duration<select className={field} value={form.durationSeconds} onChange={e => setForm({ ...form, durationSeconds: Number(e.target.value) })}>{[180,300,600,900,1800].map(v => <option key={v} value={v}>{v / 60} minutes</option>)}</select></label>
+        <label className="text-xs text-zinc-400">Entrant limit<select className={field} value={form.capacity} onChange={e => setForm({ ...form, capacity: Number(e.target.value) })}>{[4,8,16].map(v => <option key={v} value={v}>{v} players</option>)}</select></label>
+      </div><p className="text-xs text-zinc-400">You join as organizer. You may start with at least two entrants; empty bracket slots become byes.</p><button disabled={busy} className={action}>Create tournament</button>
+    </form>}
+    <div className="grid lg:grid-cols-3 gap-4">{data?.map(t => <button className={`${card} text-left ${selected === t.id ? 'ring-1 ring-[#E5FF45]' : ''}`} key={t.id} onClick={() => setSelected(t.id)}><p className="text-xs text-[#E5FF45]">{t.format} · {t.state}</p><h2 className="text-xl font-bold">{t.name}</h2><p className="text-sm text-zinc-400">{t.language} · {t.difficulty} · {t.durationSeconds / 60} min</p><p className="text-sm">{t.entries.length}/{t.capacity} entrants{t.entries.some(e => e.userId === session?.id) ? ' · Registered' : ''}</p></button>)}</div>
+    {data?.length === 0 && <p className="text-zinc-400">No tournaments yet. Organize the first one.</p>}
+    {tournament && <section className={card}>
+      <div className="flex flex-wrap justify-between gap-4"><div><h2 className="text-2xl font-bold">{tournament.name}</h2><p className="text-sm text-zinc-400">{tournament.state} · {tournament.entries.length} entrants</p></div><div className="flex gap-2 items-start">{tournament.state === 'OPEN' && <>{tournament.entries.some(e => e.userId === session?.id) ? tournament.creatorId !== session?.id && <button disabled={busy} className={secondary} onClick={() => mutate(`/api/codearena/tournaments/${tournament.id}/leave`)}>Withdraw</button> : <button disabled={busy || tournament.entries.length >= tournament.capacity} className={action} onClick={() => mutate(`/api/codearena/tournaments/${tournament.id}/join`)}>Register</button>}{tournament.creatorId === session?.id && <button disabled={busy || tournament.entries.length < 2} className={action} onClick={() => mutate(`/api/codearena/tournaments/${tournament.id}/start`)}>Start tournament</button>}</>}</div></div>
+      <p className="text-sm text-zinc-400">Entrants: {tournament.entries.map(e => `@${e.user.username}`).join(', ')}</p>
+      {tournament.winnerId && <p className="rounded-xl bg-[#E5FF45]/10 border border-[#E5FF45]/40 p-4 text-[#E5FF45] text-lg font-bold">Champion: @{tournament.entries.find(e => e.userId === tournament.winnerId)?.user.username || 'Former player'}</p>}
+      {tournament.format === 'SWISS' && <section className="space-y-2"><h3 className="font-bold">Swiss standings · {tournament.roundLimit} rounds</h3>{tournament.standings.map((row,i) => <p key={row.userId} className="text-sm">#{i+1} @{tournament.entries.find(e => e.userId === row.userId)?.user.username} · {row.points} points · Buchholz {row.buchholz}</p>)}<p className="text-xs text-zinc-500">Win or bye = 1 point. Ties use opponents’ total points (Buchholz), then registration order. Repeat opponents are minimized; a repeat may be necessary in a small field.</p></section>}
+      <div className="flex gap-4 overflow-x-auto pb-3">{[...new Set(tournament.matches.map(m => m.round))].map(round => <div className="min-w-64 flex-1 space-y-3" key={round}><h3 className="font-bold text-cyan-400">Round {round}</h3>{tournament.matches.filter(m => m.round === round).map(m => {
+        const username = (id: string | null) => id ? `@${tournament.entries.find(e => e.userId === id)?.user.username || 'Former player'}` : 'BYE';
+        const mine = m.playerAId === session?.id || m.playerBId === session?.id;
+        return <article className="rounded-xl border border-zinc-700 p-4 space-y-2 bg-zinc-900/60" key={m.id}><p className={m.winnerId === m.playerAId ? 'text-[#E5FF45] font-bold' : ''}>{username(m.playerAId)}</p><p className="text-xs text-zinc-500">vs</p><p className={m.winnerId && m.winnerId === m.playerBId ? 'text-[#E5FF45] font-bold' : ''}>{username(m.playerBId)}</p><p className="text-xs text-zinc-400">{m.resolution === 'BYE' ? 'Automatic bye' : m.resolution === 'NO_SUBMISSION_SEED_TIEBREAK' ? 'No submissions: bracket seed advanced' : m.winnerId ? 'Judged result' : 'Arena in progress'}</p>{mine && m.battleId && <Link className="inline-block text-sm text-cyan-400 underline" href={`/arena?room=${m.battleId}`}>{m.winnerId ? 'View result' : 'Enter your match'}</Link>}</article>;
+      })}</div>)}</div>
+      <p className="text-xs text-zinc-500">Each round uses a shared problem and randomized initial seeds. Best judged standing advances. If neither player submits, the earlier bracket seed advances. New rounds start automatically, so stay on this page after your match.</p>
+    </section>}
+  </div>;
 }
+export default function TournamentsPage() { return <DashboardLayout><Tournaments /></DashboardLayout>; }

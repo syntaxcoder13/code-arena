@@ -35,3 +35,7 @@ Thumbs.db
 .vscode/
 .idea/
 .vercel
+
+# Local Code Arena infrastructure
+.local/
+backend/.test-tmp/

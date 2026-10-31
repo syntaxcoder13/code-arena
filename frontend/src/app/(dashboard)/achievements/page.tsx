@@ -1,5 +1,6 @@
 "use client";
 
+import { useArenaSummary } from "@/hooks/useArenaSummary";
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import {
@@ -20,7 +21,7 @@ import { AchievementsHero } from "@/components/achievements/AchievementsHero";
 import { MilestoneRoadmap } from "@/components/achievements/MilestoneRoadmap";
 import { AchievementCard } from "@/components/achievements/AchievementCard";
 import { AchievementInspectModal } from "@/components/achievements/AchievementInspectModal";
-import { ALL_ACHIEVEMENTS, Achievement } from "@/lib/achievements-data";
+import { ALL_ACHIEVEMENTS as ACHIEVEMENT_DEFINITIONS, Achievement } from "@/lib/achievements-data";
 import { useUserSession } from "@/hooks/useUserSession";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 
@@ -46,10 +47,14 @@ function AchievementsContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [inspectedAchievement, setInspectedAchievement] = useState<Achievement | null>(null);
 
-  // Dynamic user level & XP
-  const userLevel = 14;
-  const currentXp = 3850;
-  const nextLevelXp = 5000;
+  const { summary, error } = useArenaSummary();
+  const ALL_ACHIEVEMENTS = ACHIEVEMENT_DEFINITIONS.map(a => {
+    const progress = Math.min(a.maxProgress, summary?.achievementProgress[a.id] ?? 0);
+    return { ...a, progress, unlocked: progress >= a.maxProgress, unlockedAt: undefined };
+  });
+  const userLevel = summary?.level ?? 1;
+  const currentXp = summary?.profile.totalXp ?? 0;
+  const nextLevelXp = userLevel * userLevel * 100;
 
   // Entrance animations with GSAP
   useEffect(() => {

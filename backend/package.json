@@ -1,0 +1,68 @@
+{
+  "name": "code-arena-backend",
+  "version": "1.0.0",
+  "description": "Code Arena API and Judge0 battle workers",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "node --watch --env-file=.env.local --import tsx src/main.ts",
+    "build": "prisma generate && rimraf dist && tsc",
+    "start": "node dist/main.js",
+    "start:dev": "node --watch --env-file=.env.local --import tsx src/main.ts",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "migrate": "node --env-file=.env.local node_modules/prisma/build/index.js migrate deploy",
+    "seed:problems": "node --env-file=.env.local --import tsx src/modules/battles/seed-problems.script.ts",
+    "sandbox:check": "tsx src/modules/battles/sandbox-check.script.ts",
+    "problems:verify": "tsx src/modules/battles/verify-problems.script.ts",
+    "problems:review": "tsx src/modules/battles/review-problems.script.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "migrate:local": "node --env-file=.env.local node_modules/prisma/build/index.js migrate deploy",
+    "seed:local": "node --env-file=.env.local --import tsx src/modules/battles/seed-problems.script.ts",
+    "migrate:production": "prisma migrate deploy",
+    "test:smoke": "node --env-file=.env.local --import tsx scripts/codearena-smoke.ts",
+    "test:features": "node --env-file=.env.local --import tsx scripts/features-smoke.ts",
+    "test:modes": "node --env-file=.env.local --import tsx scripts/modes-smoke.ts",
+    "problems:verify-expanded": "node --env-file=.env.local --import tsx scripts/verify-expanded-bank.ts"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.1.2",
+    "@fastify/cors": "^11.3.0",
+    "@fastify/helmet": "^13.1.1",
+    "@nestjs/common": "^11.0.10",
+    "@nestjs/config": "^4.0.0",
+    "@nestjs/core": "^11.0.10",
+    "@nestjs/platform-fastify": "^11.0.10",
+    "@nestjs/schedule": "^5.0.1",
+    "@prisma/client": "^6.4.1",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.10.7",
+    "bullmq": "^6.3.8",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.12.5",
+    "ioredis": "^6.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "lru-cache": "^11.0.2",
+    "prisma": "^6.4.1",
+    "reflect-metadata": "^0.2.2",
+    "resend": "^6.28.1",
+    "rimraf": "^6.0.1",
+    "rxjs": "^7.8.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "@nestjs/testing": "^11.2.5",
+    "@types/ioredis": "^4.28.10",
+    "mongodb": "^7.6.0",
+    "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "@nestjs/platform-fastify": {
+      "fastify": "$fastify"
+    }
+  }
+}
