@@ -1,9 +1,9 @@
 import { EventsService } from '../events/events.service';
 import { Optional } from '@nestjs/common';
-import { forwardRef,Inject,Injectable,Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { ParticipantState } from '@prisma/client';
-import { PrismaService,withDbRetry } from '../../database/prisma.service';
-import { endStateFor,everyoneSubmitted,LOBBY_BATTLE_STATES,rankedFieldSize } from './battle.state';
+import { PrismaService, withDbRetry } from '../../database/prisma.service';
+import { endStateFor, everyoneSubmitted, LOBBY_BATTLE_STATES, rankedFieldSize } from './battle.state';
 import { JudgeQueueService } from './judge-queue.service';
 
 export interface SweepResult {
@@ -65,16 +65,6 @@ export class BattleTimerService {
 
   /**
    * Picks up battles that went in for judging and never came out.
-   *
-   * A sandbox outage, a database that stopped answering, a worker that died
-   * mid-job: the verdict is marked FAILED and the battle stays in JUDGING on
-   * purpose, because scoring somebody as wrong when the runner was down
-   * cannot be undone. But nothing used to come back for those battles, so
-   * "retryable" meant nobody ever retried them and the players simply never
-   * got a result.
-   *
-   * Only submissions still missing a verdict are re-queued, so a solution
-   * already measured keeps the timing it earned.
    */
   public async retryStuckJudging(now: Date = new Date()): Promise<number> {
     const stuck = await withDbRetry(() =>
@@ -95,9 +85,6 @@ export class BattleTimerService {
 
   /**
    * A lobby nobody started inside its four hours is done.
-   *
-   * One statement whatever the number of rows, so a quiet sweep costs a single
-   * query against a pool that only has a handful of connections.
    */
   public async expireStaleLobbies(now: Date = new Date()): Promise<number> {
     const { count } = await withDbRetry(() =>
@@ -114,9 +101,6 @@ export class BattleTimerService {
 
   /**
    * Ends battles whose deadline has passed.
-   *
-   * Battles are read once and written in two grouped statements, so the query
-   * count does not grow with how many finished at the same moment.
    */
   public async closeFinishedBattles(now: Date = new Date()): Promise<{ closed: number; abandoned: number }> {
     const due = await withDbRetry(() =>
@@ -147,7 +131,6 @@ export class BattleTimerService {
       await withDbRetry(() =>
         this.prisma.battle.updateMany({
           where: { id: { in: abandoned } },
-          // Started but nothing handed in: there is no winner here
           data: { state: 'ABANDONED', completedAt: now },
         }),
       );
@@ -155,8 +138,6 @@ export class BattleTimerService {
     }
 
     if (toJudge.length > 0) {
-      // Grouped by field size so this stays a handful of statements rather
-      // than one per battle
       for (const size of new Set(fieldSizes.values())) {
         const ids = toJudge.filter((id) => fieldSizes.get(id) === size);
         await withDbRetry(() =>
@@ -175,16 +156,18 @@ export class BattleTimerService {
   }
 
   /**
-   * Closes a battle the moment the last contender hands in.
-   *
-   * The only early end there is, and it needs nobody's permission: waiting out
-   * the clock when everyone has finished just makes people sit and watch it.
+   * Closes a battle the moment the contenders hand in.
    */
   public async closeIfEveryoneSubmitted(battleId: string, _now: Date = new Date()): Promise<boolean> {
     const battle = await withDbRetry(() =>
       this.prisma.battle.findUnique({
         where: { id: battleId },
-        select: { state: true, participants: { select: { state: true } } },
+        select: {
+          state: true,
+          participants: {
+            select: { id: true, state: true, isGhost: true, userId: true },
+          },
+        },
       }),
     );
     if (!battle || battle.state !== 'ACTIVE') {
@@ -192,7 +175,11 @@ export class BattleTimerService {
     }
 
     const states: ParticipantState[] = battle.participants.map((participant) => participant.state);
-    if (!everyoneSubmitted(states)) {
+    const activeHumans = battle.participants.filter((p) => !p.isGhost);
+    const allActiveHumansSubmitted =
+      activeHumans.length > 0 && activeHumans.every((p) => p.state === 'SUBMITTED');
+
+    if (!everyoneSubmitted(states) && !allActiveHumansSubmitted) {
       return false;
     }
 

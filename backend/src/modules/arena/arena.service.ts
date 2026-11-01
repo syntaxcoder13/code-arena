@@ -266,7 +266,25 @@ export class ArenaService {
 
       this.practiceState(userId),
 
-      this.db.battleParticipant.findMany({ where: { userId, isGhost: false, invalidatedAt: null, battle: { state: 'COMPLETE', seriesId: null } }, include: { battle: { include: { problem: { select: { title: true, difficulty: true } } } }, submission: { include: { judgement: true } } }, orderBy: { battle: { completedAt: 'asc' } } }),
+      this.db.battleParticipant.findMany({
+        where: { userId, isGhost: false, invalidatedAt: null, battle: { state: 'COMPLETE', seriesId: null } },
+        include: {
+          battle: {
+            include: {
+              problem: { select: { title: true, difficulty: true } },
+              participants: {
+                select: {
+                  userId: true,
+                  isGhost: true,
+                  user: { select: { username: true, name: true } },
+                },
+              },
+            },
+          },
+          submission: { include: { judgement: true } },
+        },
+        orderBy: { battle: { completedAt: 'asc' } },
+      }),
 
     ]);
 
@@ -284,7 +302,15 @@ export class ArenaService {
 
       if (eligible) { if (won) { wins++; winStreak++; bestStreak = Math.max(bestStreak, winStreak); } else { losses++; winStreak = 0; } }
 
-      return { id: s.battleId, mode: s.battle.durationSeconds === 300 ? 'BLITZ_DEATHMATCH' : s.battle.durationSeconds === 900 ? 'GAUNTLET' : 'RANKED_1V1', outcome: won ? 'VICTORY' : 'DEFEAT', eloChange: delta, problemTitle: s.battle.problem?.title ?? 'Arena', durationSeconds: s.battle.durationSeconds, casesPassed: `${s.submission?.judgement?.passedTests ?? 0}/${s.submission?.judgement?.totalTests ?? 0}`, timestamp: s.battle.completedAt?.toISOString(), rivalHandle: s.battle.visibility === 'GHOST' ? 'Recorded ghost' : 'Arena opponent', rivalElo: 1200 };
+      const rival = s.battle.participants?.find((p) => p.userId !== userId);
+      const rivalName = rival?.user?.username || rival?.user?.name;
+      const rivalHandle = rivalName
+        ? `@${rivalName}${rival?.isGhost ? ' (ghost)' : ''}`
+        : s.battle.visibility === 'GHOST'
+        ? 'Recorded ghost'
+        : 'Arena opponent';
+
+      return { id: s.battleId, mode: s.battle.durationSeconds === 300 ? 'BLITZ_DEATHMATCH' : s.battle.durationSeconds === 900 ? 'GAUNTLET' : 'RANKED_1V1', outcome: won ? 'VICTORY' : 'DEFEAT', eloChange: delta, problemTitle: s.battle.problem?.title ?? 'Arena', durationSeconds: s.battle.durationSeconds, casesPassed: `${s.submission?.judgement?.passedTests ?? 0}/${s.submission?.judgement?.totalTests ?? 0}`, timestamp: s.battle.completedAt?.toISOString(), rivalHandle, rivalElo: 1200 };
 
     }).reverse();
 

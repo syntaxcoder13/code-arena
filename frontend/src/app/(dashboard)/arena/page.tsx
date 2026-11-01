@@ -149,6 +149,7 @@ function ArenaContent() {
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedRoomId, setCopiedRoomId] = useState(false);
   const [queueElapsed, setQueueElapsed] = useState(0);
+  const [autoCloseSeconds, setAutoCloseSeconds] = useState<number | null>(null);
 
   const problemLoaded = useRef("");
   const log = useCallback(
@@ -382,7 +383,8 @@ function ArenaContent() {
     try {
       await api.post(`/api/arena/${battle!.id}/submit`, { code });
       setSubmitted(true);
-      log("Solution submitted. Waiting for both players and Judge0.");
+      setAutoCloseSeconds(6);
+      log("Solution submitted. Room closing automatically in 6s or exit now.");
     } catch (e) {
       setError(apiError(e));
     } finally {
@@ -425,6 +427,8 @@ function ArenaContent() {
       setProblem(null);
       setQueue(null);
       setResults(null);
+      setSubmitted(false);
+      setAutoCloseSeconds(null);
       setSpectatorUrl("");
       sessionStorage.removeItem("codearena_active_arena");
       window.history.replaceState({}, "", "/arena");
@@ -432,8 +436,31 @@ function ArenaContent() {
         .get("/api/arena/open")
         .then((r) => setRooms(r.data))
         .catch(() => {});
+      loadSummary()
+        .then((s) => setProfile(s.profile))
+        .catch(() => {});
     }
   };
+
+  const terminal = Boolean(battle && ["COMPLETE", "ABANDONED", "EXPIRED"].includes(battle.state));
+
+  useEffect(() => {
+    if (terminal && autoCloseSeconds === null) {
+      setAutoCloseSeconds(8);
+    }
+  }, [terminal, autoCloseSeconds]);
+
+  useEffect(() => {
+    if (autoCloseSeconds === null) return;
+    if (autoCloseSeconds <= 0) {
+      handleLeaveRoom();
+      return;
+    }
+    const timer = setTimeout(() => {
+      setAutoCloseSeconds((prev) => (prev !== null && prev > 0 ? prev - 1 : null));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [autoCloseSeconds]);
 
   const opponent = battle?.participants.find((p) => p.userId !== session?.id);
   const rival: GladiatorRival = {
@@ -451,8 +478,6 @@ function ArenaContent() {
     taunt: "",
     speedMultiplier: 1,
   };
-
-  const terminal = battle && ["COMPLETE", "ABANDONED", "EXPIRED"].includes(battle.state);
   const winRate =
     profile && profile.wins + profile.losses > 0
       ? Math.round((profile.wins / (profile.wins + profile.losses)) * 100)
@@ -925,6 +950,94 @@ function ArenaContent() {
               </div>
             )}
           </section>
+
+          {/* Duel Match History Section */}
+          <section className="rounded-2xl border border-zinc-800 bg-[#0C0E14] p-5 space-y-3.5">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2 font-display text-xs font-bold uppercase text-white">
+                <Swords className="h-3.5 w-3.5 text-[#E5FF45]" />
+                <span>RECENT ARENA DUEL HISTORY</span>
+              </div>
+              <span className="font-mono text-xs text-zinc-500">
+                {profile?.history?.length ?? 0} MATCHES RECORDED
+              </span>
+            </div>
+
+            {profile?.history && profile.history.length > 0 ? (
+              <div className="overflow-x-auto -mx-1 px-1">
+                <table className="w-full min-w-[560px] text-left font-mono text-xs">
+                  <thead>
+                    <tr className="text-zinc-500 border-b border-zinc-800 text-[10px] uppercase tracking-wider">
+                      <th className="pb-2">RESULT</th>
+                      <th className="pb-2">RIVAL</th>
+                      <th className="pb-2">PROBLEM</th>
+                      <th className="pb-2">TESTS</th>
+                      <th className="pb-2">RATING</th>
+                      <th className="pb-2 text-right">DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-800/60">
+                    {profile.history.slice(0, 10).map((h) => (
+                      <tr key={h.id} className="hover:bg-zinc-800/30 text-zinc-300 transition-colors">
+                        <td className="py-3 font-display font-bold text-xs">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border text-[10px] font-semibold ${
+                              h.outcome === "VICTORY"
+                                ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                                : "bg-rose-500/15 text-rose-400 border-rose-500/30"
+                            }`}
+                          >
+                            {h.outcome === "VICTORY" ? (
+                              <Trophy className="h-3 w-3" />
+                            ) : (
+                              <Skull className="h-3 w-3" />
+                            )}
+                            <span>{h.outcome}</span>
+                          </span>
+                        </td>
+                        <td className="py-3 font-bold text-white">
+                          <span>{h.rivalHandle}</span>
+                          <span className="block text-[10px] text-zinc-500 font-normal">
+                            {h.mode}
+                          </span>
+                        </td>
+                        <td className="py-3 font-medium text-zinc-200">
+                          {h.problemTitle}
+                        </td>
+                        <td className="py-3 text-emerald-400 font-semibold">{h.casesPassed}</td>
+                        <td className="py-3 font-bold">
+                          <span
+                            className={
+                              h.eloChange > 0
+                                ? "text-emerald-400"
+                                : h.eloChange < 0
+                                ? "text-rose-400"
+                                : "text-zinc-400"
+                            }
+                          >
+                            {h.eloChange > 0 ? `+${h.eloChange}` : h.eloChange}
+                          </span>
+                        </td>
+                        <td className="py-3 text-right text-zinc-500">
+                          {h.timestamp ? new Date(h.timestamp).toLocaleDateString() : "Just now"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-8 space-y-2">
+                <Trophy className="h-8 w-8 text-zinc-600 mx-auto" />
+                <p className="font-mono text-xs text-zinc-300 font-bold">
+                  No duel history recorded yet.
+                </p>
+                <p className="font-body text-xs text-zinc-500 max-w-sm mx-auto">
+                  Complete your first 1v1 battle or Blitz deathmatch above to record your wins and rating progression.
+                </p>
+              </div>
+            )}
+          </section>
         </div>
       )}
 
@@ -1205,17 +1318,42 @@ function ArenaContent() {
 
           {/* If already submitted or judging */}
           {submitted || battle.state !== "ACTIVE" ? (
-            <div className="rounded-2xl border border-zinc-800 bg-[#0C0E14] p-10 text-center space-y-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 mx-auto">
-                <CheckCircle2 className="h-6 w-6" />
+            <div className="rounded-2xl border border-zinc-800 bg-[#0C0E14] p-10 text-center space-y-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 mx-auto animate-pulse">
+                <CheckCircle2 className="h-7 w-7" />
               </div>
-              <h2 className="font-display text-xl font-bold uppercase text-white">
+              <h2 className="font-display text-2xl font-bold uppercase tracking-tight text-white">
                 SOLUTION SUBMITTED
               </h2>
               <p className="font-mono text-xs text-zinc-400 max-w-md mx-auto">
-                Your submission is locked and registered. Waiting for opponent or match timer to
-                expire. Verified Judge0 metrics and ELO outcomes will display momentarily.
+                Your submission is locked and registered. Evaluation and battle outcome will display momentarily.
               </p>
+
+              {/* Auto close indicator & immediate exit buttons */}
+              <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleLeaveRoom}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#E5FF45] hover:bg-[#d8f236] text-black font-display text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(229,255,69,0.2)] cursor-pointer"
+                >
+                  <ArrowRight className="h-4 w-4" />
+                  <span>Exit to Arena Lobby</span>
+                  {autoCloseSeconds !== null && (
+                    <span className="ml-1 px-1.5 py-0.5 rounded bg-black/20 text-xs font-mono">
+                      ({autoCloseSeconds}s)
+                    </span>
+                  )}
+                </button>
+                {autoCloseSeconds !== null && (
+                  <button
+                    type="button"
+                    onClick={() => setAutoCloseSeconds(null)}
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-zinc-700 bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                  >
+                    Cancel Auto-Close
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <ArenaWorkspace
@@ -1271,7 +1409,7 @@ function ArenaContent() {
                   : results.winnerUserId
                   ? "DEFEAT SUFFERED"
                   : "STALEMATE / DRAW"
-                : battle.state}
+                : battle?.state || "CONCLUDED"}
             </h2>
             <p className="font-mono text-xs text-zinc-400">
               {results?.winnerUserId === session?.id ? (
@@ -1326,21 +1464,29 @@ function ArenaContent() {
           )}
 
           {/* Action to Return to Lobby */}
-          <div className="flex justify-center pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <button
               type="button"
-              onClick={() => {
-                playClick();
-                setBattle(null);
-                setProblem(null);
-                setResults(null);
-                sessionStorage.removeItem("codearena_active_arena");
-              }}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#E5FF45] hover:bg-[#d8f236] text-black font-display text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+              onClick={handleLeaveRoom}
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#E5FF45] hover:bg-[#d8f236] text-black font-display text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(229,255,69,0.2)] cursor-pointer"
             >
               <RotateCcw className="h-3.5 w-3.5" />
-              <span>Return to Duel Lobby</span>
+              <span>Return to Arena Lobby</span>
+              {autoCloseSeconds !== null && (
+                <span className="ml-1 px-1.5 py-0.5 rounded bg-black/20 text-xs font-mono">
+                  ({autoCloseSeconds}s)
+                </span>
+              )}
             </button>
+            {autoCloseSeconds !== null ? (
+              <button
+                type="button"
+                onClick={() => setAutoCloseSeconds(null)}
+                className="px-4 py-2.5 rounded-xl border border-zinc-700 bg-zinc-900/80 hover:bg-zinc-800 text-zinc-400 hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Stay in Room
+              </button>
+            ) : null}
           </div>
         </section>
       )}

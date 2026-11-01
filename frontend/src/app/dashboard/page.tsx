@@ -1,7 +1,7 @@
 "use client";
 
-import { LivePlayerPanels } from "@/components/dashboard/LivePlayerPanels";
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import { DashboardLayout, useDashboardUI } from "@/components/dashboard/DashboardLayout";
 import { WelcomePanel } from "@/components/dashboard/WelcomePanel";
@@ -15,6 +15,7 @@ import { useUserSession } from "@/hooks/useUserSession";
 
 function DashboardContent() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const { openUnavailable, openDailyChallenge, openMatchmaking } = useDashboardUI();
   const { session } = useUserSession();
   const [greeting, setGreeting] = useState("Good morning");
@@ -68,20 +69,24 @@ function DashboardContent() {
   }, []);
 
   const handleQuickMatch = () => {
-    openMatchmaking();
+    router.push("/arena");
   };
 
   const handlePractice = () => {
-    openDailyChallenge();
+    router.push("/practice");
   };
 
   const handleQuickAction = (actionId: string, actionTitle: string) => {
     if (actionId === "quick_match") {
-      openMatchmaking();
+      router.push("/arena");
       return;
     }
     if (actionId === "daily_challenge" || actionId === "practice") {
-      openDailyChallenge();
+      router.push("/practice");
+      return;
+    }
+    if (actionId === "competitions") {
+      router.push("/competitions");
       return;
     }
     openUnavailable(
@@ -120,7 +125,7 @@ function DashboardContent() {
         />
       </div>
 
-      {/* 2. Featured Daily Challenge (Prominent Full Width) */}
+      {/* 2. Featured Daily Challenge */}
       <div className="dashboard-entrance-grid">
         <DailyChallenge onViewChallenge={openDailyChallenge} />
       </div>
@@ -133,28 +138,22 @@ function DashboardContent() {
       {/* 4. Bottom Grid: Recent Battles (7 cols) + Leaderboard (5 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div className="lg:col-span-7">
-
+          <RecentMatches onExploreArena={() => router.push("/arena")} />
         </div>
         <div className="lg:col-span-5">
-
+          <LeaderboardPreview />
         </div>
       </div>
 
       {/* 5. Progression & Locked Achievements Preview */}
       <div>
-
+        <ProgressionPanel />
       </div>
 
       {/* 6. Community & Social Rivals Preview */}
       <div>
         <CommunityPreview
-          onJoinCommunity={() =>
-            openUnavailable(
-              "Beta Clan Access",
-              "BETA ACCESS PROGRAM",
-              "Early beta invite requests for developer clan tournaments will open once the core combat engine ships."
-            )
-          }
+          onJoinCommunity={() => router.push("/clans")}
         />
       </div>
     </div>
