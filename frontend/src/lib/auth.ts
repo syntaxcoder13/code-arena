@@ -9,6 +9,22 @@ export interface UserSession {
 }
 
 const STORAGE_KEY = "codearena_auth_session";
+const TOKEN_KEY = "codearena_jwt_token";
+
+export function getStoredToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function saveStoredToken(token: string): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(TOKEN_KEY, token);
+}
+
+export function clearStoredToken(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(TOKEN_KEY);
+}
 
 export function getStoredSession(): UserSession | null {
   if (typeof window === "undefined") return null;
@@ -35,6 +51,7 @@ export function clearSession(): void {
   if (typeof window === "undefined") return;
   try {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(TOKEN_KEY);
     window.dispatchEvent(new CustomEvent("codearena_session_updated", { detail: null }));
   } catch (e) {
     console.error("Failed to clear auth session", e);
