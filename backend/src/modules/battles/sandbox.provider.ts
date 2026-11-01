@@ -8,10 +8,7 @@ import { SandboxRunner, SANDBOX_RUNNER } from './sandbox.types';
  *
  * Judge0 wins when both are set: it measures CPU time and memory, which is
  * what a result ranked on speed needs. Piston is the fallback because it is
- * one container and starts in seconds, which makes it practical on a
- * developer machine where Judge0's cgroup requirements are awkward - but it
- * reports no timing of its own, so rankings built on it are only as good as
- * wall clock.
+ * one container and starts in seconds, which makes it the practical local sandbox.
  */
 export const sandboxProvider: Provider = {
   provide: SANDBOX_RUNNER,
@@ -22,6 +19,11 @@ export const sandboxProvider: Provider = {
     if (judge0.configured) {
       logger.log('Running submissions on Judge0');
       return judge0;
+    }
+
+    if (piston.configured) {
+      logger.log('Running submissions on Piston');
+      return piston;
     }
 
     logger.warn('No sandbox configured, so submissions will not be run');

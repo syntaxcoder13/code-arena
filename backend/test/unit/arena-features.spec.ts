@@ -59,3 +59,53 @@ describe('tournament progression locking', () => {
     expect(tx.arenaTournamentMatch.create).not.toHaveBeenCalled();
   });
 });
+
+
+describe('clan management authorization', () => {
+  it('allows owner to disband clan and forbids non-owner', async () => {
+    const tx = {
+      $queryRaw: vi.fn(),
+      arenaClan: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: 'clan-1',
+          members: [{ userId: 'owner-id', role: 'OWNER' }, { userId: 'member-id', role: 'MEMBER' }],
+        }),
+        delete: vi.fn().mockResolvedValue({ id: 'clan-1' }),
+      },
+    };
+    const db = { $transaction: vi.fn(async (run: (arg: unknown) => unknown) => run(tx)) };
+    const service = new ArenaFeaturesService(db as never, {} as never, {} as never);
+
+    // Non-owner fails
+    await expect(service.deleteClan('member-id', 'clan-1')).rejects.toThrow('Only the clan leader');
+
+    // Owner succeeds
+    const res = await service.deleteClan('owner-id', 'clan-1');
+    expect(res).toEqual({ success: true });
+    expect(tx.arenaClan.delete).toHaveBeenCalledWith({ where: { id: 'clan-1' } });
+  });
+
+  it('allows owner to dismiss a member and prevents leader from kicking self', async () => {
+    const tx = {
+      $queryRaw: vi.fn(),
+      arenaClanMember: {
+        findUnique: vi.fn().mockImplementation(({ where: { userId } }: { where: { userId: string } }) => {
+          if (userId === 'owner-id') return Promise.resolve({ userId: 'owner-id', clanId: 'clan-1', role: 'OWNER' });
+          if (userId === 'member-id') return Promise.resolve({ userId: 'member-id', clanId: 'clan-1', role: 'MEMBER' });
+          return Promise.resolve(null);
+        }),
+        delete: vi.fn().mockResolvedValue({ userId: 'member-id' }),
+      },
+    };
+    const db = { $transaction: vi.fn(async (run: (arg: unknown) => unknown) => run(tx)) };
+    const service = new ArenaFeaturesService(db as never, {} as never, {} as never);
+
+    // Owner cannot kick themselves
+    await expect(service.kickMember('owner-id', 'clan-1', 'owner-id')).rejects.toThrow('Leader cannot dismiss themselves');
+
+    // Owner can kick member
+    const res = await service.kickMember('owner-id', 'clan-1', 'member-id');
+    expect(res).toEqual({ success: true });
+    expect(tx.arenaClanMember.delete).toHaveBeenCalledWith({ where: { userId: 'member-id' } });
+  });
+});

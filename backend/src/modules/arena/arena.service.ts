@@ -7,7 +7,7 @@ import { PrismaService } from '../../database/prisma.service';
 
 import { ProblemService } from '../battles/problem.service';
 
-import { Judge0Client } from '../battles/judge0.client';
+import { SandboxRunner, SANDBOX_RUNNER } from '../battles/sandbox.types';
 
 import { outputMatches } from '../battles/judge.service';
 
@@ -39,7 +39,7 @@ export class ArenaService {
 
     @Inject(ProblemService) private readonly problems: ProblemService,
 
-    @Inject(Judge0Client) private readonly judge: Judge0Client,
+    @Inject(SANDBOX_RUNNER) private readonly judge: SandboxRunner,
 
     @Inject(EnforcementService) private readonly enforcement: EnforcementService,
 

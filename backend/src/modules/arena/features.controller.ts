@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param, Post, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Inject, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { CurrentUser, AuthenticatedUser } from '../../common/decorators/current-user.decorator';
 import { ValidatedBody } from '../../common/pipes/validated-body.decorator';
@@ -15,6 +15,9 @@ export class ArenaFeaturesController {
   @Post('clans/:id/join') joinClan(@CurrentUser() u: AuthenticatedUser, @Param('id') id: string) { return this.features.joinClan(u.id, id); }
   @Post('clans/:id/leave') leaveClan(@CurrentUser() u: AuthenticatedUser, @Param('id') id: string) { return this.features.leaveClan(u.id, id); }
   @Post('clans/:id/leader/:userId') transferClan(@CurrentUser() u: AuthenticatedUser, @Param('id') id: string, @Param('userId') target: string) { return this.features.transferClan(u.id, id, target); }
+  @Delete('clans/:id') deleteClan(@CurrentUser() u: AuthenticatedUser, @Param('id') id: string) { return this.features.deleteClan(u.id, id); }
+  @Post('clans/:id/delete') deleteClanPost(@CurrentUser() u: AuthenticatedUser, @Param('id') id: string) { return this.features.deleteClan(u.id, id); }
+  @Post('clans/:id/kick/:userId') kickMember(@CurrentUser() u: AuthenticatedUser, @Param('id') id: string, @Param('userId') target: string) { return this.features.kickMember(u.id, id, target); }
   @Get('inventory') inventory(@CurrentUser() u: AuthenticatedUser) { return this.features.inventory(u.id); }
   @Post('inventory/equip') equip(@CurrentUser() u: AuthenticatedUser, @ValidatedBody(EquipDto) body: EquipDto) { return this.features.equip(u.id, body.itemId); }
   @Get('analytics') analytics(@CurrentUser() u: AuthenticatedUser) { return this.features.analytics(u.id); }

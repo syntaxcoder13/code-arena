@@ -88,6 +88,38 @@ export class ArenaFeaturesService {
       return { success: true };
     });
   }
+  async deleteClan(userId: string, id: string) {
+    return this.db.$transaction(async tx => {
+      await tx.$queryRaw`SELECT "id" FROM "arena_clans" WHERE "id" = ${id} FOR UPDATE`;
+      const clan = await tx.arenaClan.findUnique({ where: { id }, include: { members: true } });
+      if (!clan) throw new NotFoundException('Clan not found');
+      const owner = clan.members.find(m => m.userId === userId && m.role === 'OWNER');
+      if (!owner) throw new ForbiddenException('Only the clan leader can disband this alliance');
+      await tx.arenaClan.delete({ where: { id } });
+      return { success: true };
+    });
+  }
+  async kickMember(userId: string, id: string, targetUserId: string) {
+    return this.db.$transaction(async tx => {
+      await tx.$queryRaw`SELECT "id" FROM "arena_clans" WHERE "id" = ${id} FOR UPDATE`;
+      const [leader, member] = await Promise.all([
+        tx.arenaClanMember.findUnique({ where: { userId } }),
+        tx.arenaClanMember.findUnique({ where: { userId: targetUserId } }),
+      ]);
+      if (leader?.clanId !== id || leader.role !== 'OWNER') {
+        throw new ForbiddenException('Only the clan leader can dismiss members');
+      }
+      if (!member || member.clanId !== id) {
+        throw new NotFoundException('Gladiator is not a member of this clan');
+      }
+      if (targetUserId === userId) {
+        throw new BadRequestException('Leader cannot dismiss themselves. Disband the clan or transfer leadership instead.');
+      }
+      await tx.arenaClanMember.delete({ where: { userId: targetUserId } });
+      return { success: true };
+    });
+  }
+
 
   async inventory(userId: string) {
     const [s, settings] = await Promise.all([this.arena.summary(userId), this.arena.settings(userId)]);
