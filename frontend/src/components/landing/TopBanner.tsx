@@ -3,8 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { Zap } from "lucide-react";
+import { useUserSession } from "@/hooks/useUserSession";
 
 export function TopBanner() {
+  const { session } = useUserSession();
+  const targetHref = session ? "/dashboard" : "/login";
   return (
     <div
       role="region"
@@ -33,7 +36,7 @@ export function TopBanner() {
         {/* Right: Active counter pill */}
         <div className="flex items-center gap-2 text-xs font-bold">
           <Link
-            href="/login"
+            href={targetHref}
             className="inline-flex items-center gap-1.5 rounded-full bg-[#E5FF45] border border-black/20 px-3 py-1 font-mono text-[11px] font-black text-black hover:bg-[#DAF428] transition-all"
           >
             <Zap className="h-3 w-3 fill-black shrink-0" />

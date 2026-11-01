@@ -6,9 +6,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Shield, Users, KeyRound, ArrowUpRight, Swords } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useUserSession } from "@/hooks/useUserSession";
 
 export function MatchTypes() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { session } = useUserSession();
   const { playHover, playClash } = useSoundEffects();
 
   useEffect(() => {
@@ -207,7 +209,7 @@ export function MatchTypes() {
                   </div>
 
                   <Link
-                    href={mode.href}
+                    href={session ? mode.href : "/login"}
                     onClick={() => playClash()}
                     className="group/btn inline-flex items-center gap-1.5 font-bold text-xs sm:text-sm text-white hover:text-[#E5FF45] transition-colors"
                   >

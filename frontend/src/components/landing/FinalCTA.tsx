@@ -4,8 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { Swords, ArrowRight, Play } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useUserSession } from "@/hooks/useUserSession";
 
 export function FinalCTA() {
+  const { session } = useUserSession();
+  const arenaHref = session ? "/dashboard" : "/login";
   const { playClick, playHover, playClash } = useSoundEffects();
 
   return (
@@ -41,7 +44,7 @@ export function FinalCTA() {
         {/* Action Buttons */}
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
           <Link
-            href="/login"
+            href={arenaHref}
             onClick={() => playClash()}
             onMouseEnter={() => playHover()}
             className="group w-full sm:w-auto bg-white hover:bg-zinc-200 text-black font-extrabold text-xs sm:text-sm px-8 py-3.5 rounded-full inline-flex items-center justify-center gap-2.5 shadow-xl transition-all duration-200 active:scale-95 cursor-pointer whitespace-nowrap"

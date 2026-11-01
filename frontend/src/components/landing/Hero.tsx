@@ -18,8 +18,11 @@ import {
   User,
 } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useUserSession } from "@/hooks/useUserSession";
 
 export function Hero() {
+  const { session } = useUserSession();
+  const arenaHref = session ? "/dashboard" : "/login";
   const { playClick, playHover, playClash } = useSoundEffects();
   const [activeLeaderboardTab, setActiveLeaderboardTab] = useState<"global" | "friends">("global");
   const [activeWriteTab, setActiveWriteTab] = useState<"problem" | "code" | "submissions">("code");
@@ -142,7 +145,7 @@ export function Hero() {
           {/* Desktop Buttons */}
           <div className="hidden md:flex flex-wrap items-center justify-center gap-5 lg:gap-8 mb-12 sm:mb-16">
             <Link
-              href="/login"
+              href={arenaHref}
               onClick={() => playClash()}
               onMouseEnter={() => playHover()}
               className="group inline-flex items-center gap-3.5 bg-white hover:bg-zinc-200 text-black font-semibold px-6 sm:px-7 py-3 rounded-full text-base shadow-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 whitespace-nowrap"
@@ -166,7 +169,7 @@ export function Hero() {
           {/* Mobile Buttons (Centered vertical layout) */}
           <div className="flex md:hidden flex-col items-center gap-3.5 mb-8 w-full px-4">
             <Link
-              href="/login"
+              href={arenaHref}
               onClick={() => playClash()}
               className="w-full max-w-[280px] py-3 px-6 rounded-full bg-white text-black font-semibold text-sm flex items-center justify-center gap-3 shadow-xl active:scale-95"
             >

@@ -14,8 +14,11 @@ import {
   Clock,
 } from "lucide-react";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useUserSession } from "@/hooks/useUserSession";
 
 export function Intro() {
+  const { session } = useUserSession();
+  const targetHref = session ? "/dashboard" : "/login";
   const { playClick, playHover, playClash } = useSoundEffects();
   const [isRunning, setIsRunning] = useState(false);
   const [hasWon, setHasWon] = useState(false);
@@ -259,7 +262,7 @@ export function Intro() {
         {/* ========================================================================= */}
         <div className="mt-8 sm:mt-12">
           <Link
-            href="/login"
+            href={targetHref}
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
             className="group inline-flex items-center gap-3 bg-white hover:bg-zinc-200 text-black font-semibold px-6 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm shadow-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95"
